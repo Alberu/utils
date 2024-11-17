@@ -8,6 +8,13 @@ export const pages = [
     // component: () => import('../pages/Page2.jsx')
   },
   {
+    id: 'TripCalc',
+    title: 'Trip Calculator',
+    description: 'First page description',
+    thumbnail: '/api/placeholder/300/200',
+    component: () => import('@/pages/TripCalc.jsx')
+  },
+  {
     id: 'Page1',
     title: 'Page One',
     description: 'First page description',
