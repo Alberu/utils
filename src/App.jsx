@@ -1,14 +1,31 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { pages } from "./utils";
+import HomePage from "./pages/HomePage";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <>
-      <Button>hi</Button>
-    </>
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {pages.map((page) => (
+            <Route
+              key={page.id}
+              path={`/${page.id}`}
+              element={
+                <Suspense fallback={<div>Loading page...</div>}>
+                  {React.createElement(
+                    lazy(page.component)
+                  )}
+                </Suspense>
+              }
+            />
+          ))}
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

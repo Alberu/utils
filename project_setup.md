@@ -106,3 +106,10 @@ export default {
     /* ... */
 }
 ```
+
+### dependecny
+install `react-router-dom`
+```
+npm install react-router-dom
+
+```
