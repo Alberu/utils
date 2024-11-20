@@ -11,7 +11,7 @@ const MoneyFlow = () => {
     const [expenses, setExpenses] = useState({
         rent: 1000,
         food: 300,
-        extras: 200,
+        other: 200,
     })
 
     const salary1Calcs = calcTakeHome(salary1);
