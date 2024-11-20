@@ -38,15 +38,16 @@ const CircularPieChart = ({ chartData }) => {
                     dataKey="value"
                     nameKey="name"
                     innerRadius={60}
+                    stroke='#fff'
                     strokeWidth={5}
+                    animationBegin={0}
+                    animationDuration={500}
                     activeIndex={hoveredIndex}
                     onMouseEnter={handlePieEnter}
-                    activeShape={({
-                        outerRadius,
-                        ...props
-                    }) => (
+                    activeShape={({ outerRadius, ...props }) => (
                         <g>
-                            <Sector {...props} outerRadius={(outerRadius || 0) + 10} />
+                            <Sector {...props}
+                                outerRadius={(outerRadius || 0) + 10} />
                             {/* <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0) + 25}
@@ -59,7 +60,7 @@ const CircularPieChart = ({ chartData }) => {
                         <Cell
                             key={`cell-${index}`}
                             fill={entry.name === 'Income Tax' ? "#ff0000" :
-                                entry.name === 'National Insurance' ? '#FA961F': '#000'}
+                                entry.name === 'National Insurance' ? '#FA961F' : '#000'}
                         />
                     ))}
 
