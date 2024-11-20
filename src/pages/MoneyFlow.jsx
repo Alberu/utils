@@ -3,6 +3,7 @@ import { calcTakeHome } from "@/utils/taxCalc";
 import SalaryCard from "@/components/SalaryCard";
 import ExpensesCard from "@/components/ExpensesCard";
 import { ChevronRight } from "lucide-react";
+import CircularPieChart from "@/components/CircularPieChart";
 
 const MoneyFlow = () => {
     const [salary1, setSalary1] = useState(30000);
@@ -17,6 +18,8 @@ const MoneyFlow = () => {
     const salary1Calcs = calcTakeHome(salary1);
     const salary2Calcs = calcTakeHome(salary2);
 
+    console.log(salary1Calcs)
+
     return (
         <>
             <div className="container mx-auto px-4 py-8">
@@ -28,7 +31,12 @@ const MoneyFlow = () => {
                         salary={salary1}
                         setSalary={setSalary1}
                     />
-                    <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses}/>
+                    <CircularPieChart chartData={[
+                        { name: "Income Tax", value: salary1Calcs.incomeTax },
+                        { name: "National Insurance", value: salary1Calcs.ni },
+                        { name: "Take Home Pay", value: salary1Calcs.net },
+                    ]} />
+                    <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses} />
                     <SalaryCard
                         title="Salary 2"
                         calculations={salary2Calcs}

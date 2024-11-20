@@ -3,7 +3,7 @@ import { Wallet } from "lucide-react"
 import { Input } from "./ui/input"
 import { Separator } from "./ui/separator"
 import { Label } from "./ui/label"
-
+import CircularPieChart from "./CircularPieChart"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const handleExpenseChange = (expense, newValue) => {
@@ -26,33 +26,41 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-4">
-                        <div>
-                            <Label className="text-sm text-muted-foreground">Budget</Label>
-                            <p className="text-2xl font-bold">
-                                £{(salary / 12).toLocaleString()}
-                            </p>
-                        </div>
-                        <Separator />
-                        {Object.keys(expenses).map((expense) => {
-                            return (
-                                <div key={expense}>
-                                    <Label className="capitalize text-sm text-muted-foreground">{expense}</Label>
-                                    <div className="flex gap-2 items-center">
-                                        <Input
-                                            type='number'
-                                            value={expenses[expense]}
-                                            onChange={(e) => { handleExpenseChange(expense, e.target.value) }} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-4">
+                            <div>
+                                <Label className="text-sm text-muted-foreground">Budget</Label>
+                                <p className="text-2xl font-bold">
+                                    £{(salary / 12).toLocaleString()}
+                                </p>
+                            </div>
+                            <Separator />
+                            {Object.keys(expenses).map((expense) => {
+                                return (
+                                    <div key={expense}>
+                                        <Label className="capitalize text-sm text-muted-foreground">{expense}</Label>
+                                        <div className="flex gap-2 items-center">
+                                            <Input
+                                                type='number'
+                                                value={expenses[expense]}
+                                                onChange={(e) => { handleExpenseChange(expense, e.target.value) }} />
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
-                        <div>
-                            <Label className="text-sm text-muted-foreground">Monthly Savings</Label>
-                            <p className="text-2xl font-bold">
-                                £{leftOvers.toLocaleString()}
-                            </p>
+                                )
+                            })}
+                            <div>
+                                <Label className="text-sm text-muted-foreground">Monthly Savings</Label>
+                                <p className="text-2xl font-bold">
+                                    £{leftOvers.toLocaleString()}
+                                </p>
+                            </div>
                         </div>
+                        <CircularPieChart chartData={[
+                            { name: "Left overs", value: leftOvers },
+                            { name: "Rent", value: expenses.rent },
+                            { name: "Food", value: expenses.food },
+                            { name: "Other", value: expenses.other },
+                        ]} />
                     </div>
                 </CardContent>
             </Card>
