@@ -1,11 +1,12 @@
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card"
-import { Wallet, Activity } from "lucide-react"
+import { Wallet, Activity, Trash2 } from "lucide-react"
 import { Input } from "./ui/input"
 import { Separator } from "./ui/separator"
 import { Label } from "./ui/label"
 import CircularPieChart from "./CircularPieChart"
 import { Button } from "./ui/button"
 import { AddExpense } from "./AddExpense"
+import { ColourPicker } from "./ColourPicker"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const handleUpdateExpense = (expenseIndex, newValue) => {
@@ -75,7 +76,8 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                                 type='number'
                                                 value={expense?.value}
                                                 onChange={(e) => { handleUpdateExpense(expsenseIndex, Number(e.target.value)) }} />
-                                            <Button onClick={() => { handleDeleteExpense(expsenseIndex) }}>Delete</Button>
+                                            <ColourPicker />
+                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expsenseIndex) }}><Trash2 /></Button>
                                         </div>
                                     </div>
                                 )

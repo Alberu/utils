@@ -24,18 +24,13 @@ const MoneyFlow = () => {
         <>
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</h1>
-                <div>
+                <div className="space-y-4">
                     <SalaryCard
                         title="Salary 1"
                         calculations={salary1Calcs}
                         salary={salary1}
                         setSalary={setSalary1}
                     />
-                    <CircularPieChart chartData={[
-                        { name: "Income Tax", value: salary1Calcs.incomeTax, colour: '#f00' },
-                        { name: "National Insurance", value: salary1Calcs.ni, colour: '#FA961F' },
-                        { name: "Take Home Pay", value: salary1Calcs.net, colour: '#000' },
-                    ]} />
                     <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses} />
                     {/* <SalaryCard
                         title="Salary 2"
