@@ -1,20 +1,49 @@
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card"
-import { Wallet } from "lucide-react"
+import { Wallet, Activity } from "lucide-react"
 import { Input } from "./ui/input"
 import { Separator } from "./ui/separator"
 import { Label } from "./ui/label"
 import CircularPieChart from "./CircularPieChart"
+import { Button } from "./ui/button"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
-    const handleExpenseChange = (expense, newValue) => {
-        setExpenses(prevExpenses => ({
-            ...prevExpenses,
-            [expense]: Number(newValue)
-        }))
+    const handleUpdateExpense = (expenseIndex, newValue) => {
+        // setExpenses(prevExpenses => ({
+        //     ...prevExpenses,
+        //     [expense]: Number(newValue)
+        // }))
+        setExpenses(prevExpenses =>
+            prevExpenses.map((expense, i) =>
+                i === expenseIndex
+                    ? { ...expense, value: newValue }
+                    : expense
+            )
+        );
     }
 
-    const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
+    const handleAddExpense = () => {
+        // setExpenses(prevExpenses => ({ ...prevExpenses, ['new expense']: 100 }))
+        setExpenses(prevExpenses => ([...prevExpenses, { name: "hi", value: 200, colour: '#f00' }]))
+    }
+
+    const handleDeleteExpense = (expenseIndex) => {
+        // setExpenses(prevExpenses => {
+        //     const newExpenses = { ...prevExpenses };
+        //     delete newExpenses[expense];
+        //     return newExpenses;
+        // });
+        // setExpenses(prevExpenses => {
+        //     const newExpenses = [...prevExpenses];
+        //     newExpenses.filter((_, valIndex) => valIndex !== expenseIndex);
+        //     return newExpenses;
+        // });
+        setExpenses(prevExpenses => prevExpenses.filter((_, valIndex) => valIndex !== expenseIndex));
+    }
+
+    // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
+    const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0)
     const leftOvers = salary / 12 - totalExpenses
+
 
     return (
         <>
@@ -35,19 +64,22 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 </p>
                             </div>
                             <Separator />
-                            {Object.keys(expenses).map((expense) => {
+                            {expenses.map((expense, expsenseIndex) => {
+                                console.log(expense)
                                 return (
-                                    <div key={expense}>
-                                        <Label className="capitalize text-sm text-muted-foreground">{expense}</Label>
+                                    <div key={expsenseIndex}>
+                                        <Label className="capitalize text-sm text-muted-foreground">{expense?.name}</Label>
                                         <div className="flex gap-2 items-center">
                                             <Input
                                                 type='number'
-                                                value={expenses[expense]}
-                                                onChange={(e) => { handleExpenseChange(expense, e.target.value) }} />
+                                                value={expense?.value}
+                                                onChange={(e) => { handleUpdateExpense(expsenseIndex, Number(e.target.value)) }} />
+                                            <Button onClick={() => { handleDeleteExpense(expsenseIndex) }}>Delete</Button>
                                         </div>
                                     </div>
                                 )
                             })}
+                            <Button onClick={handleAddExpense}>Hi</Button>
                             <div>
                                 <Label className="text-sm text-muted-foreground">Monthly Savings</Label>
                                 <p className="text-2xl font-bold">
@@ -55,12 +87,12 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 </p>
                             </div>
                         </div>
-                        <CircularPieChart chartData={[
-                            { name: "Left overs", value: leftOvers, colour: '#000' },
-                            { name: "Rent", value: expenses.rent, colour: '#FA961F' },
-                            { name: "Food", value: expenses.food, colour: '#000' },
-                            { name: "Other", value: expenses.other, colour: '#f00' },
-                        ]} />
+                        {leftOvers >= 0 && (
+                            <CircularPieChart chartData={[...expenses, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
+                        )}
+                        {leftOvers < 0 && (
+                            <p><Activity/>Your bank is in critical condition. Mate, you ain't doing so good</p>
+                        )}
                     </div>
                 </CardContent>
             </Card>

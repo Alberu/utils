@@ -9,11 +9,11 @@ const MoneyFlow = () => {
     const [salary1, setSalary1] = useState(30000);
     const [salary2, setSalary2] = useState(70000);
 
-    const [expenses, setExpenses] = useState({
-        rent: 1000,
-        food: 300,
-        other: 200,
-    })
+    const [expenses, setExpenses] = useState([
+        { name: "Rent", value: 1000, colour: '#FA961F' },
+        { name: "Food", value: 300, colour: '#000' },
+        { name: "Other", value: 200, colour: '#f00' },
+    ])
 
     const salary1Calcs = calcTakeHome(salary1);
     const salary2Calcs = calcTakeHome(salary2);
@@ -24,7 +24,7 @@ const MoneyFlow = () => {
         <>
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
                     <SalaryCard
                         title="Salary 1"
                         calculations={salary1Calcs}
