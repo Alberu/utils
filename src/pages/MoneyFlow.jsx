@@ -37,12 +37,12 @@ const MoneyFlow = () => {
                         { name: "Take Home Pay", value: salary1Calcs.net, colour: '#000' },
                     ]} />
                     <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses} />
-                    <SalaryCard
+                    {/* <SalaryCard
                         title="Salary 2"
                         calculations={salary2Calcs}
                         salary={salary2}
                         setSalary={setSalary2}
-                    />
+                    /> */}
                 </div>
             </div>
 

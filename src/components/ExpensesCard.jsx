@@ -5,6 +5,7 @@ import { Separator } from "./ui/separator"
 import { Label } from "./ui/label"
 import CircularPieChart from "./CircularPieChart"
 import { Button } from "./ui/button"
+import { AddExpense } from "./AddExpense"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const handleUpdateExpense = (expenseIndex, newValue) => {
@@ -21,9 +22,9 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
         );
     }
 
-    const handleAddExpense = () => {
+    const handleAddExpense = (newExpense) => {
         // setExpenses(prevExpenses => ({ ...prevExpenses, ['new expense']: 100 }))
-        setExpenses(prevExpenses => ([...prevExpenses, { name: "hi", value: 200, colour: '#f00' }]))
+        setExpenses(prevExpenses => ([...prevExpenses, newExpense]))
     }
 
     const handleDeleteExpense = (expenseIndex) => {
@@ -79,9 +80,11 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                     </div>
                                 )
                             })}
-                            <Button onClick={handleAddExpense}>Hi</Button>
+
+                            <AddExpense handleAddExpense={handleAddExpense} />
+
                             <div>
-                                <Label className="text-sm text-muted-foreground">Monthly Savings</Label>
+                                <Label className="text-sm rounded-text-muted-foreground">Monthly Savings</Label>
                                 <p className="text-2xl font-bold">
                                     £{leftOvers.toLocaleString()}
                                 </p>
