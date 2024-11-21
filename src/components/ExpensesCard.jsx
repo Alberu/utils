@@ -9,15 +9,11 @@ import { AddExpense } from "./AddExpense"
 import { ColourPicker } from "./ColourPicker"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
-    const handleUpdateExpense = (expenseIndex, newValue) => {
-        // setExpenses(prevExpenses => ({
-        //     ...prevExpenses,
-        //     [expense]: Number(newValue)
-        // }))
+    const handleUpdateExpense = (expenseIndex, newValue, type) => {
         setExpenses(prevExpenses =>
             prevExpenses.map((expense, i) =>
                 i === expenseIndex
-                    ? { ...expense, value: newValue }
+                    ? { ...expense, [type]: newValue }
                     : expense
             )
         );
@@ -66,18 +62,19 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 </p>
                             </div>
                             <Separator />
-                            {expenses.map((expense, expsenseIndex) => {
+                            {expenses.map((expense, expenseIndex) => {
                                 console.log(expense)
                                 return (
-                                    <div key={expsenseIndex}>
-                                        <Label className="capitalize text-sm text-muted-foreground">{expense?.name}</Label>
+                                    <div key={expenseIndex}>
+                                        {/* <Label className="capitalize text-sm text-muted-foreground">{expense?.name}</Label> */}
                                         <div className="flex gap-2 items-center">
+                                            <Label className='min-w-20'>{expense?.name}</Label>
                                             <Input
                                                 type='number'
                                                 value={expense?.value}
-                                                onChange={(e) => { handleUpdateExpense(expsenseIndex, Number(e.target.value)) }} />
-                                            <ColourPicker />
-                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expsenseIndex) }}><Trash2 /></Button>
+                                                onChange={(e) => { handleUpdateExpense(expenseIndex, Number(e.target.value), 'value') }} />
+                                            <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateExpense} expenseIndex={expenseIndex} />
+                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expenseIndex) }}><Trash2 /></Button>
                                         </div>
                                     </div>
                                 )
@@ -96,7 +93,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                             <CircularPieChart chartData={[...expenses, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
                         )}
                         {leftOvers < 0 && (
-                            <p><Activity/>Your bank is in critical condition. Mate, you ain't doing so good</p>
+                            <p><Activity />Your bank is in critical condition. Mate, you ain't doing so good</p>
                         )}
                     </div>
                 </CardContent>

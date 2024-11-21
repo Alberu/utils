@@ -16,17 +16,17 @@ export function AddExpense({ handleAddExpense }) {
             <PopoverTrigger asChild>
                 <Button variant="outline">Add another expense</Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80">
+            <PopoverContent className="w-auto">
                 <div className="grid gap-4">
                     <div className="space-y-2">
-                        <h4 className="font-medium leading-none">Dimensions</h4>
+                        <h4 className="font-medium leading-none">New Expense</h4>
                         <p className="text-sm text-muted-foreground">
-                            Set the dimensions for the layer.
+                            Set the name for this new expense and its initial value.
                         </p>
                     </div>
                     <div className="grid gap-2">
                         <div className="grid grid-cols-3 items-center gap-4">
-                            <Label htmlFor="width">Name</Label>
+                            <Label>Name</Label>
                             <Input
                                 id="width"
                                 value={newExpense?.name}
@@ -38,14 +38,6 @@ export function AddExpense({ handleAddExpense }) {
                             <Input
                                 id="maxWidth"
                                 defaultValue="300px"
-                                className="col-span-2 h-8"
-                            />
-                        </div>
-                        <div className="grid grid-cols-3 items-center gap-4">
-                            <Label htmlFor="height">Colour</Label>
-                            <Input
-                                id="height"
-                                defaultValue="25px"
                                 className="col-span-2 h-8"
                             />
                         </div>
