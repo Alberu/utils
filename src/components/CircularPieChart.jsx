@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Cell, Label, LabelList, Pie, PieChart, Sector } from "recharts"
 import { ChartContainer, ChartStyle, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
+// still need to figure out how this works really
 const chartConfig = {
     takehometax: {
         label: "Take-Home Pay",
@@ -26,6 +27,21 @@ const CircularPieChart = ({ chartData }) => {
 
     const displayedData = chartData[hoveredIndex]
 
+    // const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
+
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                {`${(percent * 100).toFixed(0)}%`}
+            </text>
+        );
+    };
+
     return (
         <ChartContainer
             id="pie-chart"
@@ -43,26 +59,40 @@ const CircularPieChart = ({ chartData }) => {
                     animationBegin={0}
                     animationDuration={500}
                     activeIndex={hoveredIndex}
+                    label={renderCustomizedLabel}
+                    labelLine={false}
                     onMouseEnter={handlePieEnter}
                     activeShape={({ outerRadius, ...props }) => (
                         <g>
                             <Sector {...props}
                                 outerRadius={(outerRadius || 0) + 10} />
-                            {/* <Sector
+                            <Sector
                                 {...props}
-                                outerRadius={(outerRadius || 0) + 25}
-                                innerRadius={(outerRadius || 0) + 12}
-                            /> */}
+                                outerRadius={(outerRadius || 0) + 18}
+                                innerRadius={(outerRadius || 0) + 14}
+                            />
                         </g>
                     )}
                 >
-                    {chartData.map((entry, index) => (
-                        <Cell
-                            key={`cell-${index}`}
-                            fill={entry.name === 'Income Tax' ? "#ff0000" :
-                                entry.name === 'National Insurance' ? '#FA961F' : '#000'}
-                        />
-                    ))}
+                    {/* <LabelList
+                        dataKey="value"
+                        position="inside"
+                        stroke='none'
+                        style={{
+                            fill: 'white',
+                            fontSize: '12px',
+                            fontWeight: 'bold'
+                        }}
+                        formatter={(value) => `${value}%`}
+                    /> */}
+                    {chartData.map((entry, index) => {
+                        // const percentage = ((entry.value / totalValue) * 100).toFixed(1)
+                        return (
+                            <Cell key={`cell-${index}`} fill={entry.colour}>
+                            </Cell>
+                        )
+                    })}
+
 
                     <Label
                         content={({ viewBox }) => {
@@ -77,7 +107,7 @@ const CircularPieChart = ({ chartData }) => {
                                         <tspan
                                             x={viewBox.cx}
                                             y={viewBox.cy}
-                                            className="fill-foreground text-2xl font-bold"
+                                            className="fill-foreground text-2xl font-bold bg-white"
                                         >
                                             {displayedData?.value.toLocaleString()}
                                         </tspan>

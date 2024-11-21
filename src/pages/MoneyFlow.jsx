@@ -18,7 +18,7 @@ const MoneyFlow = () => {
     const salary1Calcs = calcTakeHome(salary1);
     const salary2Calcs = calcTakeHome(salary2);
 
-    console.log(salary1Calcs)
+    // console.log(salary1Calcs)
 
     return (
         <>
@@ -32,9 +32,9 @@ const MoneyFlow = () => {
                         setSalary={setSalary1}
                     />
                     <CircularPieChart chartData={[
-                        { name: "Income Tax", value: salary1Calcs.incomeTax },
-                        { name: "National Insurance", value: salary1Calcs.ni },
-                        { name: "Take Home Pay", value: salary1Calcs.net },
+                        { name: "Income Tax", value: salary1Calcs.incomeTax, colour: '#f00' },
+                        { name: "National Insurance", value: salary1Calcs.ni, colour: '#FA961F' },
+                        { name: "Take Home Pay", value: salary1Calcs.net, colour: '#000' },
                     ]} />
                     <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses} />
                     <SalaryCard

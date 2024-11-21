@@ -22,11 +22,11 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                 <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                         <Wallet className="h-5 w-5" />
-                        Monthly Expenses {salary / 12}
+                        Monthly Expenses
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-4">
                             <div>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
@@ -56,10 +56,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                             </div>
                         </div>
                         <CircularPieChart chartData={[
-                            { name: "Left overs", value: leftOvers },
-                            { name: "Rent", value: expenses.rent },
-                            { name: "Food", value: expenses.food },
-                            { name: "Other", value: expenses.other },
+                            { name: "Left overs", value: leftOvers, colour: '#000' },
+                            { name: "Rent", value: expenses.rent, colour: '#FA961F' },
+                            { name: "Food", value: expenses.food, colour: '#000' },
+                            { name: "Other", value: expenses.other, colour: '#f00' },
                         ]} />
                     </div>
                 </CardContent>
