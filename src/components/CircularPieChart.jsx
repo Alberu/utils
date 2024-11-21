@@ -67,14 +67,24 @@ const CircularPieChart = ({ chartData }) => {
                     label={renderCustomizedLabel}
                     labelLine={false}
                     onMouseEnter={handlePieEnter}
-                    activeShape={({ outerRadius, ...props }) => (
+                    activeShape={({ outerRadius, innerRadius, ...props }) => (
                         <g>
-                            <Sector {...props}
-                                outerRadius={(outerRadius || 0) + 10} />
-                            <Sector
+                            {/* <Sector {...props}
+                                outerRadius={(outerRadius || 0) + 10} /> */}
+                            {/* <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0) + 18}
                                 innerRadius={(outerRadius || 0) + 14}
+                            /> */}
+                            <Sector
+                                {...props}
+                                outerRadius={(outerRadius || 0) - 10}
+                                innerRadius={(innerRadius || 0)}
+                            />
+                            <Sector
+                                {...props}
+                                outerRadius={(outerRadius || 0)}
+                                innerRadius={(outerRadius || 0) - 8}
                             />
                         </g>
                     )}
@@ -102,6 +112,7 @@ const CircularPieChart = ({ chartData }) => {
                     <Label
                         content={({ viewBox }) => {
                             if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                displayedData?.colour
                                 return (
                                     <text
                                         x={viewBox.cx}
@@ -113,13 +124,15 @@ const CircularPieChart = ({ chartData }) => {
                                             x={viewBox.cx}
                                             y={viewBox.cy}
                                             className="fill-foreground text-2xl font-bold bg-white"
-                                        >
+                                            // style={{fill: displayedData?.colour}}
+                                            >
                                             {displayedData?.value.toLocaleString()}
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
                                             y={(viewBox.cy || 0) + 24}
                                             className="fill-muted-foreground"
+                                            style={{fill: displayedData?.colour}}
                                         >
                                             {displayedData?.name}
                                         </tspan>
