@@ -19,13 +19,14 @@ const chartConfig = {
 }
 
 const CircularPieChart = ({ chartData }) => {
+    const sortedChartData = chartData.sort((a, b) => b.value - a.value)
     const [hoveredIndex, setHoveredIndex] = useState(0)
 
     const handlePieEnter = (_, index) => {
         setHoveredIndex(index)
     }
 
-    const displayedData = chartData[hoveredIndex]
+    const displayedData = sortedChartData[hoveredIndex]
 
     // const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
 
@@ -55,7 +56,7 @@ const CircularPieChart = ({ chartData }) => {
         >
             <PieChart>
                 <Pie
-                    data={chartData}
+                    data={sortedChartData}
                     dataKey="value"
                     nameKey="name"
                     innerRadius={60}
@@ -100,7 +101,7 @@ const CircularPieChart = ({ chartData }) => {
                         }}
                         formatter={(value) => `${value}%`}
                     /> */}
-                    {chartData.map((entry, index) => {
+                    {sortedChartData.map((entry, index) => {
                         // const percentage = ((entry.value / totalValue) * 100).toFixed(1)
                         return (
                             <Cell key={`cell-${index}`} fill={entry.colour}>
