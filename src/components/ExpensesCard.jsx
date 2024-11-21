@@ -62,6 +62,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 </p>
                             </div>
                             <Separator />
+                            <AddExpense handleAddExpense={handleAddExpense} />
                             {expenses.map((expense, expenseIndex) => {
                                 console.log(expense)
                                 return (
@@ -80,7 +81,6 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 )
                             })}
 
-                            <AddExpense handleAddExpense={handleAddExpense} />
 
                             <div>
                                 <Label className="text-sm rounded-text-muted-foreground">Monthly Savings</Label>

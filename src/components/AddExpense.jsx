@@ -9,7 +9,11 @@ import {
 import { useState } from "react"
 
 export function AddExpense({ handleAddExpense }) {
-    const [newExpense, setNewExpense] = useState({ name: "Other", value: 200, colour: '#f00' })
+    const [newExpense, setNewExpense] = useState({ name: "Other", value: 200, colour: '#ABAA99' })
+
+    const handleNewExpenseChange = (newValue, target) => {
+        setNewExpense(oldExpense => ({ ...oldExpense, [target]: newValue }))
+    }
 
     return (
         <Popover>
@@ -28,16 +32,16 @@ export function AddExpense({ handleAddExpense }) {
                         <div className="grid grid-cols-3 items-center gap-4">
                             <Label>Name</Label>
                             <Input
-                                id="width"
                                 value={newExpense?.name}
+                                onChange={(e) => { handleNewExpenseChange(e.target.value, 'name') }}
                                 className="col-span-2 h-8"
                             />
                         </div>
                         <div className="grid grid-cols-3 items-center gap-4">
-                            <Label htmlFor="maxWidth">Value</Label>
+                            <Label>Value</Label>
                             <Input
-                                id="maxWidth"
-                                defaultValue="300px"
+                                value={newExpense?.value}
+                                onChange={(e) => { handleNewExpenseChange(Number(e.target.value), 'value') }}
                                 className="col-span-2 h-8"
                             />
                         </div>

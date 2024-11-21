@@ -11,7 +11,7 @@ const MoneyFlow = () => {
 
     const [expenses, setExpenses] = useState([
         { name: "Rent", value: 1000, colour: '#FA961F' },
-        { name: "Food", value: 300, colour: '#000' },
+        { name: "Food", value: 300, colour: '#ABAA99' },
         { name: "Other", value: 200, colour: '#f00' },
     ])
 

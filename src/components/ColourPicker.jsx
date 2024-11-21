@@ -4,7 +4,7 @@ import { Button } from "./ui/button"
 import { Pipette } from "lucide-react"
 
 const colours = [
-    '#f00', '#FA961F', '#000', '#2ECE2E',
+    '#f00', '#FA961F', '#2ECE2E', '#ABAA99',
 ]
 
 export function ColourPicker({ selectedColour, handleUpdateExpense, expenseIndex }) {
@@ -16,7 +16,7 @@ export function ColourPicker({ selectedColour, handleUpdateExpense, expenseIndex
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-2">
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                     {colours.map((colour) => (
                         <button
                             key={colour}

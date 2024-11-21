@@ -60,7 +60,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                 <CircularPieChart chartData={[
                     { name: "Income Tax", value: calculations.incomeTax, colour: '#f00' },
                     { name: "National Insurance", value: calculations.ni, colour: '#FA961F' },
-                    { name: "Take Home Pay", value: calculations.net, colour: '#000' },
+                    { name: "Take Home Pay", value: calculations.net, colour: '#ABAA99' },
                 ]} />
             </div>
         </CardContent>
