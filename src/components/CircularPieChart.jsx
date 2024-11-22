@@ -127,7 +127,7 @@ const CircularPieChart = ({ chartData }) => {
                                             className="fill-foreground text-2xl font-bold bg-white"
                                             // style={{fill: displayedData?.colour}}
                                             >
-                                            {displayedData?.value.toLocaleString()}
+                                            {displayedData?.value.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}

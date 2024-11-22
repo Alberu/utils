@@ -15,3 +15,6 @@ export const pages = [
     component: () => import('@/pages/TripCalc.jsx')
   },
 ];
+
+// locale can also be set to undefined to let the system pick
+export const formatCurrency = (num, decimalPlaces=2, locale='en-GB') => num.toLocaleString(locale, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })

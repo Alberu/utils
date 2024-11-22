@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import CircularPieChart from "./CircularPieChart";
+import { formatCurrency } from "@/utils";
 
 const SalaryCard = ({ title, calculations, salary, setSalary }) => (
     <Card>
@@ -26,7 +27,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                     <div>
                         <Label className="text-sm text-muted-foreground">Take Home Pay</Label>
                         <p className="text-2xl font-bold">
-                            £{calculations?.net.toLocaleString()}
+                            £{formatCurrency(calculations?.net)}
                         </p>
                     </div>
                     <Separator />
@@ -34,14 +35,14 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                         <div>
                             <Label className="text-sm text-muted-foreground">Income Tax</Label>
                             <p className="text-lg">
-                                £{calculations?.incomeTax.toLocaleString()}
+                                £{formatCurrency(calculations?.incomeTax)}
                             </p>
                         </div>
                         <div>
                             <Label className="text-sm text-muted-foreground">
                                 National Insurance
                             </Label>
-                            <p className="text-lg">£{calculations?.ni.toLocaleString()}</p>
+                            <p className="text-lg">£{formatCurrency(calculations?.ni)}</p>
                         </div>
                         <div>
                             <Label className="text-sm text-muted-foreground">

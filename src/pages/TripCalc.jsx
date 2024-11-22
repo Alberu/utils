@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/PageLayout";
 import { Fuel } from "lucide-react";
+import { formatCurrency } from "@/utils";
 
 const TripCalc = () => {
     const [fuelEconomy, setFuelEconomy] = useState(40);
@@ -110,7 +111,7 @@ const TripCalc = () => {
                                 Price of the trip
                             </Label>
                             <p className="text-2xl font-bold">
-                                {currency}{tripPrice.toLocaleString()}
+                                {currency}{formatCurrency(tripPrice)}
                             </p>
                         </div>
                     </CardContent>

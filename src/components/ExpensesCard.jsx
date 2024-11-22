@@ -8,6 +8,7 @@ import { Button } from "./ui/button"
 import { AddExpense } from "./AddExpense"
 import { ColourPicker } from "./ColourPicker"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { formatCurrency } from "@/utils"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const handleUpdateExpense = (expenseIndex, newValue, type) => {
@@ -59,7 +60,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                             <div>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
                                 <p className="text-2xl font-bold">
-                                    £{(salary / 12).toLocaleString()}
+                                    £{formatCurrency(salary / 12)}
                                 </p>
                             </div>
                             <Separator />
@@ -103,7 +104,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                             <div>
                                 <Label className="text-sm rounded-text-muted-foreground">Monthly Savings</Label>
                                 <p className="text-2xl font-bold">
-                                    £{leftOvers.toLocaleString()}
+                                    £{formatCurrency(leftOvers)}
                                 </p>
                             </div>
                         </div>
