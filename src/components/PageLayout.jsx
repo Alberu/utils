@@ -7,11 +7,11 @@ export default function PageLayout({ children }) {
     // const location = { pathname: '/more/somethign/andevenmore/hahah' };
 
     const pathSegments = location?.pathname.split('/').filter(segment => segment);
-    console.log(pathSegments)
+    // console.log(pathSegments)
 
     const Breadcrumbs = pathSegments.map((segment, index) => {
         const pathToSegment = `/${pathSegments.slice(0, index + 1).join('/')}`;
-        console.log(pathToSegment)
+        // console.log(pathToSegment)
 
         return (
             <span key={index} className="flex items-center">
@@ -24,14 +24,14 @@ export default function PageLayout({ children }) {
     return (
         <>
             <header></header>
-            <main>
-                <div className="container mx-auto px-4 py-8">
+            <main >
+                <div className="container mx-auto px-4 py-8 space-y-4">
                     <h1 className="text-2xl font-bold flex items-center">
                         <Link to={'/'}>Utils collection</Link>
                         {Breadcrumbs}
                     </h1>
                     {/* <span className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</span> */}
-                    <div className="space-y-4">
+                    <div className="flex justify-center space-y-4">
                         {children}
                     </div>
                 </div>

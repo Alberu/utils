@@ -23,9 +23,9 @@ const MoneyFlow = () => {
     return (
         <>
             <PageLayout>
-                <div className="container mx-auto px-4 py-8">
-                    <h1 className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</h1>
-                    <div className="space-y-4">
+                {/* <div className="container mx-auto px-4 py-8"> */}
+                    {/* <h1 className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</h1> */}
+                    <div className="space-y-4 w-max">
                         <SalaryCard
                             title="Salary"
                             calculations={salary1Calcs}
@@ -40,7 +40,7 @@ const MoneyFlow = () => {
                         setSalary={setSalary2}
                     /> */}
                     </div>
-                </div>
+                {/* </div> */}
             </PageLayout>
         </>
     );

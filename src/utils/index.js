@@ -8,9 +8,9 @@ export const pages = [
     // component: () => import('../pages/Page2.jsx') // can also be done like this
   },
   {
-    id: 'TripCalc',
+    id: 'Trip Price Calculator',
     title: 'Trip Calculator',
-    description: 'First page description',
+    description: 'To calculate price of fuel by car',
     thumbnail: '/api/placeholder/300/200',
     component: () => import('@/pages/TripCalc.jsx')
   },

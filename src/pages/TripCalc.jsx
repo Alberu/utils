@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import PageLayout from "@/components/PageLayout";
+import { Fuel } from "lucide-react";
 
 const TripCalc = () => {
     const [fuelEconomy, setFuelEconomy] = useState(40);
@@ -23,11 +25,11 @@ const TripCalc = () => {
 
     return (
         <>
-            <div className="container mx-auto px-4 py-8 max-w-lg">
-                <h1 className="text-2xl font-bold">Trip price calculator</h1>
-                <Card>
+            <PageLayout>
+                {/* <div className="container mx-auto px-4 py-8 max-w-lg"> */}
+                <Card className='container max-w-lg'>
                     <CardHeader>
-                        <CardTitle>Calculate the price of your trip</CardTitle>
+                        <CardTitle className='text-lg flex items-center gap-2'><Fuel className="h-5 w-5" />Calculate the price of your trip</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
@@ -113,7 +115,7 @@ const TripCalc = () => {
                         </div>
                     </CardContent>
                 </Card>
-            </div>
+            </PageLayout>
         </>
     );
 };
