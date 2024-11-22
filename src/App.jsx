@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+// need to do this for it to work with github pages?
+import { HashRouter as BrowserRouter, Routes, Route } from "react-router-dom";
 import { pages } from "./utils";
 import HomePage from "./pages/HomePage";
 
