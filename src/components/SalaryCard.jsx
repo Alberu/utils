@@ -9,7 +9,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
     <Card>
         <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-                <PoundSterling className="h-5 w-5" />
+                <TrendingUp className="h-5 w-5" />
                 {title}
             </CardTitle>
         </CardHeader>
