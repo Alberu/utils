@@ -96,6 +96,6 @@ npm run deploy
 
 ## Credits
 
-This project was based on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
+This project was inspired by the projects built on the [React.JS Full Course by James McArthur](https://smoljames.com/roadmap)
 
 
