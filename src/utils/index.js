@@ -1,6 +1,6 @@
 export const pages = [
   {
-    id: 'money',
+    id: 'Money Flow',
     title: '🤑 Money',
     description: 'To help with taxes and how to spend your money',
     thumbnail: '/api/placeholder/300/200',
