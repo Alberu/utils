@@ -7,15 +7,15 @@ The **Utils React App** is a dynamic and user-friendly web application offering 
 ## ✨ Features
 
 - 🔍 **Utility Tools:**
-  - **Spending Visualizer:**
-    - Input your gross salary and monthly expenses to visualize your spending habits.
+  - **Spending Visualiser:**
+    - Input your gross salary and monthly expenses to visualise your spending habits.
     - Receive clear, graphical representations of your financial allocations.
   - **Fuel Cost Calculator:**
     - Calculate the cost of fuel based on distance, fuel efficiency, and fuel price.
     - Get insights into potential savings or expenses for your trips.
 
 - 🎨 **Responsive Design:**
-  - Optimized for desktop, tablet, and mobile devices.
+  - Optimised for desktop, tablet, and mobile devices.
 
 ## 🛠️ Built With
 
