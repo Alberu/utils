@@ -33,12 +33,25 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                     </div>
                     <Separator /> */}
                     <div>
-                        <Button className='my-0 py-0 flex justify-between w-full' variant='ghost'>
-                            <Label className="text-sm text-muted-foreground">Gross Salary</Label>
-                            <p className="text-2xl font-bold">
-                                £{formatCurrency(salary)}
-                            </p>
-                        </Button>
+                        <div className="group relative">
+                            <Button className='my-0 py-0 flex justify-between w-full group-hover:opacity-0 transition-opacity duration-100' variant='ghost'>
+                                <Label className="text-sm text-muted-foreground">Gross Salary</Label>
+                                <p className="text-2xl font-bold">
+                                    £{formatCurrency(salary)}
+                                </p>
+                            </Button>
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center">
+                                <Label className="text-sm text-muted-foreground">Gross Salary</Label>
+                                <Input
+                                    type="number"
+                                    value={salary}
+                                    onChange={(e) => setSalary(Number(e.target.value))}
+                                    className="text-right w-full h-full px-4 py-2"
+                                    step="0.01"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
 
                         <Separator />
 
