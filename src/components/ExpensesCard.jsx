@@ -44,6 +44,9 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0)
     const leftOvers = salary / 12 - totalExpenses
 
+    const buttonHover = () => (<p>more</p>)
+    const regular = () => (<p>hi</p>)
+
 
     return (
         <>
@@ -56,6 +59,40 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                 </CardHeader>
                 <CardContent>
                     <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="flex flex-col justify-center">
+                            <AddExpense handleAddExpense={handleAddExpense} />
+                            <Button className='flex justify-between w-full' variant='ghost'>
+                                <Label className="text-sm text-muted-foreground">Budget</Label>
+                                <p className="text-2xl font-bold">
+                                    £{formatCurrency(salary / 12)}
+                                </p>
+                            </Button>
+
+                            <Separator />
+
+                            {expenses.map((expense, expenseIndex) => {
+                                return (
+                                    <Button key={expenseIndex} className='flex justify-between w-full' variant='ghost'>
+                                        <div className="flex items-center gap-2">
+                                            <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                            <span className="w-4 h-4 rounded-sm" style={{backgroundColor: expense?.colour}}></span>
+                                        </div>
+                                        <p className="text-2xl font-light">
+                                            {formatCurrency(expense?.value)}
+                                        </p>
+                                    </Button>
+                                )
+                            })}
+
+                            <Separator />
+
+                            <Button className='flex justify-between w-full' variant='ghost'>
+                                <Label className="text-sm text-muted-foreground">Savings</Label>
+                                <p className="text-2xl font-bold">
+                                    £{formatCurrency(leftOvers)}
+                                </p>
+                            </Button>
+                        </div>
                         <div className="space-y-4">
                             <div>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
@@ -81,9 +118,9 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                                         <p className="text-sm text-muted-foreground">
                                                             Change the name of this expense.
                                                         </p>
-                                                    <Input
-                                                        value={expense?.name}
-                                                        onChange={(e) => { handleUpdateExpense(expenseIndex, (e.target.value), 'name') }} />
+                                                        <Input
+                                                            value={expense?.name}
+                                                            onChange={(e) => { handleUpdateExpense(expenseIndex, (e.target.value), 'name') }} />
                                                     </div>
                                                 </PopoverContent>
                                             </Popover>

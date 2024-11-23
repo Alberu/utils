@@ -20,7 +20,7 @@ export function AddExpense({ handleAddExpense }) {
             <PopoverTrigger asChild>
                 <Button variant="outline">Add another expense</Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto">
+            <PopoverContent side='top' className="w-auto">
                 <div className="grid gap-4">
                     <div className="space-y-2">
                         <h4 className="font-medium leading-none">New Expense</h4>
