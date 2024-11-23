@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import CircularPieChart from "./CircularPieChart";
 import { formatCurrency } from "@/utils";
+import { Button } from "./ui/button";
 
 const SalaryCard = ({ title, calculations, salary, setSalary }) => (
     <Card>
@@ -17,7 +18,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
         <CardContent>
             <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                    <Input
+                    {/* <Input
                         id={title}
                         type="number"
                         value={salary}
@@ -30,9 +31,51 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                             £{formatCurrency(calculations?.net)}
                         </p>
                     </div>
-                    <Separator />
-                    <div className="space-y-2">
-                        <div>
+                    <Separator /> */}
+                    <div>
+                        <Button className='my-0 py-0 flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">Gross Salary</Label>
+                            <p className="text-2xl font-bold">
+                                £{formatCurrency(salary)}
+                            </p>
+                        </Button>
+
+                        <Separator />
+
+                        <Button className='my-0 py-0 flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">Income Tax</Label>
+                            <p className="text-2xl font-extralight">
+                                {formatCurrency(calculations?.incomeTax)}
+                            </p>
+                        </Button>
+                        <Button className='flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">National Insurance</Label>
+                            <p className="text-2xl font-extralight">
+                                {formatCurrency(calculations?.ni)}
+                            </p>
+                        </Button>
+                        <Button className='flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">Pension</Label>
+                            <p className="text-2xl font-extralight">
+                                {formatCurrency(0)}
+                            </p>
+                        </Button>
+                        <Button className='flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">Student Finance</Label>
+                            <p className="text-2xl font-extralight">
+                                {formatCurrency(0)}
+                            </p>
+                        </Button>
+
+                        <Separator />
+
+                        <Button className='flex justify-between w-full' variant='ghost'>
+                            <Label className="text-sm text-muted-foreground">Take Home Pay</Label>
+                            <p className="text-2xl font-bold">
+                                £{formatCurrency(calculations?.net)}
+                            </p>
+                        </Button>
+                        {/* <div>
                             <Label className="text-sm text-muted-foreground">Income Tax</Label>
                             <p className="text-lg">
                                 £{formatCurrency(calculations?.incomeTax)}
@@ -43,8 +86,8 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                                 National Insurance
                             </Label>
                             <p className="text-lg">£{formatCurrency(calculations?.ni)}</p>
-                        </div>
-                        <div>
+                        </div> */}
+                        {/* <div>
                             <Label className="text-sm text-muted-foreground">
                                 Effective Tax Rate
                             </Label>
@@ -55,7 +98,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                                 ).toFixed(1)}
                                 %
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <CircularPieChart chartData={[
