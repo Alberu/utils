@@ -58,9 +58,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="items-start grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="flex flex-col justify-center">
-                            <AddExpense handleAddExpense={handleAddExpense} />
+                            <Button variant="outline" onClick={() => { handleAddExpense({ name: "Other", value: 200, colour: '#ABAA99' }) }}>Add another expense</Button>
+                            {/* <AddExpense handleAddExpense={handleAddExpense} /> */}
                             <Button className='flex justify-between w-full' variant='ghost'>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
                                 <p className="text-2xl font-bold">
@@ -72,15 +73,41 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
                             {expenses.map((expense, expenseIndex) => {
                                 return (
-                                    <Button key={expenseIndex} className='flex justify-between w-full' variant='ghost'>
-                                        <div className="flex items-center gap-2">
-                                            <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
-                                            <span className="w-4 h-4 rounded-sm" style={{backgroundColor: expense?.colour}}></span>
+                                    <div key={expenseIndex} className="group relative">
+                                        <Button className='flex justify-between w-full group-hover:opacity-0 transition-opacity duration-100' variant='ghost'>
+                                            <div className="flex items-center gap-2">
+                                                <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                                <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
+                                            </div>
+                                            <p className="text-2xl font-light">
+                                                {formatCurrency(expense?.value)}
+                                            </p>
+                                        </Button>
+                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center">
+                                            <Input
+                                                // type="number"
+                                                value={expense?.name}
+                                                onChange={(e) => { handleUpdateExpense(expenseIndex, (e.target.value), 'name') }}
+                                                // value={inputValues[expense.id]}
+                                                // onChange={(e) => handleInputChange(expense.id, e.target.value)}
+                                                className="w-full h-full px-4 py-2"
+                                                step="0.01"
+                                                min="0"
+                                            />
+                                            <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateExpense} expenseIndex={expenseIndex} />
+                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expenseIndex) }}><Trash2 /></Button>
+                                            <Input
+                                                type="number"
+                                                value={expense?.value}
+                                                onChange={(e) => { handleUpdateExpense(expenseIndex, Number(e.target.value), 'value') }}
+                                                // value={inputValues[expense.id]}
+                                                // onChange={(e) => handleInputChange(expense.id, e.target.value)}
+                                                className="w-full h-full px-4 py-2 text-right"
+                                                step="0.01"
+                                                min="0"
+                                            />
                                         </div>
-                                        <p className="text-2xl font-light">
-                                            {formatCurrency(expense?.value)}
-                                        </p>
-                                    </Button>
+                                    </div>
                                 )
                             })}
 
@@ -93,58 +120,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                 </p>
                             </Button>
                         </div>
-                        <div className="space-y-4">
-                            <div>
-                                <Label className="text-sm text-muted-foreground">Budget</Label>
-                                <p className="text-2xl font-bold">
-                                    £{formatCurrency(salary / 12)}
-                                </p>
-                            </div>
-                            <Separator />
-                            <AddExpense handleAddExpense={handleAddExpense} />
-                            {expenses.map((expense, expenseIndex) => {
-                                console.log(expense)
-                                return (
-                                    <div key={expenseIndex}>
-                                        {/* <Label className="capitalize text-sm text-muted-foreground">{expense?.name}</Label> */}
-                                        <div className="flex gap-2 items-center">
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <Button variant='ghost' style={{ color: expense?.colour }}>{expense?.name}</Button>
-                                                    {/* <Label className='min-w-20'>{expense?.name}</Label> */}
-                                                </PopoverTrigger>
-                                                <PopoverContent side="right" align="center" className='w-auto'>
-                                                    <div className="space-y-2">
-                                                        <p className="text-sm text-muted-foreground">
-                                                            Change the name of this expense.
-                                                        </p>
-                                                        <Input
-                                                            value={expense?.name}
-                                                            onChange={(e) => { handleUpdateExpense(expenseIndex, (e.target.value), 'name') }} />
-                                                    </div>
-                                                </PopoverContent>
-                                            </Popover>
-
-                                            <Input
-                                                // className='border-none shadow-none' // something to keep in mind? which one looks better
-                                                type='number'
-                                                value={expense?.value}
-                                                onChange={(e) => { handleUpdateExpense(expenseIndex, Number(e.target.value), 'value') }} />
-                                            <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateExpense} expenseIndex={expenseIndex} />
-                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expenseIndex) }}><Trash2 /></Button>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-
-
-                            <div>
-                                <Label className="text-sm rounded-text-muted-foreground">Monthly Savings</Label>
-                                <p className="text-2xl font-bold">
-                                    £{formatCurrency(leftOvers)}
-                                </p>
-                            </div>
-                        </div>
+                        
                         {leftOvers >= 0 && (
                             <CircularPieChart chartData={[...expenses, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
                         )}

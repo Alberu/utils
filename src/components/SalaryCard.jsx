@@ -16,7 +16,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
             </CardTitle>
         </CardHeader>
         <CardContent>
-            <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="items-start grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     {/* <Input
                         id={title}
