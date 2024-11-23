@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import CircularPieChart from "./CircularPieChart";
 import { formatCurrency } from "@/utils";
 import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const SalaryCard = ({ title, calculations, salary, setSalary }) => (
     <Card>
@@ -18,29 +19,17 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
         <CardContent>
             <div className="items-start grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                    {/* <Input
-                        id={title}
-                        type="number"
-                        value={salary}
-                        onChange={(e) => setSalary(Number(e.target.value))}
-                        className="w-full"
-                    />
                     <div>
-                        <Label className="text-sm text-muted-foreground">Take Home Pay</Label>
-                        <p className="text-2xl font-bold">
-                            £{formatCurrency(calculations?.net)}
-                        </p>
-                    </div>
-                    <Separator /> */}
-                    <div>
-                        <div className="group relative">
-                            <Button className='my-0 py-0 flex justify-between w-full group-hover:opacity-0 transition-opacity duration-100' variant='ghost'>
-                                <Label className="text-sm text-muted-foreground">Gross Salary</Label>
-                                <p className="text-2xl font-bold">
-                                    £{formatCurrency(salary)}
-                                </p>
-                            </Button>
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center">
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button className='my-0 py-0 flex justify-between w-full group-hover:opacity-0 transition-opacity duration-100' variant='ghost'>
+                                    <Label className="text-sm text-muted-foreground">Gross Salary</Label>
+                                    <p className="text-xl font-bold">
+                                        £{formatCurrency(salary)}
+                                    </p>
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className='flex'>
                                 <Label className="text-sm text-muted-foreground">Gross Salary</Label>
                                 <Input
                                     type="number"
@@ -50,6 +39,10 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                                     step="0.01"
                                     min="0"
                                 />
+                            </PopoverContent>
+                        </Popover>
+                        <div className="group relative">
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center">
                             </div>
                         </div>
 
@@ -57,25 +50,25 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
 
                         <Button className='my-0 py-0 flex justify-between w-full' variant='ghost'>
                             <Label className="text-sm text-muted-foreground">Income Tax</Label>
-                            <p className="text-2xl font-extralight">
+                            <p className="text-xl font-extralight">
                                 {formatCurrency(calculations?.incomeTax)}
                             </p>
                         </Button>
                         <Button className='flex justify-between w-full' variant='ghost'>
                             <Label className="text-sm text-muted-foreground">National Insurance</Label>
-                            <p className="text-2xl font-extralight">
+                            <p className="text-xl font-extralight">
                                 {formatCurrency(calculations?.ni)}
                             </p>
                         </Button>
                         <Button className='flex justify-between w-full' variant='ghost'>
                             <Label className="text-sm text-muted-foreground">Pension</Label>
-                            <p className="text-2xl font-extralight">
+                            <p className="text-xl font-extralight">
                                 {formatCurrency(0)}
                             </p>
                         </Button>
                         <Button className='flex justify-between w-full' variant='ghost'>
                             <Label className="text-sm text-muted-foreground">Student Finance</Label>
-                            <p className="text-2xl font-extralight">
+                            <p className="text-xl font-extralight">
                                 {formatCurrency(0)}
                             </p>
                         </Button>
@@ -84,34 +77,18 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
 
                         <Button className='flex justify-between w-full' variant='ghost'>
                             <Label className="text-sm text-muted-foreground">Take Home Pay</Label>
-                            <p className="text-2xl font-bold">
+                            <p className="text-xl font-bold">
                                 £{formatCurrency(calculations?.net)}
                             </p>
                         </Button>
-                        {/* <div>
-                            <Label className="text-sm text-muted-foreground">Income Tax</Label>
-                            <p className="text-lg">
-                                £{formatCurrency(calculations?.incomeTax)}
-                            </p>
-                        </div>
-                        <div>
-                            <Label className="text-sm text-muted-foreground">
-                                National Insurance
-                            </Label>
-                            <p className="text-lg">£{formatCurrency(calculations?.ni)}</p>
-                        </div> */}
-                        {/* <div>
-                            <Label className="text-sm text-muted-foreground">
-                                Effective Tax Rate
-                            </Label>
-                            <p className="text-lg">
-                                {(
-                                    ((calculations?.incomeTax + calculations?.ni) / salary) *
-                                    100
-                                ).toFixed(1)}
-                                %
-                            </p>
-                        </div> */}
+                    </div>
+                    <div>
+                        <Label className="text-sm text-muted-foreground">
+                            Effective Tax Rate
+                        </Label>
+                        <p className="text-lg">
+                            {(((calculations?.incomeTax + calculations?.ni) / salary) * 100).toFixed(1)} %
+                        </p>
                     </div>
                 </div>
                 <CircularPieChart chartData={[

@@ -64,7 +64,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                             {/* <AddExpense handleAddExpense={handleAddExpense} /> */}
                             <Button className='flex justify-between w-full' variant='ghost'>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
-                                <p className="text-2xl font-bold">
+                                <p className="text-xl font-bold">
                                     £{formatCurrency(salary / 12)}
                                 </p>
                             </Button>
@@ -73,17 +73,20 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
                             {expenses.map((expense, expenseIndex) => {
                                 return (
-                                    <div key={expenseIndex} className="group relative">
-                                        <Button className='flex justify-between w-full group-hover:opacity-0 transition-opacity duration-100' variant='ghost'>
-                                            <div className="flex items-center gap-2">
-                                                <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
-                                                <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
-                                            </div>
-                                            <p className="text-2xl font-light">
-                                                {formatCurrency(expense?.value)}
-                                            </p>
-                                        </Button>
-                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center">
+                                    <Popover key={expenseIndex}>
+                                        <PopoverTrigger asChild>
+
+                                            <Button className='flex justify-between w-full' variant='ghost'>
+                                                <div className="flex items-center gap-2">
+                                                    <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                                    <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
+                                                </div>
+                                                <p className="text-xl font-light">
+                                                    {formatCurrency(expense?.value)}
+                                                </p>
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className='flex'>
                                             <Input
                                                 // type="number"
                                                 value={expense?.name}
@@ -106,8 +109,8 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                                 step="0.01"
                                                 min="0"
                                             />
-                                        </div>
-                                    </div>
+                                        </PopoverContent>
+                                    </Popover>
                                 )
                             })}
 
@@ -115,12 +118,12 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
                             <Button className='flex justify-between w-full' variant='ghost'>
                                 <Label className="text-sm text-muted-foreground">Savings</Label>
-                                <p className="text-2xl font-bold">
+                                <p className="text-xl font-bold">
                                     £{formatCurrency(leftOvers)}
                                 </p>
                             </Button>
                         </div>
-                        
+
                         {leftOvers >= 0 && (
                             <CircularPieChart chartData={[...expenses, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
                         )}
