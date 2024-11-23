@@ -63,7 +63,8 @@ const CircularPieChart = ({ chartData }) => {
                             <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0)}
-                                innerRadius={(outerRadius || 0) - 10}
+                                innerRadius={(outerRadius || 0) - 5}
+                                fill='#000'
                             />
                         </g>
                     )}
