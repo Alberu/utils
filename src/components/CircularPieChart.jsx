@@ -28,21 +28,6 @@ const CircularPieChart = ({ chartData }) => {
 
     const displayedData = sortedChartData[hoveredIndex]
 
-    // const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
-
-    // const RADIAN = Math.PI / 180;
-    // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    //     const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
-    //     const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    //     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    //     return (
-    //         <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-    //             {`${(percent * 100).toFixed(0)}%`}
-    //         </text>
-    //     );
-    // };
-
     const renderCustomizedLabel = ({ percent }) => {
         if (!percent) return null;
         return `${(percent * 100).toFixed(0)}%`;
@@ -60,8 +45,8 @@ const CircularPieChart = ({ chartData }) => {
                     dataKey="value"
                     nameKey="name"
                     innerRadius={60}
-                    stroke='#fff'
-                    strokeWidth={5}
+                    stroke='#000'
+                    strokeWidth={2}
                     animationBegin={0}
                     animationDuration={500}
                     activeIndex={hoveredIndex}
@@ -70,13 +55,6 @@ const CircularPieChart = ({ chartData }) => {
                     onMouseEnter={handlePieEnter}
                     activeShape={({ outerRadius, innerRadius, ...props }) => (
                         <g>
-                            {/* <Sector {...props}
-                                outerRadius={(outerRadius || 0) + 10} /> */}
-                            {/* <Sector
-                                {...props}
-                                outerRadius={(outerRadius || 0) + 18}
-                                innerRadius={(outerRadius || 0) + 14}
-                            /> */}
                             <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0) - 10}
@@ -85,22 +63,11 @@ const CircularPieChart = ({ chartData }) => {
                             <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0)}
-                                innerRadius={(outerRadius || 0) - 8}
+                                innerRadius={(outerRadius || 0) - 10}
                             />
                         </g>
                     )}
                 >
-                    {/* <LabelList
-                        dataKey="value"
-                        position="inside"
-                        stroke='none'
-                        style={{
-                            fill: 'white',
-                            fontSize: '12px',
-                            fontWeight: 'bold'
-                        }}
-                        formatter={(value) => `${value}%`}
-                    /> */}
                     {sortedChartData.map((entry, index) => {
                         // const percentage = ((entry.value / totalValue) * 100).toFixed(1)
                         return (
@@ -113,7 +80,6 @@ const CircularPieChart = ({ chartData }) => {
                     <Label
                         content={({ viewBox }) => {
                             if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                displayedData?.colour
                                 return (
                                     <text
                                         x={viewBox.cx}
