@@ -36,7 +36,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
                                     value={salary}
                                     onChange={(e) => setSalary(Number(e.target.value))}
                                     className="text-right w-full h-full px-4 py-2"
-                                    step="0.01"
+                                    step="1000"
                                     min="0"
                                 />
                             </PopoverContent>

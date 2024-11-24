@@ -31,7 +31,7 @@ const CircularPieChart = ({ chartData }) => {
     const renderCustomizedLabel = ({ percent }) => {
         if (!percent) return null;
         return `${(percent * 100).toFixed(0)}%`;
-      };
+    };
 
     return (
         <ChartContainer
@@ -46,16 +46,17 @@ const CircularPieChart = ({ chartData }) => {
                     nameKey="name"
                     innerRadius={60}
                     stroke='#000'
-                    strokeWidth={2}
+                    strokeWidth={0.5}
                     animationBegin={0}
                     animationDuration={500}
                     activeIndex={hoveredIndex}
                     label={renderCustomizedLabel}
                     labelLine={false}
                     onMouseEnter={handlePieEnter}
+                    opacity={0.6}
                     activeShape={({ outerRadius, innerRadius, ...props }) => (
                         <g>
-                            <Sector
+                            {/* <Sector
                                 {...props}
                                 outerRadius={(outerRadius || 0) - 10}
                                 innerRadius={(innerRadius || 0)}
@@ -65,6 +66,18 @@ const CircularPieChart = ({ chartData }) => {
                                 outerRadius={(outerRadius || 0)}
                                 innerRadius={(outerRadius || 0) - 5}
                                 fill='#000'
+                            /> */}
+                            <Sector
+                                {...props}
+                                outerRadius={(outerRadius || 0)}
+                                innerRadius={(innerRadius || 0)}
+                                opacity={0.6}
+                            />
+                            <Sector
+                                {...props}
+                                outerRadius={(outerRadius || 0) - 10}
+                                innerRadius={(innerRadius || 0)}
+                                opacity={1}
                             />
                         </g>
                     )}
@@ -92,15 +105,15 @@ const CircularPieChart = ({ chartData }) => {
                                             x={viewBox.cx}
                                             y={viewBox.cy}
                                             className="fill-foreground text-2xl font-bold bg-white"
-                                            // style={{fill: displayedData?.colour}}
-                                            >
+                                        // style={{fill: displayedData?.colour}}
+                                        >
                                             {displayedData?.value.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                         </tspan>
                                         <tspan
                                             x={viewBox.cx}
                                             y={(viewBox.cy || 0) + 24}
                                             className="fill-muted-foreground"
-                                            style={{fill: displayedData?.colour}}
+                                            style={{ fill: displayedData?.colour }}
                                         >
                                             {displayedData?.name}
                                         </tspan>

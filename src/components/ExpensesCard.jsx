@@ -44,10 +44,6 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0)
     const leftOvers = salary / 12 - totalExpenses
 
-    const buttonHover = () => (<p>more</p>)
-    const regular = () => (<p>hi</p>)
-
-
     return (
         <>
             <Card>
@@ -94,8 +90,6 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                                 // value={inputValues[expense.id]}
                                                 // onChange={(e) => handleInputChange(expense.id, e.target.value)}
                                                 className="w-full h-full px-4 py-2"
-                                                step="0.01"
-                                                min="0"
                                             />
                                             <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateExpense} expenseIndex={expenseIndex} />
                                             <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expenseIndex) }}><Trash2 /></Button>
@@ -106,7 +100,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                                 // value={inputValues[expense.id]}
                                                 // onChange={(e) => handleInputChange(expense.id, e.target.value)}
                                                 className="w-full h-full px-4 py-2 text-right"
-                                                step="0.01"
+                                                step="25"
                                                 min="0"
                                             />
                                         </PopoverContent>
