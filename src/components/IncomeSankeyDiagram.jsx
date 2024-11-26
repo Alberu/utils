@@ -4,18 +4,48 @@ import { tmp } from "@/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 const IncomeSankeyDiagram = () => {
+  // const data = {
+  //   nodes: [
+  //     { id: "A", color: "#f00" },
+  //     { id: "B", color: "#ABAA99" },
+  //     { id: "C", color: "#2ECE2E" },
+  //     { id: "D", color: "#FA961" },
+  //   ],
+  //   links: [
+  //     { source: "A", target: "B", value: 10 },
+  //     { source: "A", target: "C", value: 15 },
+  //     { source: "B", target: "D", value: 5 },
+  //     { source: "C", target: "D", value: 20 }
+  //   ]
+  // };
+
   const data = {
     nodes: [
-      { id: "A", color: "#f00" },
-      { id: "B", color: "#ABAA99" },
-      { id: "C", color: "#2ECE2E" },
-      { id: "D", color: "#FA961" },
+      { id: "Bonus", color: "#f00" },
+      { id: "Salary", color: "#f00" },
+      { id: "Income", color: "#f00" },
+      { id: "Pre-tax", color: "#ABAA99" },
+      { id: "Tax", color: "#2ECE2E" },
+      { id: "Savings", color: "#FA961" },
+      { id: "ISA", color: "#FA961" },
+      { id: "Hi", color: "#FA961" },
+      { id: "Expenses", color: "#FA961" },
+      { id: "Rent", color: "#FA961" },
+      { id: "Food", color: "#FA961" },
+      { id: "Other", color: "#FA961" },
     ],
     links: [
-      { source: "A", target: "B", value: 10 },
-      { source: "A", target: "C", value: 15 },
-      { source: "B", target: "D", value: 5 },
-      { source: "C", target: "D", value: 20 }
+      { source: "Bonus", target: "Income", value: 0.1 },
+      { source: "Salary", target: "Income", value: 0.9 },
+      { source: "Income", target: "Pre-tax", value: 0.1 },
+      { source: "Income", target: "Tax", value: 0.3 },
+      { source: "Income", target: "Savings", value: 0.3 },
+      { source: "Income", target: "Expenses", value: 0.3 },
+      { source: "Expenses", target: "Rent", value: 0.09 },
+      { source: "Expenses", target: "Food", value: 0.09 },
+      { source: "Expenses", target: "Other", value: 0.09 },
+      { source: "Savings", target: "ISA", value: 0.09 },
+      { source: "Savings", target: "Hi", value: 0.09 },
     ]
   };
   // const colorScheme = ["#1f77b4", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
@@ -34,7 +64,7 @@ const IncomeSankeyDiagram = () => {
             // margin={{ top: 40, right: 160, bottom: 40, left: 50 }}
             align="justify"
             // colors={getColor}
-            
+
             // colors={{ scheme: "category10" }}
             // colors={{ scheme: "paired" }}
             // colors={{ datum: "node.color" }}
@@ -42,10 +72,11 @@ const IncomeSankeyDiagram = () => {
               console.log(node)
               return (node.color)}
             }
+            sort={'descending'}
             nodeOpacity={1}
             nodeHoverOthersOpacity={0.35}
             nodeThickness={30}
-            nodeSpacing={10}
+            nodeSpacing={2}
             nodeBorderWidth={0}
             nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
             nodeBorderRadius={2}
