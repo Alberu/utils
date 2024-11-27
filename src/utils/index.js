@@ -39,10 +39,10 @@ export const finances = [
     name: 'budget', colour: 'green', value: 30000, children: [
       { category: 'expense', name: "Rent", value: 1000, colour: '#FA961F' },
       { category: 'expense', name: "Food", value: 300, colour: '#ABAA99' },
-      { category: 'expense', name: "Other", value: 200, colour: '#f00' },
+      { category: 'expense', name: "Other", value: 25, colour: '#f00' },
       { category: 'saving', name: "Other", value: 200, colour: '#f00' },
       { category: 'investment', name: "Other", value: 200, colour: '#f00' },
-      { category: 'essential', name: "Other", value: 200, colour: '#f00' },
+      { category: 'essential', name: "Other", value: 25, colour: '#f00' },
     ]
   },
 ]

@@ -11,37 +11,73 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { formatCurrency } from "@/utils"
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
-    const handleUpdateExpense = (expenseIndex, newValue, type) => {
-        setExpenses(prevExpenses =>
-            prevExpenses.map((expense, i) =>
-                i === expenseIndex
-                    ? { ...expense, [type]: newValue }
-                    : expense
+    // const handleUpdateExpense = (expenseIndex, newValue, type) => {
+    //     setExpenses(prevExpenses =>
+    //         prevExpenses.map((expense, i) =>
+    //             i === expenseIndex
+    //                 ? { ...expense, [type]: newValue }
+    //                 : expense
+    //         )
+    //     );
+    // }
+
+    // const handleAddExpense = (newExpense) => {
+    //     setExpenses(prevExpenses => ([...prevExpenses, newExpense]))
+    // }
+
+    // const handleDeleteExpense = (expenseIndex) => {
+    //     setExpenses(prevExpenses => prevExpenses.filter((_, valIndex) => valIndex !== expenseIndex));
+    // }
+    const handleUpdateExpense = (expenseIndex, newValue, type, sectionName='budget') => {
+        setExpenses(prevFinances =>
+            prevFinances.map(section => {
+                if (section.name === sectionName) {
+                    return {
+                        ...section,
+                        children: section.children.map((expense, i) =>
+                            i === expenseIndex
+                                ? { ...expense, [type]: newValue }
+                                : expense
+                        )
+                    };
+                }
+                return section;
+            })
+        );
+    }
+
+    const handleAddExpense = (newExpense, sectionName='budget') => {
+        setExpenses(prevFinances =>
+            prevFinances.map(section =>
+                section.name === sectionName
+                    ? {
+                        ...section,
+                        children: [...section.children, newExpense],
+                        value: section.value + newExpense.value
+                    }
+                    : section
             )
         );
     }
 
-    const handleAddExpense = (newExpense) => {
-        // setExpenses(prevExpenses => ({ ...prevExpenses, ['new expense']: 100 }))
-        setExpenses(prevExpenses => ([...prevExpenses, newExpense]))
-    }
-
-    const handleDeleteExpense = (expenseIndex) => {
-        // setExpenses(prevExpenses => {
-        //     const newExpenses = { ...prevExpenses };
-        //     delete newExpenses[expense];
-        //     return newExpenses;
-        // });
-        // setExpenses(prevExpenses => {
-        //     const newExpenses = [...prevExpenses];
-        //     newExpenses.filter((_, valIndex) => valIndex !== expenseIndex);
-        //     return newExpenses;
-        // });
-        setExpenses(prevExpenses => prevExpenses.filter((_, valIndex) => valIndex !== expenseIndex));
+    const handleDeleteExpense = (expenseIndex, sectionName='budget') => {
+        setExpenses(prevFinances =>
+            prevFinances.map(section => {
+                if (section.name === sectionName) {
+                    const deletedExpense = section.children[expenseIndex];
+                    return {
+                        ...section,
+                        children: section.children.filter((_, valIndex) => valIndex !== expenseIndex),
+                        value: section.value - deletedExpense.value
+                    };
+                }
+                return section;
+            })
+        );
     }
 
     // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
-    const totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0)
+    const totalExpenses = expenses[3]?.children.reduce((sum, expense) => sum + expense.value, 0)
     const leftOvers = salary / 12 - totalExpenses
 
     return (
@@ -67,7 +103,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
                             <Separator />
 
-                            {expenses.map((expense, expenseIndex) => {
+                            {expenses[3]?.children.map((expense, expenseIndex) => {
                                 return (
                                     <Popover key={expenseIndex}>
                                         <PopoverTrigger asChild>
@@ -119,7 +155,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                         </div>
 
                         {leftOvers >= 0 && (
-                            <CircularPieChart chartData={[...expenses, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
+                            <CircularPieChart chartData={[...expenses[3]?.children, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
                         )}
                         {leftOvers < 0 && (
                             <p><Activity />Your bank is in critical condition. Mate, you ain't doing so good</p>

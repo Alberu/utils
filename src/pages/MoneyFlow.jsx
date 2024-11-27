@@ -5,10 +5,14 @@ import ExpensesCard from "@/components/ExpensesCard";
 import { ChevronRight } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import IncomeSankeyDiagram from "@/components/IncomeSankeyDiagram";
+import { finances as initialFinances } from "@/utils";
 
 const MoneyFlow = () => {
     const [salary1, setSalary1] = useState(30000);
     // const [salary2, setSalary2] = useState(70000);
+    const [finances, setFinances] = useState(initialFinances)
+    console.log(finances[3])
+
 
     const [expenses, setExpenses] = useState([
         { name: "Rent", value: 1000, colour: '#FA961F' },
@@ -33,7 +37,11 @@ const MoneyFlow = () => {
                         salary={salary1}
                         setSalary={setSalary1}
                     />
-                    <ExpensesCard salary={salary1Calcs?.net} expenses={expenses} setExpenses={setExpenses} />
+                    <ExpensesCard
+                        salary={salary1Calcs?.net}
+                        expenses={finances}
+                        setExpenses={setFinances}
+                    />
                     {/* <SalaryCard
                         title="Salary 2"
                         calculations={salary2Calcs}

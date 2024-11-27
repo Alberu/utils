@@ -20,7 +20,7 @@ export default function PageLayout({ children }) {
         );
     });
 
-    console.log(useLocation())
+    // console.log(useLocation())
     return (
         <>
             <header></header>
