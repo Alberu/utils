@@ -27,7 +27,7 @@ const IncomeSankeyDiagram = () => {
       { id: "Pre-tax", color: "#ABAA99" },
       { id: "Tax", color: "#2ECE2E" },
       { id: "Savings", color: "#FA961" },
-      { id: "ISA", color: "#FA961" },
+      { id: "ISA", color: "#f00" },
       { id: "Hi", color: "#FA961" },
       { id: "Expenses", color: "#FA961" },
       { id: "Rent", color: "#FA961" },
@@ -55,7 +55,7 @@ const IncomeSankeyDiagram = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Slankey visualisation</CardTitle>
+        <CardTitle>Sankey visualisation</CardTitle>
       </CardHeader>
       <CardContent>
         <div style={{ height: "500px" }}>
@@ -68,13 +68,14 @@ const IncomeSankeyDiagram = () => {
             // colors={{ scheme: "category10" }}
             // colors={{ scheme: "paired" }}
             // colors={{ datum: "node.color" }}
-            color={({node}) => {
+            colors={(node) => {
               console.log(node)
               return (node.color)}
             }
+            // colors={node => node.nodeColor}
             sort={'descending'}
-            nodeOpacity={1}
-            nodeHoverOthersOpacity={0.35}
+            nodeOpacity={0.6}
+            nodeHoverOthersOpacity={0.6}
             nodeThickness={30}
             nodeSpacing={2}
             nodeBorderWidth={0}
@@ -82,7 +83,7 @@ const IncomeSankeyDiagram = () => {
             nodeBorderRadius={2}
             linkOpacity={0.5}
             linkHoverOthersOpacity={0.1}
-            linkContract={1}
+            linkContract={0}
             enableLinkGradient={true}
             labelPosition="inside"
             labelOrientation="horizontal"

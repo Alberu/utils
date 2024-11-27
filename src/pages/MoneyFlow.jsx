@@ -8,7 +8,7 @@ import IncomeSankeyDiagram from "@/components/IncomeSankeyDiagram";
 
 const MoneyFlow = () => {
     const [salary1, setSalary1] = useState(30000);
-    const [salary2, setSalary2] = useState(70000);
+    // const [salary2, setSalary2] = useState(70000);
 
     const [expenses, setExpenses] = useState([
         { name: "Rent", value: 1000, colour: '#FA961F' },
@@ -17,7 +17,7 @@ const MoneyFlow = () => {
     ])
 
     const salary1Calcs = calcTakeHome(salary1);
-    const salary2Calcs = calcTakeHome(salary2);
+    // const salary2Calcs = calcTakeHome(salary2);
 
     // console.log(salary1Calcs)
 

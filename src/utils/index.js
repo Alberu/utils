@@ -16,6 +16,37 @@ export const pages = [
   },
 ];
 
+export const finances = [
+  {
+    name: 'income', colour: 'green', value: 30000, children: [
+      { category: 'fixed', name: "salary", value: 1000, colour: '#FA961F' },
+      { category: 'variable', name: "bonus", value: 1000, colour: '#FA961F' },
+    ]
+  },
+  {
+    name: 'pre-tax', colour: 'green', value: 30000, children: [
+      { category: 'pension', name: "pension", value: 1000, colour: '#FA961F' },
+    ]
+  },
+  {
+    name: 'tax', colour: 'green', value: 30000, children: [
+      { category: 'tax', name: "tax", value: 1000, colour: '#FA961F' },
+      { category: 'tax', name: "NI", value: 1000, colour: '#FA961F' },
+      { category: 'other', name: "other", value: 1000, colour: '#FA961F' },
+    ]
+  },
+  {
+    name: 'budget', colour: 'green', value: 30000, children: [
+      { category: 'expense', name: "Rent", value: 1000, colour: '#FA961F' },
+      { category: 'expense', name: "Food", value: 300, colour: '#ABAA99' },
+      { category: 'expense', name: "Other", value: 200, colour: '#f00' },
+      { category: 'saving', name: "Other", value: 200, colour: '#f00' },
+      { category: 'investment', name: "Other", value: 200, colour: '#f00' },
+      { category: 'essential', name: "Other", value: 200, colour: '#f00' },
+    ]
+  },
+]
+
 // locale can also be set to undefined to let the system pick
 export const formatCurrency = (num, decimalPlaces = 2, locale = 'en-GB') => num.toLocaleString(locale, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })
 
