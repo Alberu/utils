@@ -25,6 +25,54 @@ const MoneyFlow = () => {
 
     // console.log(salary1Calcs)
 
+    const handleUpdateChildren = (expenseIndex, newValue, type, sectionName='budget') => {
+        setFinances(prevFinances =>
+            prevFinances.map(section => {
+                if (section.name === sectionName) {
+                    return {
+                        ...section,
+                        children: section.children.map((expense, i) =>
+                            i === expenseIndex
+                                ? { ...expense, [type]: newValue }
+                                : expense
+                        )
+                    };
+                }
+                return section;
+            })
+        );
+    }
+
+    const handleAddChildren = (newExpense, sectionName='budget') => {
+        setFinances(prevFinances =>
+            prevFinances.map(section =>
+                section.name === sectionName
+                    ? {
+                        ...section,
+                        children: [...section.children, newExpense],
+                        value: section.value + newExpense.value
+                    }
+                    : section
+            )
+        );
+    }
+
+    const handleDeleteChildren = (expenseIndex, sectionName='budget') => {
+        setFinances(prevFinances =>
+            prevFinances.map(section => {
+                if (section.name === sectionName) {
+                    const deletedExpense = section.children[expenseIndex];
+                    return {
+                        ...section,
+                        children: section.children.filter((_, valIndex) => valIndex !== expenseIndex),
+                        value: section.value - deletedExpense.value
+                    };
+                }
+                return section;
+            })
+        );
+    }
+    
     return (
         <>
             <PageLayout>
@@ -36,11 +84,18 @@ const MoneyFlow = () => {
                         calculations={salary1Calcs}
                         salary={salary1}
                         setSalary={setSalary1}
+                        finances={finances}
+                        handleUpdateChildren={handleUpdateChildren}
+                        handleAddChildren={handleAddChildren}
+                        handleDeleteChildren={handleDeleteChildren}
                     />
                     <ExpensesCard
                         salary={salary1Calcs?.net}
-                        expenses={finances}
-                        setExpenses={setFinances}
+                        finances={finances}
+                        // setExpenses={setFinances}
+                        handleUpdateChildren={handleUpdateChildren}
+                        handleAddChildren={handleAddChildren}
+                        handleDeleteChildren={handleDeleteChildren}
                     />
                     {/* <SalaryCard
                         title="Salary 2"

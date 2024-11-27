@@ -10,74 +10,9 @@ import { ColourPicker } from "./ColourPicker"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { formatCurrency } from "@/utils"
 
-const ExpensesCard = ({ salary, expenses, setExpenses }) => {
-    // const handleUpdateExpense = (expenseIndex, newValue, type) => {
-    //     setExpenses(prevExpenses =>
-    //         prevExpenses.map((expense, i) =>
-    //             i === expenseIndex
-    //                 ? { ...expense, [type]: newValue }
-    //                 : expense
-    //         )
-    //     );
-    // }
-
-    // const handleAddExpense = (newExpense) => {
-    //     setExpenses(prevExpenses => ([...prevExpenses, newExpense]))
-    // }
-
-    // const handleDeleteExpense = (expenseIndex) => {
-    //     setExpenses(prevExpenses => prevExpenses.filter((_, valIndex) => valIndex !== expenseIndex));
-    // }
-    const handleUpdateExpense = (expenseIndex, newValue, type, sectionName='budget') => {
-        setExpenses(prevFinances =>
-            prevFinances.map(section => {
-                if (section.name === sectionName) {
-                    return {
-                        ...section,
-                        children: section.children.map((expense, i) =>
-                            i === expenseIndex
-                                ? { ...expense, [type]: newValue }
-                                : expense
-                        )
-                    };
-                }
-                return section;
-            })
-        );
-    }
-
-    const handleAddExpense = (newExpense, sectionName='budget') => {
-        setExpenses(prevFinances =>
-            prevFinances.map(section =>
-                section.name === sectionName
-                    ? {
-                        ...section,
-                        children: [...section.children, newExpense],
-                        value: section.value + newExpense.value
-                    }
-                    : section
-            )
-        );
-    }
-
-    const handleDeleteExpense = (expenseIndex, sectionName='budget') => {
-        setExpenses(prevFinances =>
-            prevFinances.map(section => {
-                if (section.name === sectionName) {
-                    const deletedExpense = section.children[expenseIndex];
-                    return {
-                        ...section,
-                        children: section.children.filter((_, valIndex) => valIndex !== expenseIndex),
-                        value: section.value - deletedExpense.value
-                    };
-                }
-                return section;
-            })
-        );
-    }
-
+const ExpensesCard = ({ salary, finances, handleAddChildren, handleDeleteChildren, handleUpdateChildren }) => {
     // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
-    const totalExpenses = expenses[3]?.children.reduce((sum, expense) => sum + expense.value, 0)
+    const totalExpenses = finances[3]?.children.reduce((sum, expense) => sum + expense.value, 0)
     const leftOvers = salary / 12 - totalExpenses
 
     return (
@@ -92,7 +27,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                 <CardContent>
                     <div className="items-start grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="flex flex-col justify-center">
-                            <Button variant="outline" onClick={() => { handleAddExpense({ name: "Other", value: 200, colour: '#ABAA99' }) }}>Add another expense</Button>
+                            <Button variant="outline" onClick={() => { handleAddChildren({ name: "Other", value: 200, colour: '#ABAA99' }) }}>Add another expense</Button>
                             {/* <AddExpense handleAddExpense={handleAddExpense} /> */}
                             <Button className='flex justify-between w-full' variant='ghost'>
                                 <Label className="text-sm text-muted-foreground">Budget</Label>
@@ -103,7 +38,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
                             <Separator />
 
-                            {expenses[3]?.children.map((expense, expenseIndex) => {
+                            {finances[3]?.children.map((expense, expenseIndex) => {
                                 return (
                                     <Popover key={expenseIndex}>
                                         <PopoverTrigger asChild>
@@ -122,17 +57,17 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                                             <Input
                                                 // type="number"
                                                 value={expense?.name}
-                                                onChange={(e) => { handleUpdateExpense(expenseIndex, (e.target.value), 'name') }}
+                                                onChange={(e) => { handleUpdateChildren(expenseIndex, (e.target.value), 'name') }}
                                                 // value={inputValues[expense.id]}
                                                 // onChange={(e) => handleInputChange(expense.id, e.target.value)}
                                                 className="w-full h-full px-4 py-2"
                                             />
-                                            <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateExpense} expenseIndex={expenseIndex} />
-                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteExpense(expenseIndex) }}><Trash2 /></Button>
+                                            <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateChildren} expenseIndex={expenseIndex} />
+                                            <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteChildren(expenseIndex) }}><Trash2 /></Button>
                                             <Input
                                                 type="number"
                                                 value={expense?.value}
-                                                onChange={(e) => { handleUpdateExpense(expenseIndex, Number(e.target.value), 'value') }}
+                                                onChange={(e) => { handleUpdateChildren(expenseIndex, Number(e.target.value), 'value') }}
                                                 // value={inputValues[expense.id]}
                                                 // onChange={(e) => handleInputChange(expense.id, e.target.value)}
                                                 className="w-full h-full px-4 py-2 text-right"
@@ -155,10 +90,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                         </div>
 
                         {leftOvers >= 0 && (
-                            <CircularPieChart chartData={[...expenses[3]?.children, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
+                            <CircularPieChart chartData={[...finances[3]?.children, { name: "Left Overs", value: leftOvers, colour: '#2ECE2E' }]} />
                         )}
                         {leftOvers < 0 && (
-                            <p><Activity />Your bank is in critical condition. Mate, you ain't doing so good</p>
+                            <p><Activity />Mate, you ain't doing so good</p>
                         )}
                     </div>
                 </CardContent>

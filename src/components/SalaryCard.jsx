@@ -1,4 +1,4 @@
-import { PoundSterling, TrendingUp } from "lucide-react";
+import { PoundSterling, Trash2, TrendingUp } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -7,8 +7,9 @@ import CircularPieChart from "./CircularPieChart";
 import { formatCurrency } from "@/utils";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { ColourPicker } from "./ColourPicker";
 
-const SalaryCard = ({ title, calculations, salary, setSalary }) => (
+const SalaryCard = ({ title, calculations, salary, setSalary, finances, handleAddChildren, handleDeleteChildren, handleUpdateChildren }) => (
     <Card>
         <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
@@ -18,6 +19,116 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
         </CardHeader>
         <CardContent>
             <div className="items-start grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {finances[0]?.children.map((expense, expenseIndex) => {
+                        return (
+                            <Popover key={expenseIndex}>
+                                <PopoverTrigger asChild>
+                                    <Button className='flex justify-between w-full' variant='ghost'>
+                                        <div className="flex items-center gap-2">
+                                            <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                            <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
+                                        </div>
+                                        <p className="text-xl font-light">
+                                            {formatCurrency(expense?.value)}
+                                        </p>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className='flex'>
+                                    {/* <Input
+                                        value={expense?.name}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, (e.target.value), 'name') }}
+                                        className="w-full h-full px-4 py-2"
+                                    /> */}
+                                    <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateChildren} expenseIndex={expenseIndex} />
+                                    {/* <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteChildren(expenseIndex) }}><Trash2 /></Button> */}
+                                    <Input
+                                        type="number"
+                                        value={expense?.value}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, Number(e.target.value), 'value', 'income') }}
+                                        className="w-full h-full px-4 py-2 text-right"
+                                        step="1000"
+                                        min="0"
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        )
+                    })}
+
+                    <Separator />
+
+                    {finances[1]?.children.map((expense, expenseIndex) => {
+                        return (
+                            <Popover key={expenseIndex}>
+                                <PopoverTrigger asChild>
+                                    <Button className='flex justify-between w-full' variant='ghost'>
+                                        <div className="flex items-center gap-2">
+                                            <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                            <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
+                                        </div>
+                                        <p className="text-xl font-light">
+                                            {formatCurrency(expense?.value)}
+                                        </p>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className='flex'>
+                                    {/* <Input
+                                        value={expense?.name}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, (e.target.value), 'name') }}
+                                        className="w-full h-full px-4 py-2"
+                                        /> */}
+                                    <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateChildren} expenseIndex={expenseIndex} />
+                                    {/* <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteChildren(expenseIndex) }}><Trash2 /></Button> */}
+                                    <Input
+                                        type="number"
+                                        value={expense?.value}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, Number(e.target.value), 'value', 'pre-tax') }}
+                                        className="w-full h-full px-4 py-2 text-right"
+                                        step="1000"
+                                        min="0"
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        )
+                    })}
+
+                    <Separator />
+
+                    {finances[2]?.children.map((expense, expenseIndex) => {
+                        return (
+                            <Popover key={expenseIndex}>
+                                <PopoverTrigger asChild>
+                                    <Button className='flex justify-between w-full' variant='ghost'>
+                                        <div className="flex items-center gap-2">
+                                            <Label className="text-sm text-muted-foreground">{expense?.name}</Label>
+                                            <span className="w-4 h-4 rounded-sm" style={{ backgroundColor: expense?.colour }}></span>
+                                        </div>
+                                        <p className="text-xl font-light">
+                                            {formatCurrency(expense?.value)}
+                                        </p>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className='flex'>
+                                    {/* <Input
+                                        value={expense?.name}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, (e.target.value), 'name') }}
+                                        className="w-full h-full px-4 py-2"
+                                        /> */}
+                                    <ColourPicker selectedColour={expense?.colour} handleUpdateExpense={handleUpdateChildren} expenseIndex={expenseIndex} />
+                                    {/* <Button variant="outline" className='w-9 h-9' onClick={() => { handleDeleteChildren(expenseIndex) }}><Trash2 /></Button> */}
+                                    <Input
+                                        type="number"
+                                        value={expense?.value}
+                                        onChange={(e) => { handleUpdateChildren(expenseIndex, Number(e.target.value), 'value', 'tax') }}
+                                        className="w-full h-full px-4 py-2 text-right"
+                                        step="1000"
+                                        min="0"
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        )
+                    })}
+                </div>
                 <div className="space-y-4">
                     <div>
                         <Popover>
