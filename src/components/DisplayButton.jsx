@@ -8,6 +8,7 @@ export function DisplayButton({
   name,
   colour,
   value,
+  category = null,
   variant = "default",
 }) {
   return (
@@ -15,13 +16,21 @@ export function DisplayButton({
       <PopoverTrigger asChild>
         <Button className="flex justify-between w-full" variant="ghost">
           <div className="flex items-center gap-2">
+            {category && (
+              <Label
+                className="text-sm text-muted-foreground"
+                style={{ color: colour }}
+              >
+                {category}
+              </Label>
+            )}
             <Label className="text-sm text-muted-foreground">new_{name}</Label>
-            {variant == "default" && (
+            {/* {variant == "default" && (
               <span
                 className="w-4 h-4 rounded-sm"
                 style={{ backgroundColor: colour }}
               ></span>
-            )}
+            )} */}
           </div>
           {variant == "default" && (
             <p className="text-xl font-light">{formatCurrency(value)}</p>
@@ -33,7 +42,7 @@ export function DisplayButton({
           {/* <p className="text-xl font-bold">£{formatCurrency(value)}</p> */}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex">{children}</PopoverContent>
+      <PopoverContent>{children}</PopoverContent>
     </Popover>
   );
 }

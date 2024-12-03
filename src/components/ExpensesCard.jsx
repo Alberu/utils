@@ -10,6 +10,16 @@ import { ColourPicker } from "./ColourPicker";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { formatCurrency } from "@/utils";
 import { DisplayButton } from "./DisplayButton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { BudgetSettings } from "./BudgetSettings";
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   const handleUpdateExpense = (expenseIndex, newValue, type) => {
@@ -21,21 +31,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   };
 
   const handleAddExpense = (newExpense) => {
-    // setExpenses(prevExpenses => ({ ...prevExpenses, ['new expense']: 100 }))
     setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
   };
 
   const handleDeleteExpense = (expenseIndex) => {
-    // setExpenses(prevExpenses => {
-    //     const newExpenses = { ...prevExpenses };
-    //     delete newExpenses[expense];
-    //     return newExpenses;
-    // });
-    // setExpenses(prevExpenses => {
-    //     const newExpenses = [...prevExpenses];
-    //     newExpenses.filter((_, valIndex) => valIndex !== expenseIndex);
-    //     return newExpenses;
-    // });
     setExpenses((prevExpenses) =>
       prevExpenses.filter((_, valIndex) => valIndex !== expenseIndex)
     );
@@ -89,50 +88,13 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     name={expense?.name}
                     colour={expense?.colour}
                     value={expense?.value}
+                    category={expense?.category}
                   >
-                    <Input
-                      // type="number"
-                      value={expense?.name}
-                      onChange={(e) => {
-                        handleUpdateExpense(
-                          expenseIndex,
-                          e.target.value,
-                          "name"
-                        );
-                      }}
-                      // value={inputValues[expense.id]}
-                      // onChange={(e) => handleInputChange(expense.id, e.target.value)}
-                      className="w-full h-full px-4 py-2"
-                    />
-                    <ColourPicker
-                      selectedColour={expense?.colour}
-                      handleUpdateExpense={handleUpdateExpense}
+                    <BudgetSettings
+                      expense={expense}
                       expenseIndex={expenseIndex}
-                    />
-                    <Button
-                      variant="outline"
-                      className="w-9 h-9"
-                      onClick={() => {
-                        handleDeleteExpense(expenseIndex);
-                      }}
-                    >
-                      <Trash2 />
-                    </Button>
-                    <Input
-                      type="number"
-                      value={expense?.value}
-                      onChange={(e) => {
-                        handleUpdateExpense(
-                          expenseIndex,
-                          Number(e.target.value),
-                          "value"
-                        );
-                      }}
-                      // value={inputValues[expense.id]}
-                      // onChange={(e) => handleInputChange(expense.id, e.target.value)}
-                      className="w-full h-full px-4 py-2 text-right"
-                      step="25"
-                      min="0"
+                      handleUpdateExpense={handleUpdateExpense}
+                      handleDeleteExpense={handleDeleteExpense}
                     />
                   </DisplayButton>
                 );
@@ -141,7 +103,9 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
               <Separator />
 
               <Button className="flex justify-between w-full" variant="ghost">
-                <Label className="text-sm text-muted-foreground">Savings</Label>
+                <Label className="text-sm text-muted-foreground">
+                  Left overs
+                </Label>
                 <p className="text-xl font-bold">
                   £{formatCurrency(leftOvers)}
                 </p>

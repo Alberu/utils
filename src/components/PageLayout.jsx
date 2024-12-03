@@ -25,7 +25,7 @@ export default function PageLayout({ children }) {
         <>
             <header></header>
             <main >
-                <div className="container mx-auto px-4 py-8 space-y-4">
+                <div className="mx-auto px-4 py-8 space-y-4">
                     <h1 className="text-2xl font-bold flex items-center">
                         <Link to={'/'}>Utils collection</Link>
                         {Breadcrumbs}
