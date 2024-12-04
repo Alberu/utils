@@ -20,7 +20,7 @@ export function BudgetSettings({
   handleUpdateExpense,
 }) {
   const [occurance, setOccurance] = useState("Monthly");
-  const occuraces = ["Monthly", "Weekly", "Daily", "Custom"];
+  const occuraces = ["monthly", "weekly", "daily", "custom"];
   return (
     <div>
       <div className="flex">
@@ -60,14 +60,18 @@ export function BudgetSettings({
       <div className="flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">{occurance}</Button>
+            <Button variant="outline">{expense?.type}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>How often does this happen</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuRadioGroup
-              value={occurance}
-              onValueChange={setOccurance}
+              value={expense?.type}
+              onValueChange={(value) => {
+                console.log(value)
+                handleUpdateExpense(expenseIndex, value, "type");
+              }}
+            //   onValueChange={setOccurance}
             >
               {occuraces.map((item, itemIndex) => (
                 <DropdownMenuRadioItem key={itemIndex} value={item}>

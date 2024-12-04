@@ -11,10 +11,10 @@ const MoneyFlow = () => {
     // const [salary2, setSalary2] = useState(70000);
 
     const [expenses, setExpenses] = useState([
-        { category: 'essential', name: "Rent", value: 1000, colour: '#FA961F' },
-        { category: 'essential', name: "Food", value: 300, colour: '#ABAA99' },
-        { category: 'investment', name: "Other", value: 200, colour: '#f00' },
-        { category: 'saving', name: "isa", value: 200, colour: '#f00' },
+        { category: 'essential', type: 'monthly', name: "Rent", value: 1000, colour: '#FA961F' },
+        { category: 'essential', type: 'monthly', name: "Food", value: 300, colour: '#ABAA99' },
+        { category: 'investment', type: 'monthly', name: "Other", value: 200, colour: '#f00' },
+        { category: 'saving', type: 'monthly', name: "isa", value: 200, colour: '#f00' },
     ])
 
     const salary1Calcs = calcTakeHome(salary1);
