@@ -5,17 +5,13 @@ import ExpensesCard from "@/components/ExpensesCard";
 import { ChevronRight } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import IncomeSankeyDiagram from "@/components/IncomeSankeyDiagram";
+import { initialExpenses } from "@/utils";
 
 const MoneyFlow = () => {
     const [salary1, setSalary1] = useState(30000);
     // const [salary2, setSalary2] = useState(70000);
 
-    const [expenses, setExpenses] = useState([
-        { category: 'essential', type: 'monthly', name: "Rent", value: 1000, colour: '#FA961F' },
-        { category: 'essential', type: 'monthly', name: "Food", value: 300, colour: '#ABAA99' },
-        { category: 'investment', type: 'monthly', name: "Other", value: 200, colour: '#f00' },
-        { category: 'saving', type: 'monthly', name: "isa", value: 200, colour: '#f00' },
-    ])
+    const [expenses, setExpenses] = useState(initialExpenses)
 
     const salary1Calcs = calcTakeHome(salary1);
     // const salary2Calcs = calcTakeHome(salary2);

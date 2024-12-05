@@ -17,11 +17,20 @@ export const pages = [
 ];
 
 export const occuraceMultiplier = {
-  'monthly': 1,
-  'weekly': 4,
-  'daily': 30.47,
+  'Monthly': 1,
+  'Weekly': 4,
+  'Daily': 30.47,
   // 'other': 1,
 }
+
+export const initialCategories = ['Essential', 'Investment', 'Savings']
+
+export const initialExpenses = [
+  { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, colour: '#FA961F' },
+  { category: 'Essential', type: 'Monthly', name: "Food", value: 300, colour: '#ABAA99' },
+  { category: 'Investment', type: 'Monthly', name: "Other", value: 200, colour: '#f00' },
+  { category: 'Savings', type: 'Monthly', name: "isa", value: 200, colour: '#f00' },
+]
 
 // experimenting wiht a new way to store all the information in one place
 export const finances = [
