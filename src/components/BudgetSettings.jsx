@@ -14,13 +14,24 @@ import {
 import { useState } from "react";
 import { initialCategories, occuraceMultiplier } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "./ui/slider";
 
 export function BudgetSettings({
   expense,
   expenseIndex,
   handleDeleteExpense,
   handleUpdateExpense,
+  budget,
 }) {
+  const handlePercentChange = (value) => {
+    console.log(value);
+    // need to check that the percent is valid
+    if (value == false) {
+      return;
+    }
+    handleUpdateExpense(expenseIndex, Number(value), "percent");
+  };
+
   const occuraces = ["monthly", "weekly", "daily", "custom"];
   return (
     <div className="space-y-1">
@@ -79,7 +90,30 @@ export function BudgetSettings({
           <Trash2 />
         </Button>
       </div>
-      <Tabs defaultValue="value" className="w-full">
+      <Tabs
+        defaultValue={expense?.percent ? "percent" : "value"} // change this to depend on the percent
+        className="w-full"
+        onValueChange={(value) => {
+          console.log(value);
+          // if set to value
+          // set percent to null/false
+          if (value == "value") {
+            handleUpdateExpense(expenseIndex, false, "percent");
+          }
+
+          // if set to percent
+          if (value == "percent") {
+            // set the expense to monthly
+            handleUpdateExpense(expenseIndex, "Monthly", "type");
+            // work out the current percent of the value
+            const expensePercent = (expense?.value / budget) * 100;
+            // set that to be the percent
+            handleUpdateExpense(expenseIndex, expensePercent, "percent");
+          }
+
+          // else do nothing
+        }}
+      >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="value">Value</TabsTrigger>
           <TabsTrigger value="percent">Percent</TabsTrigger>
@@ -102,7 +136,6 @@ export function BudgetSettings({
                     console.log(value);
                     handleUpdateExpense(expenseIndex, value, "type");
                   }}
-                  //   onValueChange={setOccurance}
                 >
                   {Object.keys(occuraceMultiplier).map((item, itemIndex) => (
                     <DropdownMenuRadioItem key={itemIndex} value={item}>
@@ -128,7 +161,27 @@ export function BudgetSettings({
             />
           </div>
         </TabsContent>
-        <TabsContent value="percent">Change the value by percent.</TabsContent>
+        <TabsContent value="percent" className="space-y-2">
+          <Slider
+            value={[expense?.percent]}
+            min={0}
+            max={100}
+            step={1}
+            onValueChange={(value) => {
+              handlePercentChange(value[0]);
+            }}
+          />
+          <Input
+            type="number"
+            value={expense?.percent}
+            onChange={(e) => {
+              handlePercentChange(e.target.value);
+            }}
+            className="w-full h-full px-4 py-2 text-right"
+            step="25"
+            min="0"
+          />
+        </TabsContent>
       </Tabs>
     </div>
   );

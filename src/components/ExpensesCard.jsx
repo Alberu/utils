@@ -98,6 +98,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                       expenseIndex={expenseIndex}
                       handleUpdateExpense={handleUpdateExpense}
                       handleDeleteExpense={handleDeleteExpense}
+                      budget={salary / 12}
                     />
                   </DisplayButton>
                 );

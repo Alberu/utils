@@ -34,7 +34,7 @@ export function DisplayButton({
             )} */}
           </div>
           <div className="flex items-center gap-4">
-            {percent && <span className="bg-slate-200 rounded-sm px-1">{percent} %</span>}
+            {percent && <span className="bg-slate-200 rounded-sm px-1">{percent.toFixed(1)} %</span>}
             {variant == "default" && (
               <p className="text-xl font-light">{formatCurrency(value)}</p>
             )}
