@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import { occuraceMultiplier } from "@/utils";
 
 export function BudgetSettings({
   expense,
@@ -19,7 +20,6 @@ export function BudgetSettings({
   handleDeleteExpense,
   handleUpdateExpense,
 }) {
-  const [occurance, setOccurance] = useState("Monthly");
   const occuraces = ["monthly", "weekly", "daily", "custom"];
   return (
     <div>
@@ -68,12 +68,12 @@ export function BudgetSettings({
             <DropdownMenuRadioGroup
               value={expense?.type}
               onValueChange={(value) => {
-                console.log(value)
+                console.log(value);
                 handleUpdateExpense(expenseIndex, value, "type");
               }}
-            //   onValueChange={setOccurance}
+              //   onValueChange={setOccurance}
             >
-              {occuraces.map((item, itemIndex) => (
+              {Object.keys(occuraceMultiplier).map((item, itemIndex) => (
                 <DropdownMenuRadioItem key={itemIndex} value={item}>
                   {item}
                 </DropdownMenuRadioItem>

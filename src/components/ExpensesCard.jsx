@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { AddExpense } from "./AddExpense";
 import { ColourPicker } from "./ColourPicker";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { formatCurrency } from "@/utils";
+import { formatCurrency, occuraceMultiplier } from "@/utils";
 import { DisplayButton } from "./DisplayButton";
 import {
   DropdownMenu,
@@ -42,7 +42,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
 
   // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
   const totalExpenses = expenses.reduce(
-    (sum, expense) => sum + expense.value,
+    (sum, expense) => sum + expense.value * occuraceMultiplier[expense.type],
     0
   );
   const leftOvers = salary / 12 - totalExpenses;
@@ -87,7 +87,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     key={expenseIndex}
                     name={expense?.name}
                     colour={expense?.colour}
-                    value={expense?.value}
+                    value={expense?.value*occuraceMultiplier[expense?.type]}
                     category={expense?.category}
                   >
                     <BudgetSettings

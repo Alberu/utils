@@ -69,7 +69,7 @@ const IncomeSankeyDiagram = () => {
             // colors={{ scheme: "paired" }}
             // colors={{ datum: "node.color" }}
             colors={(node) => {
-              console.log(node)
+              // console.log(node)
               return (node.color)}
             }
             // colors={node => node.nodeColor}

@@ -16,6 +16,14 @@ export const pages = [
   },
 ];
 
+export const occuraceMultiplier = {
+  'monthly': 1,
+  'weekly': 4,
+  'daily': 30.47,
+  // 'other': 1,
+}
+
+// experimenting wiht a new way to store all the information in one place
 export const finances = [
   {
     name: 'income', colour: 'green', value: 30000, children: [
