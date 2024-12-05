@@ -88,6 +88,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     name={expense?.name}
                     colour={expense?.colour}
                     value={expense?.value*occuraceMultiplier[expense?.type]}
+                    percent={expense?.percent}
                     category={expense?.category}
                   >
                     <BudgetSettings

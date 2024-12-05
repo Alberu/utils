@@ -23,7 +23,7 @@ const MoneyFlow = () => {
             <PageLayout>
                 {/* <div className="container mx-auto px-4 py-8"> */}
                 {/* <h1 className="text-2xl font-bold flex items-center"><a href='/'>Utils collection</a> <ChevronRight /> Money Flow</h1> */}
-                <div className="space-y-4 w-max">
+                <div className="space-y-4 w-full max-w-5xl">
                     <SalaryCard
                         title="Salary"
                         calculations={salary1Calcs}

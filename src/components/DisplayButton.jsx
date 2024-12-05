@@ -8,6 +8,7 @@ export function DisplayButton({
   name,
   colour,
   value,
+  percent = null,
   category = null,
   variant = "default",
 }) {
@@ -24,7 +25,7 @@ export function DisplayButton({
                 {category}
               </Label>
             )}
-            <Label className="text-sm text-muted-foreground">new_{name}</Label>
+            <Label className="text-sm text-muted-foreground">{name}</Label>
             {/* {variant == "default" && (
               <span
                 className="w-4 h-4 rounded-sm"
@@ -32,14 +33,17 @@ export function DisplayButton({
               ></span>
             )} */}
           </div>
-          {variant == "default" && (
-            <p className="text-xl font-light">{formatCurrency(value)}</p>
-          )}
-          {variant == "bold" && (
-            <p className="text-xl font-bold">£{formatCurrency(value)}</p>
-          )}
-          {/* make sure that you can switch between these two values in the future */}
-          {/* <p className="text-xl font-bold">£{formatCurrency(value)}</p> */}
+          <div className="flex items-center gap-4">
+            {percent && <span className="bg-slate-200 rounded-sm px-1">{percent} %</span>}
+            {variant == "default" && (
+              <p className="text-xl font-light">{formatCurrency(value)}</p>
+            )}
+            {variant == "bold" && (
+              <p className="text-xl font-bold">£{formatCurrency(value)}</p>
+            )}
+            {/* make sure that you can switch between these two values in the future */}
+            {/* <p className="text-xl font-bold">£{formatCurrency(value)}</p> */}
+          </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent>{children}</PopoverContent>
