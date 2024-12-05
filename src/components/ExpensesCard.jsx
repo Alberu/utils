@@ -63,8 +63,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                 variant="outline"
                 onClick={() => {
                   handleAddExpense({
+                    type: "Monthly",
                     name: "Other",
                     value: 200,
+                    percent: false,
                     colour: "#ABAA99",
                   });
                 }}
@@ -87,7 +89,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     key={expenseIndex}
                     name={expense?.name}
                     colour={expense?.colour}
-                    value={expense?.value*occuraceMultiplier[expense?.type]}
+                    value={expense?.value * occuraceMultiplier[expense?.type]}
                     percent={expense?.percent}
                     category={expense?.category}
                   >

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { initialCategories, occuraceMultiplier } from "@/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function BudgetSettings({
   expense,
@@ -78,41 +79,57 @@ export function BudgetSettings({
           <Trash2 />
         </Button>
       </div>
-      <div className="flex">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{expense?.type}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>How often does this happen</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={expense?.type}
-              onValueChange={(value) => {
-                console.log(value);
-                handleUpdateExpense(expenseIndex, value, "type");
+      <Tabs defaultValue="value" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="value">Value</TabsTrigger>
+          <TabsTrigger value="percent">Percent</TabsTrigger>
+        </TabsList>
+        <TabsContent value="value">
+          Change the value.
+          <div className="flex">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">{expense?.type}</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>
+                  How often does this happen
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={expense?.type}
+                  onValueChange={(value) => {
+                    console.log(value);
+                    handleUpdateExpense(expenseIndex, value, "type");
+                  }}
+                  //   onValueChange={setOccurance}
+                >
+                  {Object.keys(occuraceMultiplier).map((item, itemIndex) => (
+                    <DropdownMenuRadioItem key={itemIndex} value={item}>
+                      {item}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Input
+              type="number"
+              value={expense?.value}
+              onChange={(e) => {
+                handleUpdateExpense(
+                  expenseIndex,
+                  Number(e.target.value),
+                  "value"
+                );
               }}
-              //   onValueChange={setOccurance}
-            >
-              {Object.keys(occuraceMultiplier).map((item, itemIndex) => (
-                <DropdownMenuRadioItem key={itemIndex} value={item}>
-                  {item}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <Input
-          type="number"
-          value={expense?.value}
-          onChange={(e) => {
-            handleUpdateExpense(expenseIndex, Number(e.target.value), "value");
-          }}
-          className="w-full h-full px-4 py-2 text-right"
-          step="25"
-          min="0"
-        />
-      </div>
+              className="w-full h-full px-4 py-2 text-right"
+              step="25"
+              min="0"
+            />
+          </div>
+        </TabsContent>
+        <TabsContent value="percent">Change the value by percent.</TabsContent>
+      </Tabs>
     </div>
   );
 }
