@@ -23,60 +23,55 @@ export function BudgetSettings({
   handleUpdateExpense,
   budget,
   totalNonPercentExpenses,
-//   totalPercent,
+  //   totalPercent,
 }) {
   const handlePercentChange = (value) => {
-    // need to check that the percent is valid
-    // if (totalPercent - expense?.percent + value > 100) {
-    //   return;
-    // }
+    // add a way to check if the total percent is over 100?
     handleUpdateExpense(expenseIndex, Number(value), "percent");
-    const newValue = Number(value)/100 * (budget - totalNonPercentExpenses)
+    const newValue = (Number(value) / 100) * (budget - totalNonPercentExpenses);
     handleUpdateExpense(expenseIndex, newValue, "value");
   };
 
-  const occuraces = ["monthly", "weekly", "daily", "custom"];
+  const FlexBox = ({ children }) => <div className="flex gap-2">{children}</div>;
+  
   return (
-    <div className="space-y-1">
-      <div className="flex">
+    <div className="space-y-2">
+      <FlexBox>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{expense?.category}</Button>
+          <DropdownMenuTrigger className="w-full" asChild>
+            <Button variant="outline">
+              <span className="text-muted-foreground">Category:</span>
+              <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span>
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>to be done!</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuLabel>to be done!</DropdownMenuLabel> */}
+            {/* <DropdownMenuSeparator /> */}
             <DropdownMenuRadioGroup
               value={expense?.category}
               onValueChange={(value) => {
+                // change the category of this expense
                 handleUpdateExpense(expenseIndex, value, "category");
+                // change the colour of this expense to the one set of the category
+                handleUpdateExpense(expenseIndex, initialCategories[value], "colour");
               }}
             >
-              {initialCategories.map((item, itemIndex) => (
-                <DropdownMenuRadioItem key={itemIndex} value={item}>
+              {Object.keys(initialCategories).map((item, itemIndex) => (
+                <DropdownMenuRadioItem key={itemIndex} value={item} style={{color: initialCategories[item]}}>
                   {item}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* <Input
-          // type="number"
-          value={expense?.category}
-          onChange={(e) => {
-            handleUpdateExpense(expenseIndex, e.target.value, "category");
-          }}
-          className="w-full h-full px-4 py-2"
-        /> */}
         <ColourPicker
           selectedColour={expense?.colour}
           handleUpdateExpense={handleUpdateExpense}
           expenseIndex={expenseIndex}
         />
-      </div>
-      <div className="flex">
+      </FlexBox>
+      <FlexBox>
         <Input
-          // type="number"
           value={expense?.name}
           onChange={(e) => {
             handleUpdateExpense(expenseIndex, e.target.value, "name");
@@ -92,7 +87,7 @@ export function BudgetSettings({
         >
           <Trash2 />
         </Button>
-      </div>
+      </FlexBox>
       <Tabs
         defaultValue={expense?.percent ? "percent" : "value"} // change this to depend on the percent
         className="w-full bg-muted p-1 rounded-lg"
@@ -108,22 +103,32 @@ export function BudgetSettings({
             // set the expense to monthly
             handleUpdateExpense(expenseIndex, "Monthly", "type");
             // work out the current percent of the value
-            const expensePercent = (expense?.value * occuraceMultiplier[expense?.type] / budget) * 100;
+            const expensePercent =
+              ((expense?.value * occuraceMultiplier[expense?.type]) / budget) *
+              100;
             // set that to be the percent
             handleUpdateExpense(expenseIndex, expensePercent, "percent");
             // also update the value
-            handleUpdateExpense(expenseIndex, expense?.value * occuraceMultiplier[expense?.type], "value");
+            handleUpdateExpense(
+              expenseIndex,
+              expense?.value * occuraceMultiplier[expense?.type],
+              "value"
+            );
           }
 
           // else do nothing
         }}
       >
         <TabsList className="grid w-full grid-cols-2 p-0 m-0">
-          <TabsTrigger value="value" className='h-full p-0 m-0'>Value</TabsTrigger>
-          <TabsTrigger value="percent" className='h-full p-0 m-0'>Percent</TabsTrigger>
+          <TabsTrigger value="value" className="h-full p-0 m-0">
+            Value
+          </TabsTrigger>
+          <TabsTrigger value="percent" className="h-full p-0 m-0">
+            Percent
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="value">
-          <div className="flex">
+          <FlexBox>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">{expense?.type}</Button>
@@ -162,7 +167,7 @@ export function BudgetSettings({
               step="25"
               min="0"
             />
-          </div>
+          </FlexBox>
         </TabsContent>
         <TabsContent value="percent" className="space-y-2">
           <Slider

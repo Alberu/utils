@@ -23,7 +23,7 @@ export const occuraceMultiplier = {
   // 'other': 1,
 }
 
-export const initialCategories = ['Essential', 'Investment', 'Savings']
+export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
 
 export const initialExpenses = [
   { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, percent: false, colour: '#FA961F' },
