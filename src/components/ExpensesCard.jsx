@@ -50,11 +50,13 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   // work out the total of the non percent boxes
   const totalNonPercentExpenses = expenses.reduce(
     (sum, expense) =>
-      expense.percent === false || expense.percent === null
-        ? sum + expense.value * occuraceMultiplier[expense.type]
+      expense?.percent === false || expense.percent === null
+        ? sum + expense?.value * occuraceMultiplier[expense?.type]
         : sum,
     0
   );
+
+  const totalPercent = expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
 
   return (
     <>
@@ -109,6 +111,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                       handleDeleteExpense={handleDeleteExpense}
                       budget={salary / 12}
                       totalNonPercentExpenses={totalNonPercentExpenses}
+                      totalPercent={totalPercent}
                     />
                   </DisplayButton>
                 );

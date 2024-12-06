@@ -23,11 +23,11 @@ export function BudgetSettings({
   handleUpdateExpense,
   budget,
   totalNonPercentExpenses,
+  totalPercent,
 }) {
   const handlePercentChange = (value) => {
-    console.log(value);
     // need to check that the percent is valid
-    if (value == false) {
+    if (totalPercent - expense?.percent + value > 100) {
       return;
     }
     handleUpdateExpense(expenseIndex, Number(value), "percent");
