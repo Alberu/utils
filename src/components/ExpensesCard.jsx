@@ -47,26 +47,26 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   const [totalPercent, setTotalPercent] = useState(0);
 
   useEffect(() => {
-    setTotalExpenses(
-      expenses.reduce(
-        (sum, expense) =>
-          sum + expense.value * occuraceMultiplier[expense.type],
-        0
-      )
+    // calcualte the new total
+    const newTotalExpenses = expenses.reduce(
+      (sum, expense) => sum + expense.value * occuraceMultiplier[expense.type],
+      0
     );
+    setTotalExpenses(newTotalExpenses);
 
-    setLeftOvers(salary / 12 - totalExpenses);
+    // calcualte the new leftovers
+    const newLeftOvers = salary / 12 - newTotalExpenses;
+    setLeftOvers(newLeftOvers);
 
     // work out the total of the non percent boxes
-    setTotalNonPercentExpenses(
-      expenses.reduce(
-        (sum, expense) =>
-          expense?.percent === false || expense.percent === null
-            ? sum + expense?.value * occuraceMultiplier[expense?.type]
-            : sum,
-        0
-      )
+    const newTotalNonPercentExpenses = expenses.reduce(
+      (sum, expense) =>
+        expense?.percent === false || expense.percent === null
+          ? sum + expense?.value * occuraceMultiplier[expense?.type]
+          : sum,
+      0
     );
+    setTotalNonPercentExpenses(newTotalNonPercentExpenses);
 
     setTotalPercent(
       expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
@@ -143,10 +143,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                       handleUpdateExpense={handleUpdateExpense}
                       handleDeleteExpense={handleDeleteExpense}
                       budget={salary / 12}
-                    //   totalNonPercentExpenses={totalNonPercentExpenses}
-                    //   totalPercent={totalPercent}
-                      totalNonPercentExpenses={1000}
-                      totalPercent={0}
+                      totalNonPercentExpenses={totalNonPercentExpenses}
+                      //   totalPercent={totalPercent}
+                      //   totalNonPercentExpenses={1000}
+                      //   totalPercent={0}
                     />
                   </DisplayButton>
                 );

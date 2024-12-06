@@ -23,13 +23,13 @@ export function BudgetSettings({
   handleUpdateExpense,
   budget,
   totalNonPercentExpenses,
-  totalPercent,
+//   totalPercent,
 }) {
   const handlePercentChange = (value) => {
     // need to check that the percent is valid
-    if (totalPercent - expense?.percent + value > 100) {
-      return;
-    }
+    // if (totalPercent - expense?.percent + value > 100) {
+    //   return;
+    // }
     handleUpdateExpense(expenseIndex, Number(value), "percent");
     const newValue = Number(value)/100 * (budget - totalNonPercentExpenses)
     handleUpdateExpense(expenseIndex, newValue, "value");
@@ -95,9 +95,8 @@ export function BudgetSettings({
       </div>
       <Tabs
         defaultValue={expense?.percent ? "percent" : "value"} // change this to depend on the percent
-        className="w-full"
+        className="w-full bg-muted p-1 rounded-lg"
         onValueChange={(value) => {
-          console.log(value);
           // if set to value
           // set percent to null/false
           if (value == "value") {
@@ -109,20 +108,21 @@ export function BudgetSettings({
             // set the expense to monthly
             handleUpdateExpense(expenseIndex, "Monthly", "type");
             // work out the current percent of the value
-            const expensePercent = (expense?.value / budget) * 100;
+            const expensePercent = (expense?.value * occuraceMultiplier[expense?.type] / budget) * 100;
             // set that to be the percent
             handleUpdateExpense(expenseIndex, expensePercent, "percent");
+            // also update the value
+            handleUpdateExpense(expenseIndex, expense?.value * occuraceMultiplier[expense?.type], "value");
           }
 
           // else do nothing
         }}
       >
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="value">Value</TabsTrigger>
-          <TabsTrigger value="percent">Percent</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 p-0 m-0">
+          <TabsTrigger value="value" className='h-full p-0 m-0'>Value</TabsTrigger>
+          <TabsTrigger value="percent" className='h-full p-0 m-0'>Percent</TabsTrigger>
         </TabsList>
         <TabsContent value="value">
-          Change the value.
           <div className="flex">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
