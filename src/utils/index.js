@@ -28,8 +28,8 @@ export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961
 export const initialExpenses = [
   { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, percent: false, colour: '#FA961F' },
   { category: 'Essential', type: 'Monthly', name: "Food", value: 300, percent: false, colour: '#ABAA99' },
-  { category: 'Investment', type: 'Monthly', name: "Other", value: 200, percent: false, colour: '#f00' },
-  { category: 'Savings', type: 'Monthly', name: "isa", value: 200, percent: 100, colour: '#f00' },
+  { category: 'Other', type: 'Monthly', name: "Other", value: 200, percent: false, colour: '#f00' },
+  { category: 'Savings', type: 'Monthly', name: "ISA", value: 535.20, percent: 100, colour: '#2ECE2E' },
 ]
 
 // experimenting wiht a new way to store all the information in one place

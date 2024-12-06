@@ -11,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
 import { initialCategories, occuraceMultiplier } from "@/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "./ui/slider";
@@ -33,7 +32,7 @@ export function BudgetSettings({
   };
 
   const FlexBox = ({ children }) => <div className="flex gap-2">{children}</div>;
-  
+
   return (
     <div className="space-y-2">
       <FlexBox>
