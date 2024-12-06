@@ -32,15 +32,16 @@ export function BudgetSettings({
   };
 
   const FlexBox = ({ children }) => <div className="flex gap-2">{children}</div>;
+  const flexBoxDiv = "flex gap-2"
 
   return (
     <div className="space-y-2">
-      <FlexBox>
+      <div className={flexBoxDiv}>
         <DropdownMenu>
           <DropdownMenuTrigger className="w-full" asChild>
             <Button variant="outline">
               <span className="text-muted-foreground">Category:</span>
-              <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span>
+              {/* <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span> */}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
@@ -52,7 +53,7 @@ export function BudgetSettings({
                 // change the category of this expense
                 handleUpdateExpense(expenseIndex, value, "category");
                 // change the colour of this expense to the one set of the category
-                handleUpdateExpense(expenseIndex, initialCategories[value], "colour");
+                // handleUpdateExpense(expenseIndex, initialCategories[value], "colour");
               }}
             >
               {Object.keys(initialCategories).map((item, itemIndex) => (
@@ -68,8 +69,8 @@ export function BudgetSettings({
           handleUpdateExpense={handleUpdateExpense}
           expenseIndex={expenseIndex}
         />
-      </FlexBox>
-      <FlexBox>
+        </div>
+      <div className={flexBoxDiv}>
         <Input
           value={expense?.name}
           onChange={(e) => {
@@ -86,7 +87,7 @@ export function BudgetSettings({
         >
           <Trash2 />
         </Button>
-      </FlexBox>
+        </div>
       <Tabs
         defaultValue={expense?.percent ? "percent" : "value"} // change this to depend on the percent
         className="w-full bg-muted p-1 rounded-lg"
@@ -127,7 +128,7 @@ export function BudgetSettings({
           </TabsTrigger>
         </TabsList>
         <TabsContent value="value">
-          <FlexBox>
+            <div className={flexBoxDiv}>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">{expense?.type}</Button>
@@ -166,7 +167,7 @@ export function BudgetSettings({
               step="25"
               min="0"
             />
-          </FlexBox>
+            </div>
         </TabsContent>
         <TabsContent value="percent" className="space-y-2">
           <Slider
