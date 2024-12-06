@@ -26,10 +26,10 @@ export const occuraceMultiplier = {
 export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
 
 export const initialExpenses = [
-  { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, percent: false, colour: '#FA961F' },
-  { category: 'Essential', type: 'Monthly', name: "Food", value: 300, percent: false, colour: '#ABAA99' },
-  { category: 'Other', type: 'Monthly', name: "Something else", value: 200, percent: false, colour: '#f00' },
-  { category: 'Savings', type: 'Monthly', name: "ISA", value: 535.20, percent: 100, colour: '#2ECE2E' },
+  { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, isPercent: false, colour: '#FA961F' },
+  { category: 'Essential', type: 'Monthly', name: "Food", value: 300, isPercent: false, colour: '#ABAA99' },
+  { category: 'Other', type: 'Monthly', name: "Something else", value: 200, isPercent: false, colour: '#f00' },
+  { category: 'Savings', type: 'Monthly', name: "ISA", value: 535.20, isPercent: 100, colour: '#2ECE2E' },
 ]
 
 // experimenting wiht a new way to store all the information in one place

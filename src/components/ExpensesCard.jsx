@@ -61,7 +61,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     // work out the total of the non percent boxes
     const newTotalNonPercentExpenses = expenses.reduce(
       (sum, expense) =>
-        expense?.percent === false || expense.percent === null
+        expense?.isPercent === false || expense.isPercent === null
           ? sum + expense?.value * occuraceMultiplier[expense?.type]
           : sum,
       0
@@ -69,7 +69,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     setTotalNonPercentExpenses(newTotalNonPercentExpenses);
 
     setTotalPercent(
-      expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
+      expenses.reduce((sum, expense) => sum + Number(expense?.isPercent), 0)
     );
   }, [salary, expenses]);
 
@@ -110,7 +110,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     type: "Monthly",
                     name: "Other",
                     value: 200,
-                    percent: false,
+                    isPercent: false,
                     colour: "#ABAA99",
                   });
                 }}
@@ -134,7 +134,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                     name={expense?.name}
                     colour={expense?.colour}
                     value={expense?.value * occuraceMultiplier[expense?.type]}
-                    percent={expense?.percent}
+                    percent={expense?.isPercent}
                     category={expense?.category}
                   >
                     <BudgetSettings

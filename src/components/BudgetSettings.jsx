@@ -26,7 +26,7 @@ export function BudgetSettings({
 }) {
   const handlePercentChange = (value) => {
     // add a way to check if the total percent is over 100?
-    handleUpdateExpense(expenseIndex, Number(value), "percent");
+    handleUpdateExpense(expenseIndex, Number(value), "isPercent");
     const newValue = (Number(value) / 100) * (budget - totalNonPercentExpenses);
     handleUpdateExpense(expenseIndex, newValue, "value");
   };
@@ -89,13 +89,13 @@ export function BudgetSettings({
         </Button>
         </div>
       <Tabs
-        defaultValue={expense?.percent ? "percent" : "value"} // change this to depend on the percent
+        defaultValue={expense?.isPercent ? "percent" : "value"} // change this to depend on the percent
         className="w-full bg-muted p-1 rounded-lg"
         onValueChange={(value) => {
           // if set to value
           // set percent to null/false
           if (value == "value") {
-            handleUpdateExpense(expenseIndex, false, "percent");
+            handleUpdateExpense(expenseIndex, false, "isPercent");
           }
 
           // if set to percent
@@ -107,7 +107,7 @@ export function BudgetSettings({
               ((expense?.value * occuraceMultiplier[expense?.type]) / budget) *
               100;
             // set that to be the percent
-            handleUpdateExpense(expenseIndex, expensePercent, "percent");
+            handleUpdateExpense(expenseIndex, expensePercent, "isPercent");
             // also update the value
             handleUpdateExpense(
               expenseIndex,
@@ -171,7 +171,7 @@ export function BudgetSettings({
         </TabsContent>
         <TabsContent value="percent" className="space-y-2">
           <Slider
-            value={[expense?.percent]}
+            value={[expense?.isPercent]}
             min={0}
             max={100}
             step={1}
@@ -181,7 +181,7 @@ export function BudgetSettings({
           />
           <Input
             type="number"
-            value={expense?.percent}
+            value={expense?.isPercent}
             onChange={(e) => {
               handlePercentChange(e.target.value);
             }}
