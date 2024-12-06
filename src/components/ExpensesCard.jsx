@@ -68,6 +68,16 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     );
     setTotalNonPercentExpenses(newTotalNonPercentExpenses);
 
+    // update any other percent entries
+    expenses.forEach((expense, expenseIndex) => {
+      if (expense.isPercent !== null && expense.isPercent !== false) {
+        const newValue =
+          (expense.isPercent / 100) *
+          (salary / 12 - newTotalNonPercentExpenses);
+        handleUpdateExpense(expenseIndex, newValue, "value");
+      }
+    });
+
     setTotalPercent(
       expenses.reduce((sum, expense) => sum + Number(expense?.isPercent), 0)
     );
