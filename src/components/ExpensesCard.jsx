@@ -47,6 +47,15 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   );
   const leftOvers = salary / 12 - totalExpenses;
 
+  // work out the total of the non percent boxes
+  const totalNonPercentExpenses = expenses.reduce(
+    (sum, expense) =>
+      expense.percent === false || expense.percent === null
+        ? sum + expense.value * occuraceMultiplier[expense.type]
+        : sum,
+    0
+  );
+
   return (
     <>
       <Card>
@@ -99,6 +108,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                       handleUpdateExpense={handleUpdateExpense}
                       handleDeleteExpense={handleDeleteExpense}
                       budget={salary / 12}
+                      totalNonPercentExpenses={totalNonPercentExpenses}
                     />
                   </DisplayButton>
                 );

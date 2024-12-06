@@ -22,6 +22,7 @@ export function BudgetSettings({
   handleDeleteExpense,
   handleUpdateExpense,
   budget,
+  totalNonPercentExpenses,
 }) {
   const handlePercentChange = (value) => {
     console.log(value);
@@ -30,6 +31,8 @@ export function BudgetSettings({
       return;
     }
     handleUpdateExpense(expenseIndex, Number(value), "percent");
+    const newValue = Number(value)/100 * (budget - totalNonPercentExpenses)
+    handleUpdateExpense(expenseIndex, newValue, "value");
   };
 
   const occuraces = ["monthly", "weekly", "daily", "custom"];
