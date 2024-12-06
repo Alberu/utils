@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BudgetSettings } from "./BudgetSettings";
+import { useEffect, useState } from "react";
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   const handleUpdateExpense = (expenseIndex, newValue, type) => {
@@ -40,23 +41,55 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
     );
   };
 
-  // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
-  const totalExpenses = expenses.reduce(
-    (sum, expense) => sum + expense.value * occuraceMultiplier[expense.type],
-    0
-  );
-  const leftOvers = salary / 12 - totalExpenses;
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [leftOvers, setLeftOvers] = useState(0);
+  const [totalNonPercentExpenses, setTotalNonPercentExpenses] = useState(0);
+  const [totalPercent, setTotalPercent] = useState(0);
 
-  // work out the total of the non percent boxes
-  const totalNonPercentExpenses = expenses.reduce(
-    (sum, expense) =>
-      expense?.percent === false || expense.percent === null
-        ? sum + expense?.value * occuraceMultiplier[expense?.type]
-        : sum,
-    0
-  );
+  useEffect(() => {
+    setTotalExpenses(
+      expenses.reduce(
+        (sum, expense) =>
+          sum + expense.value * occuraceMultiplier[expense.type],
+        0
+      )
+    );
 
-  const totalPercent = expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
+    setLeftOvers(salary / 12 - totalExpenses);
+
+    // work out the total of the non percent boxes
+    setTotalNonPercentExpenses(
+      expenses.reduce(
+        (sum, expense) =>
+          expense?.percent === false || expense.percent === null
+            ? sum + expense?.value * occuraceMultiplier[expense?.type]
+            : sum,
+        0
+      )
+    );
+
+    setTotalPercent(
+      expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
+    );
+  }, [salary, expenses]);
+
+  //   // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
+  //   const totalExpenses = expenses.reduce(
+  //     (sum, expense) => sum + expense.value * occuraceMultiplier[expense.type],
+  //     0
+  //   );
+  //   const leftOvers = salary / 12 - totalExpenses;
+
+  //   // work out the total of the non percent boxes
+  //   const totalNonPercentExpenses = expenses.reduce(
+  //     (sum, expense) =>
+  //       expense?.percent === false || expense.percent === null
+  //         ? sum + expense?.value * occuraceMultiplier[expense?.type]
+  //         : sum,
+  //     0
+  //   );
+
+  //   const totalPercent = expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
 
   return (
     <>
@@ -110,8 +143,10 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                       handleUpdateExpense={handleUpdateExpense}
                       handleDeleteExpense={handleDeleteExpense}
                       budget={salary / 12}
-                      totalNonPercentExpenses={totalNonPercentExpenses}
-                      totalPercent={totalPercent}
+                    //   totalNonPercentExpenses={totalNonPercentExpenses}
+                    //   totalPercent={totalPercent}
+                      totalNonPercentExpenses={1000}
+                      totalPercent={0}
                     />
                   </DisplayButton>
                 );
