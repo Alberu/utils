@@ -3,7 +3,7 @@ import { ResponsiveSankey } from "@nivo/sankey";
 import { tmp } from "@/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
-const IncomeSankeyDiagram = () => {
+const IncomeSankeyDiagram = ({ data }) => {
   // const data = {
   //   nodes: [
   //     { id: "A", color: "#f00" },
@@ -19,35 +19,6 @@ const IncomeSankeyDiagram = () => {
   //   ]
   // };
 
-  const data = {
-    nodes: [
-      { id: "Bonus", color: "#f00" },
-      { id: "Salary", color: "#f00" },
-      { id: "Income", color: "#f00" },
-      { id: "Pre-tax", color: "#ABAA99" },
-      { id: "Tax", color: "#2ECE2E" },
-      { id: "Savings", color: "#FA961" },
-      { id: "ISA", color: "#f00" },
-      { id: "Hi", color: "#FA961" },
-      { id: "Expenses", color: "#FA961" },
-      { id: "Rent", color: "#FA961" },
-      { id: "Food", color: "#FA961" },
-      { id: "Other", color: "#FA961" },
-    ],
-    links: [
-      { source: "Bonus", target: "Income", value: 0.1 },
-      { source: "Salary", target: "Income", value: 0.9 },
-      { source: "Income", target: "Pre-tax", value: 0.1 },
-      { source: "Income", target: "Tax", value: 0.3 },
-      { source: "Income", target: "Savings", value: 0.3 },
-      { source: "Income", target: "Expenses", value: 0.3 },
-      { source: "Expenses", target: "Rent", value: 0.09 },
-      { source: "Expenses", target: "Food", value: 0.09 },
-      { source: "Expenses", target: "Other", value: 0.09 },
-      { source: "Savings", target: "ISA", value: 0.09 },
-      { source: "Savings", target: "Hi", value: 0.09 },
-    ]
-  };
   // const colorScheme = ["#1f77b4", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
   const colorScheme = ['#f00', '#FA961F', '#2ECE2E', '#ABAA99'];
   const getColor = (bar) => colorScheme[bar.index % 10];

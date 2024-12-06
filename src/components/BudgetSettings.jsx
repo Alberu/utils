@@ -41,7 +41,7 @@ export function BudgetSettings({
           <DropdownMenuTrigger className="w-full" asChild>
             <Button variant="outline">
               <span className="text-muted-foreground">Category:</span>
-              {/* <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span> */}
+              <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">

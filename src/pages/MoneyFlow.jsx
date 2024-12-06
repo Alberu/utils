@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { calcTakeHome } from "@/utils/taxCalc";
+import { calcTakeHome, generateSankeyData } from "@/utils/taxCalc";
 import SalaryCard from "@/components/SalaryCard";
 import ExpensesCard from "@/components/ExpensesCard";
 import { ChevronRight } from "lucide-react";
@@ -17,6 +17,11 @@ const MoneyFlow = () => {
     // const salary2Calcs = calcTakeHome(salary2);
 
     // console.log(salary1Calcs)
+
+
+    // NEED TO COME BACK TO THIS AND MAKE IT WORK
+    // const data = generateSankeyData(salary1Calcs, expenses)
+    // console.log(data)
 
     return (
         <>
@@ -37,7 +42,7 @@ const MoneyFlow = () => {
                         salary={salary2}
                         setSalary={setSalary2}
                     /> */}
-                    <IncomeSankeyDiagram />
+                    {/* <IncomeSankeyDiagram data={data}/> */}
                 </div>
                 {/* </div> */}
             </PageLayout>
