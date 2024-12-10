@@ -46,6 +46,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   const [totalNonPercentExpenses, setTotalNonPercentExpenses] = useState(0);
   const [totalPercent, setTotalPercent] = useState(0);
 
+  // Invoke when the a change happens in the expenses or salary
   useEffect(() => {
     // calcualte the new total
     const newTotalExpenses = expenses.reduce(
@@ -67,39 +68,25 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
       0
     );
     setTotalNonPercentExpenses(newTotalNonPercentExpenses);
-
+    
     // update any other percent entries
     expenses.forEach((expense, expenseIndex) => {
-      if (expense.isPercent !== null && expense.isPercent !== false) {
-        const newValue =
-          (expense.isPercent / 100) *
-          (salary / 12 - newTotalNonPercentExpenses);
-        handleUpdateExpense(expenseIndex, newValue, "value");
-      }
-    });
+        if (expense.isPercent !== null && expense.isPercent !== false) {
+          const newValue =
+            (expense.isPercent / 100) *
+            (salary / 12 - newTotalNonPercentExpenses);
+          // make sure that this value doesn't just get updated uneccesarily so that it doens't just get rerendered
+          if (expense.value !== newValue) {
+            handleUpdateExpense(expenseIndex, newValue, "value");
+          }
+        }
+      });
 
+    // THIS ISN'T BEING USED AT THE MOMNET, BRING THIS BACK AT SOME POINT?
     setTotalPercent(
       expenses.reduce((sum, expense) => sum + Number(expense?.isPercent), 0)
     );
   }, [salary, expenses]);
-
-  //   // const totalExpenses = Object.values(expenses).reduce((sum, expense) => sum + expense, 0)
-  //   const totalExpenses = expenses.reduce(
-  //     (sum, expense) => sum + expense.value * occuraceMultiplier[expense.type],
-  //     0
-  //   );
-  //   const leftOvers = salary / 12 - totalExpenses;
-
-  //   // work out the total of the non percent boxes
-  //   const totalNonPercentExpenses = expenses.reduce(
-  //     (sum, expense) =>
-  //       expense?.percent === false || expense.percent === null
-  //         ? sum + expense?.value * occuraceMultiplier[expense?.type]
-  //         : sum,
-  //     0
-  //   );
-
-  //   const totalPercent = expenses.reduce((sum, expense) => sum + Number(expense?.percent), 0)
 
   return (
     <>
