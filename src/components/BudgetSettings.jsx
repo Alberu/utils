@@ -100,11 +100,10 @@ export function BudgetSettings({
 
           // if set to percent
           if (value == "percent") {
-            // set the expense to monthly
-            handleUpdateExpense(expenseIndex, "Monthly", "type");
             // work out the current percent of the value
+            // make sure that this takes into account the new value being a percent
             const expensePercent =
-              ((expense?.value * occuraceMultiplier[expense?.type]) / budget) *
+              ((expense?.value * occuraceMultiplier[expense?.type]) / (budget - totalNonPercentExpenses + expense?.value)) *
               100;
             // set that to be the percent
             handleUpdateExpense(expenseIndex, expensePercent, "isPercent");
@@ -114,6 +113,8 @@ export function BudgetSettings({
               expense?.value * occuraceMultiplier[expense?.type],
               "value"
             );
+            // set the expense to monthly
+            handleUpdateExpense(expenseIndex, "Monthly", "type");
           }
 
           // else do nothing
@@ -141,7 +142,6 @@ export function BudgetSettings({
                 <DropdownMenuRadioGroup
                   value={expense?.type}
                   onValueChange={(value) => {
-                    console.log(value);
                     handleUpdateExpense(expenseIndex, value, "type");
                   }}
                 >
