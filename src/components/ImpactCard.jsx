@@ -6,6 +6,7 @@ import { TrendingUp } from "lucide-react";
 import { DisplayButton } from "./DisplayButton";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 export const ImpactCard = ({ expenses }) => {
   // Variable to control the look ahead time period
@@ -20,6 +21,12 @@ export const ImpactCard = ({ expenses }) => {
       </CardHeader>
       <CardContent>
         <p>Currenlty looking at the effect of {timePeriod} years.</p>
+        <Input
+          value={timePeriod}
+          onChange={(e) => {
+            setTimePeriod(e.target.value);
+          }}
+        />
         {expenses.map((expense, expenseIndex) => {
           const value =
             expense.value * occuraceMultiplier[expense?.type] * timePeriod * 12;
