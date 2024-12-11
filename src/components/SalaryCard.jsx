@@ -1,4 +1,4 @@
-import { PoundSterling, TrendingUp } from "lucide-react";
+import { HandCoins, PoundSterling, TrendingUp } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ const SalaryCard = ({ title, calculations, salary, setSalary }) => (
     <Card>
         <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
+                <HandCoins className="h-5 w-5" />
                 {title}
             </CardTitle>
         </CardHeader>
