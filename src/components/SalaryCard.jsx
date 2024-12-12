@@ -13,7 +13,7 @@ import CircularPieChart from "./CircularPieChart";
 import { formatCurrency } from "@/utils";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   calcUsingBands,
   niBands,
@@ -32,6 +32,9 @@ const SalaryCard = ({
   setTaxes,
   net,
 }) => {
+  const [effectiveTaxRate, setEffectiveTaxRate] = useState(0);
+  const [noPensioneffectiveTaxRate, setNoPensioneffectiveTaxRate] = useState(0);
+
   // Handle any changes that happen in taxes
   const handleUpdateTax = (taxIndex, newValue, type) => {
     setTaxes((prevTaxes) =>
@@ -42,7 +45,7 @@ const SalaryCard = ({
   };
 
   useEffect(() => {
-    // Calcaulte and update each of the different sectoins
+    // Calculate and update each of the different sectoins
     const pension = taxes[0].active ? taxes[0]?.value || 0 : 0;
 
     for (let i = 1; i < taxes.length; i++) {
@@ -50,6 +53,37 @@ const SalaryCard = ({
       // Only update if the new value is different
       if (newValue !== taxes[i].value) {
         handleUpdateTax(i, newValue, "value");
+      }
+    }
+
+    // Calcualte the tolta amount of taxes
+    const sumOfTaxes = taxes.reduce((sum, tax, index) => {
+      // Dont' add the pension into the taxes
+      if (index === 0) {
+        return sum;
+      }
+
+      return tax.active ? sum + tax.value : sum;
+    }, 0);
+    // Set the new effective percent
+    const newEffectiveTaxRate = (sumOfTaxes / salary) * 100;
+    if (effectiveTaxRate != newEffectiveTaxRate) {
+      setEffectiveTaxRate(newEffectiveTaxRate);
+    }
+
+    // If pension is active, it will tell you how much % of taxes you are able to avoid
+    if (taxes[0].active) {
+      const noPension = taxes.reduce((sum, tax, index) => {
+        // Dont' add the pension into the taxes
+        if (index === 0) {
+          return sum;
+        }
+
+        return tax.active ? sum + calcUsingBands(salary, tax.bands) : sum;
+      }, 0);
+
+      if (noPensioneffectiveTaxRate !== (noPension / salary) * 100) {
+        setNoPensioneffectiveTaxRate((noPension / salary) * 100);
       }
     }
   }, [salary, taxes]);
@@ -99,44 +133,56 @@ const SalaryCard = ({
 
               {taxes.map((tax, taxIndex) => (
                 <p className="flex items-center space-x-2">
-                      <Switch checked={tax.active} onCheckedChange={(newValue) => {handleUpdateTax(taxIndex, newValue, 'active')}}></Switch>
-                <Popover key={taxIndex} className="flex items-center">
-                  <PopoverTrigger asChild>
-                    <Button
-                      className="flex justify-between w-full"
-                      variant="ghost"
-                    >
-                      <Label className="text-sm text-muted-foreground">
-                        {tax?.name}
-                      </Label>
-                      <p className="text-xl font-extralight">
-                        {tax.active ? formatCurrency(tax?.value) : formatCurrency(0)}
+                  <Switch
+                    checked={tax.active}
+                    onCheckedChange={(newValue) => {
+                      handleUpdateTax(taxIndex, newValue, "active");
+                    }}
+                  ></Switch>
+                  <Popover key={taxIndex} className="flex items-center">
+                    <PopoverTrigger asChild>
+                      <Button
+                        className="flex justify-between w-full"
+                        variant="ghost"
+                      >
+                        <Label className="text-sm text-muted-foreground">
+                          {tax?.name}
+                        </Label>
+                        <p className="text-xl font-extralight">
+                          {tax.active
+                            ? formatCurrency(tax?.value)
+                            : formatCurrency(0)}
+                        </p>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="space-y-2">
+                      <p className="flex items-center justify-between">
+                        <span className="font-light">Active</span>
+                        <Switch
+                          checked={tax.active}
+                          onCheckedChange={(newValue) => {
+                            handleUpdateTax(taxIndex, newValue, "active");
+                          }}
+                        ></Switch>
                       </p>
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="space-y-2">
-                    <p className="flex items-center justify-between">
-                      <span className="font-light">Active</span>
-                      <Switch checked={tax.active} onCheckedChange={(newValue) => {handleUpdateTax(taxIndex, newValue, 'active')}}></Switch>
-                    </p>
-                    {tax?.bands && (
-                      <>
-                        <Button variant="outline" className="w-full">
-                          Change bands
-                        </Button>
-                        {tax.bands.map((band, bandIndex) => (
-                          <p
-                            key={bandIndex}
-                            className="flex justify-between font-light"
-                          >
-                            <span>{formatCurrency(band.threshold)}</span>
-                            <span>{`${(band.rate * 100).toFixed(0)}%`}</span>
-                          </p>
-                        ))}
-                      </>
-                    )}
-                  </PopoverContent>
-                </Popover>
+                      {tax?.bands && (
+                        <>
+                          <Button variant="outline" className="w-full">
+                            Change bands
+                          </Button>
+                          {tax.bands.map((band, bandIndex) => (
+                            <p
+                              key={bandIndex}
+                              className="flex justify-between font-light"
+                            >
+                              <span>{formatCurrency(band.threshold)}</span>
+                              <span>{`${(band.rate * 100).toFixed(0)}%`}</span>
+                            </p>
+                          ))}
+                        </>
+                      )}
+                    </PopoverContent>
+                  </Popover>
                 </p>
               ))}
               <Separator />
@@ -145,9 +191,7 @@ const SalaryCard = ({
                 <Label className="text-sm text-muted-foreground">
                   Take Home Pay
                 </Label>
-                <p className="text-xl font-bold">
-                  £{formatCurrency(net)}
-                </p>
+                <p className="text-xl font-bold">£{formatCurrency(net)}</p>
               </Button>
             </div>
             <div>
@@ -155,11 +199,21 @@ const SalaryCard = ({
                 Effective Tax Rate
               </Label>
               <p className="text-lg">
-                {(
-                  ((calculations?.incomeTax + calculations?.ni) / salary) *
-                  100
-                ).toFixed(1)}{" "}
-                %
+                {effectiveTaxRate.toFixed(1)} %{" "}
+                {taxes[0].active && (
+                  <>
+                    <span className="text-xs text-muted-foreground">
+                      (saving{" "} £
+                      {formatCurrency((noPensioneffectiveTaxRate * salary) / 100 -
+                        (effectiveTaxRate * salary) / 100)}{" "}
+                      or{" "}
+                      {(noPensioneffectiveTaxRate - effectiveTaxRate).toFixed(
+                        1
+                      )}{" "}
+                      % from {noPensioneffectiveTaxRate.toFixed(1)} %)
+                    </span>
+                  </>
+                )}
               </p>
             </div>
           </div>
