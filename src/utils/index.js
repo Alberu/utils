@@ -1,3 +1,5 @@
+import { niBands, studentFinanceBands, taxBands } from './taxCalc';
+
 export const pages = [
   {
     id: 'Money Flow',
@@ -17,6 +19,7 @@ export const pages = [
 ];
 
 export const occuraceMultiplier = {
+  'Yearly': 1/12,
   'Monthly': 1,
   'Weekly': 4,
   'Daily': 30.47,
@@ -24,6 +27,13 @@ export const occuraceMultiplier = {
 }
 
 export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
+
+export const initialTaxes = [
+  { name: 'Income Tax', value: 3000, bands: taxBands },
+  { name: 'National Insurance', value: 2000, bands: niBands },
+  { name: 'Pension', value: 1500, percentValue: 5},
+  { name: 'Student Finance', value: 0, bands: studentFinanceBands},
+]
 
 export const initialExpenses = [
   { category: 'Essential', type: 'Monthly', name: "Rent", value: 1000, isPercent: false, colour: '#FA961F' },

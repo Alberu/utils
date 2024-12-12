@@ -13,6 +13,12 @@ export const niBands = [
     { threshold: Infinity, rate: 0.02 },
 ];
 
+export const studentFinanceBands = [
+    { threshold: 27295, rate: 0 }, // No repayment below this threshold
+    { threshold: 50000, rate: 0.09 }, // 9% of income over the threshold for Plan 2 loans
+    { threshold: Infinity, rate: 0.09 }, // Continues at 9% for higher income
+];
+
 export const calcUsingBands = (income, bands) => {
     let remainingIncome = income;
     let totalAmount = 0;

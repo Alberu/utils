@@ -15,9 +15,6 @@ const MoneyFlow = () => {
   const [expenses, setExpenses] = useState(initialExpenses);
 
   const salary1Calcs = calcTakeHome(salary1);
-  // const salary2Calcs = calcTakeHome(salary2);
-
-  // console.log(salary1Calcs)
 
   // NEED TO COME BACK TO THIS AND MAKE IT WORK
   // const data = generateSankeyData(salary1Calcs, expenses)
