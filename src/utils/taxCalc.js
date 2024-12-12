@@ -1,56 +1,42 @@
-import ExpensesCard from "@/components/ExpensesCard";
 
 // setup tax bands
-const taxBands = [
+export const taxBands = [
     { threshold: 12570, rate: 0 },
     { threshold: 50270, rate: 0.2 },
     { threshold: 125140, rate: 0.4 },
     { threshold: Infinity, rate: 0.45 },
 ];
 
-const niBands = [
+export const niBands = [
     { threshold: 12570, rate: 0 },
     { threshold: 50270, rate: 0.12 },
     { threshold: Infinity, rate: 0.02 },
 ];
 
-const calcIncomeTax = (income) => {
+export const calcUsingBands = (income, bands) => {
     let remainingIncome = income;
-    let totalTax = 0;
+    let totalAmount = 0;
     let previousThreshold = 0;
 
-    for (const band of taxBands) {
+    for (const band of bands) {
         const taxableAtThisBand = Math.min(
             Math.max(remainingIncome - previousThreshold, 0),
             band.threshold - previousThreshold
         );
-        totalTax += taxableAtThisBand * band.rate;
+        totalAmount += taxableAtThisBand * band.rate;
         previousThreshold = band.threshold;
     }
 
-    return totalTax;
+    return totalAmount;
 };
 
-const calcNI = (income) => {
-    let remainingIncome = income;
-    let totalNI = 0;
-    let previousThreshold = 0;
+export const calcTakeHome = (salary) => {
+    // pre tax stuff
+    const pension = 1000;
 
-    for (const band of niBands) {
-        const taxableAtThisBand = Math.min(
-            Math.max(remainingIncome - previousThreshold, 0),
-            band.threshold - previousThreshold
-        );
-        totalNI += taxableAtThisBand * band.rate;
-        previousThreshold = band.threshold;
-    }
-
-    return totalNI;
-};
-
-const calcTakeHome = (salary) => {
-    const incomeTax = calcIncomeTax(salary);
-    const ni = calcNI(salary);
+    // tax stuff
+    const incomeTax = calcUsingBands(salary, taxBands);
+    const ni = calcUsingBands(salary, niBands);
     return {
         gross: salary,
         incomeTax,
@@ -125,5 +111,3 @@ export function generateSankeyData(salaryCalcs, expenses) {
 
     return { nodes, links };
 }
-
-export { taxBands, niBands, calcIncomeTax, calcNI, calcTakeHome }
