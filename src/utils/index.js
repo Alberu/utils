@@ -29,10 +29,10 @@ export const occuraceMultiplier = {
 export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
 
 export const initialTaxes = [
-  { name: 'Pension', value: 1500, percentValue: 5, active: false},
-  { name: 'Income Tax', value: 3000, bands: taxBands, active: true },
-  { name: 'National Insurance', value: 2000, bands: niBands, active: true },
-  { name: 'Student Finance', value: 0, bands: studentFinanceBands, active: false},
+  { name: 'Pension', value: 1500, percentValue: 5, active: false, colour: "#ABAA99"},
+  { name: 'Income Tax', value: 3000, bands: taxBands, active: true, colour: "#f00" },
+  { name: 'National Insurance', value: 2000, bands: niBands, active: true, colour: "#FA961F" },
+  { name: 'Student Finance', value: 0, bands: studentFinanceBands, active: false, colour: "#f00"},
 ]
 
 export const initialExpenses = [

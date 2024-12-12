@@ -163,10 +163,13 @@ const SalaryCard = ({
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="space-y-2">
-                      {(tax?.percentValue || tax?.percentValue == 0)  && (
+                      {(tax?.percentValue || tax?.percentValue == 0) && (
                         <div className="space-y-2">
                           <Label className="text-sm font-light text-muted-foreground">
-                            Percent Selected <span className="text-black">{tax?.percentValue} %</span>
+                            Percent Selected{" "}
+                            <span className="text-black">
+                              {tax?.percentValue} %
+                            </span>
                           </Label>
                           <Slider
                             value={[tax?.percentValue]}
@@ -244,20 +247,11 @@ const SalaryCard = ({
           </div>
           <CircularPieChart
             chartData={[
-              {
-                name: "Income Tax",
-                value: calculations.incomeTax,
-                colour: "#f00",
-              },
-              {
-                name: "National Insurance",
-                value: calculations.ni,
-                colour: "#FA961F",
-              },
+              ...taxes.filter((tax) => tax.active),
               {
                 name: "Take Home Pay",
-                value: calculations.net,
-                colour: "#ABAA99",
+                value: net,
+                colour: "#2ECE2E",
               },
             ]}
           />
