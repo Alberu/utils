@@ -40,42 +40,42 @@ const SalaryCard = ({
     handleUpdateTax(0, Number(value), "percentValue");
     const newValue = (Number(value) / 100) * salary;
     handleUpdateTax(0, newValue, "value");
-};
+  };
 
-// Handle any changes that happen in taxes
-const handleUpdateTax = (taxIndex, newValue, type) => {
+  // Handle any changes that happen in taxes
+  const handleUpdateTax = (taxIndex, newValue, type) => {
     setTaxes((prevTaxes) =>
-        prevTaxes.map((tax, i) =>
-            i === taxIndex ? { ...tax, [type]: newValue } : tax
-)
-);
-};
+      prevTaxes.map((tax, i) =>
+        i === taxIndex ? { ...tax, [type]: newValue } : tax
+      )
+    );
+  };
 
-useEffect(() => {
+  useEffect(() => {
     // Calculate and update each of the different sectoins
     const pension = taxes[0].active ? taxes[0]?.value || 0 : 0;
-    
+
     for (let i = 1; i < taxes.length; i++) {
-        const newValue = calcUsingBands(salary - pension, taxes[i].bands);
-        // Only update if the new value is different
-        if (newValue !== taxes[i].value) {
-            handleUpdateTax(i, newValue, "value");
-        }
+      const newValue = calcUsingBands(salary - pension, taxes[i].bands);
+      // Only update if the new value is different
+      if (newValue !== taxes[i].value) {
+        handleUpdateTax(i, newValue, "value");
+      }
     }
-    
+
     // Calcualte the tolta amount of taxes
     const sumOfTaxes = taxes.reduce((sum, tax, index) => {
-        // Dont' add the pension into the taxes
-        if (index === 0) {
-            return sum;
-        }
-        
-        return tax.active ? sum + tax.value : sum;
+      // Dont' add the pension into the taxes
+      if (index === 0) {
+        return sum;
+      }
+
+      return tax.active ? sum + tax.value : sum;
     }, 0);
     // Set the new effective percent
     const newEffectiveTaxRate = (sumOfTaxes / salary) * 100;
     if (effectiveTaxRate != newEffectiveTaxRate) {
-        setEffectiveTaxRate(newEffectiveTaxRate);
+      setEffectiveTaxRate(newEffectiveTaxRate);
     }
 
     // Update the pension value
@@ -143,14 +143,14 @@ useEffect(() => {
               <Separator />
 
               {taxes.map((tax, taxIndex) => (
-                <p className="flex items-center space-x-2">
+                <p key={taxIndex} className="flex items-center space-x-2">
                   <Switch
                     checked={tax.active}
                     onCheckedChange={(newValue) => {
                       handleUpdateTax(taxIndex, newValue, "active");
                     }}
                   ></Switch>
-                  <Popover key={taxIndex} className="flex items-center">
+                  <Popover className="flex items-center">
                     <PopoverTrigger asChild>
                       <Button
                         className="flex justify-between w-full"
