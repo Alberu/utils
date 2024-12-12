@@ -31,8 +31,10 @@ export function BudgetSettings({
     handleUpdateExpense(expenseIndex, newValue, "value");
   };
 
-  const FlexBox = ({ children }) => <div className="flex gap-2">{children}</div>;
-  const flexBoxDiv = "flex gap-2"
+  const FlexBox = ({ children }) => (
+    <div className="flex gap-2">{children}</div>
+  );
+  const flexBoxDiv = "flex gap-2";
 
   return (
     <div className="space-y-2">
@@ -41,7 +43,9 @@ export function BudgetSettings({
           <DropdownMenuTrigger className="w-full" asChild>
             <Button variant="outline">
               <span className="text-muted-foreground">Category:</span>
-              <span style={{color: initialCategories[expense?.category]}}>{expense?.category}</span>
+              <span style={{ color: initialCategories[expense?.category] }}>
+                {expense?.category}
+              </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
@@ -57,7 +61,11 @@ export function BudgetSettings({
               }}
             >
               {Object.keys(initialCategories).map((item, itemIndex) => (
-                <DropdownMenuRadioItem key={itemIndex} value={item} style={{color: initialCategories[item]}}>
+                <DropdownMenuRadioItem
+                  key={itemIndex}
+                  value={item}
+                  style={{ color: initialCategories[item] }}
+                >
                   {item}
                 </DropdownMenuRadioItem>
               ))}
@@ -69,7 +77,7 @@ export function BudgetSettings({
           handleUpdateExpense={handleUpdateExpense}
           expenseIndex={expenseIndex}
         />
-        </div>
+      </div>
       <div className={flexBoxDiv}>
         <Input
           value={expense?.name}
@@ -87,7 +95,7 @@ export function BudgetSettings({
         >
           <Trash2 />
         </Button>
-        </div>
+      </div>
       <Tabs
         defaultValue={expense?.isPercent ? "percent" : "value"} // change this to depend on the percent
         className="w-full bg-muted p-1 rounded-lg"
@@ -103,7 +111,8 @@ export function BudgetSettings({
             // work out the current percent of the value
             // make sure that this takes into account the new value being a percent
             const expensePercent =
-              ((expense?.value * occuraceMultiplier[expense?.type]) / (budget - totalNonPercentExpenses + expense?.value)) *
+              ((expense?.value * occuraceMultiplier[expense?.type]) /
+                (budget - totalNonPercentExpenses + expense?.value)) *
               100;
             // set that to be the percent
             handleUpdateExpense(expenseIndex, expensePercent, "isPercent");
@@ -129,7 +138,7 @@ export function BudgetSettings({
           </TabsTrigger>
         </TabsList>
         <TabsContent value="value">
-            <div className={flexBoxDiv}>
+          <div className={flexBoxDiv}>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">{expense?.type}</Button>
@@ -167,7 +176,7 @@ export function BudgetSettings({
               step="25"
               min="0"
             />
-            </div>
+          </div>
         </TabsContent>
         <TabsContent value="percent" className="space-y-2">
           <Slider

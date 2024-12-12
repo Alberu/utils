@@ -22,6 +22,7 @@ import {
 } from "@/utils/taxCalc";
 import { Toggle } from "./ui/toggle";
 import { Switch } from "./ui/switch";
+import { Slider } from "./ui/slider";
 
 const SalaryCard = ({
   title,
@@ -34,6 +35,12 @@ const SalaryCard = ({
 }) => {
   const [effectiveTaxRate, setEffectiveTaxRate] = useState(0);
   const [noPensioneffectiveTaxRate, setNoPensioneffectiveTaxRate] = useState(0);
+
+  const handlePercentChange = (value) => {
+    handleUpdateTax(0, Number(value), "percentValue");
+    const newValue = (Number(value) / 100) * salary;
+    handleUpdateTax(0, newValue, "value");
+  };
 
   // Handle any changes that happen in taxes
   const handleUpdateTax = (taxIndex, newValue, type) => {
@@ -156,6 +163,22 @@ const SalaryCard = ({
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="space-y-2">
+                      {(tax?.percentValue || tax?.percentValue == 0)  && (
+                        <div className="space-y-2">
+                          <Label className="text-sm font-light text-muted-foreground">
+                            Percent Selected <span className="text-black">{tax?.percentValue} %</span>
+                          </Label>
+                          <Slider
+                            value={[tax?.percentValue]}
+                            min={0}
+                            max={50}
+                            step={5}
+                            onValueChange={(value) => {
+                              handlePercentChange(value[0]);
+                            }}
+                          />
+                        </div>
+                      )}
                       <p className="flex items-center justify-between">
                         <span className="font-light">Active</span>
                         <Switch
@@ -203,9 +226,11 @@ const SalaryCard = ({
                 {taxes[0].active && (
                   <>
                     <span className="text-xs text-muted-foreground">
-                      (saving{" "} £
-                      {formatCurrency((noPensioneffectiveTaxRate * salary) / 100 -
-                        (effectiveTaxRate * salary) / 100)}{" "}
+                      (saving £
+                      {formatCurrency(
+                        (noPensioneffectiveTaxRate * salary) / 100 -
+                          (effectiveTaxRate * salary) / 100
+                      )}{" "}
                       or{" "}
                       {(noPensioneffectiveTaxRate - effectiveTaxRate).toFixed(
                         1
