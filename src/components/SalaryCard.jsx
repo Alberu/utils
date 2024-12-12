@@ -40,16 +40,16 @@ const SalaryCard = ({
 
   useEffect(() => {
     // Calcaulte and update each of the different sectoins
-    const pension = taxes[0]?.value || 0
+    const pension = taxes[0]?.value || 0;
     for (let i = 1; i < taxes.length; i++) {
-        const newValue = calcUsingBands(salary - pension, taxes[i].bands)
-        // Only update if the new value is different
-        if (newValue !== taxes[i].value){
-            handleUpdateTax(i, newValue, 'value')
-        }
+      const newValue = calcUsingBands(salary - pension, taxes[i].bands);
+      // Only update if the new value is different
+      if (newValue !== taxes[i].value) {
+        handleUpdateTax(i, newValue, "value");
+      }
     }
   }, [salary, taxes]);
-  
+
   return (
     <Card>
       <CardHeader>
@@ -90,25 +90,43 @@ const SalaryCard = ({
                   />
                 </PopoverContent>
               </Popover>
-              <div className="group relative">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-100 flex items-center"></div>
-              </div>
 
               <Separator />
 
               {taxes.map((tax, taxIndex) => (
-                <Button
-                  key={taxIndex}
-                  className="flex justify-between w-full"
-                  variant="ghost"
-                >
-                  <Label className="text-sm text-muted-foreground">
-                    {tax?.name}
-                  </Label>
-                  <p className="text-xl font-extralight">
-                    {formatCurrency(tax?.value)}
-                  </p>
-                </Button>
+                <Popover key={taxIndex}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      className="flex justify-between w-full"
+                      variant="ghost"
+                    >
+                      <Label className="text-sm text-muted-foreground">
+                        {tax?.name}
+                      </Label>
+                      <p className="text-xl font-extralight">
+                        {formatCurrency(tax?.value)}
+                      </p>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    {tax?.bands && (
+                      <>
+                        <Button variant="outline" className="w-full">
+                          Change bands
+                        </Button>
+                        {tax.bands.map((band, bandIndex) => (
+                          <p
+                            key={bandIndex}
+                            className="flex justify-between font-light"
+                          >
+                            <span>{formatCurrency(band.threshold)}</span>
+                            <span>{`${(band.rate * 100).toFixed(0)}%`}</span>
+                          </p>
+                        ))}
+                      </>
+                    )}
+                  </PopoverContent>
+                </Popover>
               ))}
               <Separator />
 
