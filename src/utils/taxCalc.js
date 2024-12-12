@@ -36,6 +36,25 @@ export const calcUsingBands = (income, bands) => {
     return totalAmount;
 };
 
+export const calculateFutureValue = (initialPrincipal, monthlyContribution, annualReturnRate, months) => {
+    const monthlyRate = annualReturnRate / 12; // Monthly return rate
+    let total = initialPrincipal;
+
+    const monthlyBalances = []; // Array to track the balance month by month
+
+    for (let month = 1; month <= months; month++) {
+        // Apply monthly return to the current total
+        total *= (1 + monthlyRate);
+
+        // Add the monthly contribution
+        total += monthlyContribution;
+
+        // Record the balance for this month
+        monthlyBalances.push({ month, balance: total });
+    }
+    return monthlyBalances;
+}
+
 export const calcTakeHome = (salary) => {
     // pre tax stuff
     const pension = 1000;
@@ -96,11 +115,11 @@ export function generateSankeyData(salaryCalcs, expenses) {
     }, {});
 
     Object.entries(expenseCategoryTotals).forEach(([category, categoryTotal]) => {
-            links.push({
-                source: "Expenses",
-                target: category,
-                value: categoryTotal
-            });
+        links.push({
+            source: "Expenses",
+            target: category,
+            value: categoryTotal
+        });
     });
 
     // Expenses Categories to Specific Expenses

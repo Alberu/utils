@@ -20,6 +20,8 @@ import {
   studentFinanceBands,
   taxBands,
 } from "@/utils/taxCalc";
+import { Toggle } from "./ui/toggle";
+import { Switch } from "./ui/switch";
 
 const SalaryCard = ({
   title,
@@ -28,6 +30,7 @@ const SalaryCard = ({
   setSalary,
   taxes,
   setTaxes,
+  net,
 }) => {
   // Handle any changes that happen in taxes
   const handleUpdateTax = (taxIndex, newValue, type) => {
@@ -40,7 +43,8 @@ const SalaryCard = ({
 
   useEffect(() => {
     // Calcaulte and update each of the different sectoins
-    const pension = taxes[0]?.value || 0;
+    const pension = taxes[0].active ? taxes[0]?.value || 0 : 0;
+
     for (let i = 1; i < taxes.length; i++) {
       const newValue = calcUsingBands(salary - pension, taxes[i].bands);
       // Only update if the new value is different
@@ -94,7 +98,9 @@ const SalaryCard = ({
               <Separator />
 
               {taxes.map((tax, taxIndex) => (
-                <Popover key={taxIndex}>
+                <p className="flex items-center space-x-2">
+                      <Switch checked={tax.active} onCheckedChange={(newValue) => {handleUpdateTax(taxIndex, newValue, 'active')}}></Switch>
+                <Popover key={taxIndex} className="flex items-center">
                   <PopoverTrigger asChild>
                     <Button
                       className="flex justify-between w-full"
@@ -104,11 +110,15 @@ const SalaryCard = ({
                         {tax?.name}
                       </Label>
                       <p className="text-xl font-extralight">
-                        {formatCurrency(tax?.value)}
+                        {tax.active ? formatCurrency(tax?.value) : formatCurrency(0)}
                       </p>
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent>
+                  <PopoverContent className="space-y-2">
+                    <p className="flex items-center justify-between">
+                      <span className="font-light">Active</span>
+                      <Switch checked={tax.active} onCheckedChange={(newValue) => {handleUpdateTax(taxIndex, newValue, 'active')}}></Switch>
+                    </p>
                     {tax?.bands && (
                       <>
                         <Button variant="outline" className="w-full">
@@ -127,39 +137,8 @@ const SalaryCard = ({
                     )}
                   </PopoverContent>
                 </Popover>
+                </p>
               ))}
-              <Separator />
-
-              <Button className="flex justify-between w-full" variant="ghost">
-                <Label className="text-sm text-muted-foreground">Pension</Label>
-                <p className="text-xl font-extralight">{formatCurrency(0)}</p>
-              </Button>
-              <Button
-                className="my-0 py-0 flex justify-between w-full"
-                variant="ghost"
-              >
-                <Label className="text-sm text-muted-foreground">
-                  Income Tax
-                </Label>
-                <p className="text-xl font-extralight">
-                  {formatCurrency(calculations?.incomeTax)}
-                </p>
-              </Button>
-              <Button className="flex justify-between w-full" variant="ghost">
-                <Label className="text-sm text-muted-foreground">
-                  National Insurance
-                </Label>
-                <p className="text-xl font-extralight">
-                  {formatCurrency(calculations?.ni)}
-                </p>
-              </Button>
-              <Button className="flex justify-between w-full" variant="ghost">
-                <Label className="text-sm text-muted-foreground">
-                  Student Finance
-                </Label>
-                <p className="text-xl font-extralight">{formatCurrency(0)}</p>
-              </Button>
-
               <Separator />
 
               <Button className="flex justify-between w-full" variant="ghost">
@@ -167,7 +146,7 @@ const SalaryCard = ({
                   Take Home Pay
                 </Label>
                 <p className="text-xl font-bold">
-                  £{formatCurrency(calculations?.net)}
+                  £{formatCurrency(net)}
                 </p>
               </Button>
             </div>
