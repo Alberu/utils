@@ -5,12 +5,14 @@ import ExpensesCard from "@/components/ExpensesCard";
 import { ChevronRight } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import IncomeSankeyDiagram from "@/components/IncomeSankeyDiagram";
-import { initialExpenses } from "@/utils";
+import { initialExpenses, initialTaxes } from "@/utils";
 import { ImpactCard } from "@/components/ImpactCard";
 
 const MoneyFlow = () => {
   const [salary1, setSalary1] = useState(30000);
   // const [salary2, setSalary2] = useState(70000);
+
+  const [taxes, setTaxes] = useState(initialTaxes);
 
   const [expenses, setExpenses] = useState(initialExpenses);
 
@@ -31,6 +33,8 @@ const MoneyFlow = () => {
             calculations={salary1Calcs}
             salary={salary1}
             setSalary={setSalary1}
+            taxes={taxes}
+            setTaxes={setTaxes}
           />
           <ExpensesCard
             salary={salary1Calcs?.net}
