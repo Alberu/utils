@@ -104,6 +104,7 @@ const ExpensesCard = ({ salary, expenses, setExpenses }) => {
                 variant="outline"
                 onClick={() => {
                   handleAddExpense({
+                    category: "Essential",
                     type: "Monthly",
                     name: "Other",
                     value: 200,
