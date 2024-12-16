@@ -7,6 +7,7 @@ import { DisplayButton } from "./DisplayButton";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { calculateFutureValue } from "@/utils/taxCalc";
 
 export const ImpactCard = ({ expenses }) => {
   // Variable to control the look ahead time period
@@ -28,8 +29,16 @@ export const ImpactCard = ({ expenses }) => {
           }}
         />
         {expenses.map((expense, expenseIndex) => {
-          const value =
-            expense.value * occuraceMultiplier[expense?.type] * timePeriod * 12;
+          const expenseValue =
+            expense.value * occuraceMultiplier[expense?.type];
+          const value = expenseValue * timePeriod * 12;
+          const monthBreakdown = calculateFutureValue(
+            expenseValue,
+            expenseValue,
+            0.2,
+            12
+          );
+          // console.log(monthBreakdown[monthBreakdown.length - 1].value);
           return (
             <Popover key={expenseIndex}>
               <PopoverTrigger asChild>
@@ -57,6 +66,7 @@ export const ImpactCard = ({ expenses }) => {
                     <p className="text-xl font-light">
                       {formatCurrency(value)}
                     </p>
+                    <p className="text-xl font-light">{formatCurrency(monthBreakdown[monthBreakdown.length - 1].value)}</p>
                     {/* make sure that you can switch between these two values in the future */}
                     {/* <p className="text-xl font-bold">£{formatCurrency(value)}</p> */}
                   </div>

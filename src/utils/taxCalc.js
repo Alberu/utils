@@ -50,7 +50,7 @@ export const calculateFutureValue = (initialPrincipal, monthlyContribution, annu
         total += monthlyContribution;
 
         // Record the balance for this month
-        monthlyBalances.push({ month, balance: total });
+        monthlyBalances.push({ month, value: total });
     }
     return monthlyBalances;
 }
