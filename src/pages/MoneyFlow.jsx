@@ -26,7 +26,7 @@ const MoneyFlow = () => {
   }, [taxes, salary1])
 
   // NEED TO COME BACK TO THIS AND MAKE IT WORK
-  // const data = generateSankeyData(salary1Calcs, expenses)
+  const data = generateSankeyData(salary1Calcs, expenses)
   // console.log(data)
 
   return (
@@ -55,7 +55,7 @@ const MoneyFlow = () => {
                         salary={salary2}
                         setSalary={setSalary2}
                     /> */}
-          {/* <IncomeSankeyDiagram data={data}/> */}
+          <IncomeSankeyDiagram data={data}/>
           <ImpactCard expenses={expenses} />
         </div>
         {/* </div> */}

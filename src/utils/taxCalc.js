@@ -37,7 +37,12 @@ export const calcUsingBands = (income, bands) => {
 };
 
 export const calculateFutureValue = (initialPrincipal, monthlyContribution, annualReturnRate, months) => {
+    // const monthlyRate = Math.log(1+annualReturnRate) / Math.log(12)
     const monthlyRate = annualReturnRate / 12; // Monthly return rate
+    console.log('new')
+    console.log(Math.log(1+annualReturnRate) / Math.log(12))
+    console.log(Math.pow(1+annualReturnRate, 1 / 12))
+    console.log(monthlyRate)
     let total = initialPrincipal;
 
     const monthlyBalances = []; // Array to track the balance month by month
