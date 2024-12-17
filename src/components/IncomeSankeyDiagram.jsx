@@ -44,7 +44,7 @@ const IncomeSankeyDiagram = ({ data }) => {
               return (node.color)}
             }
             // colors={node => node.nodeColor}
-            sort={'descending'}
+            sort={'input'}
             nodeOpacity={0.6}
             nodeHoverOthersOpacity={0.6}
             nodeThickness={30}
@@ -60,6 +60,7 @@ const IncomeSankeyDiagram = ({ data }) => {
             labelOrientation="horizontal"
             labelPadding={16}
             labelTextColor={{ from: "color", modifiers: [["darker", 1]] }}
+            motionConfig="wobbly"
           />
         </div>
       </CardContent>
