@@ -45,16 +45,16 @@ const IncomeSankeyDiagram = ({ data }) => {
             }
             // colors={node => node.nodeColor}
             sort={'input'}
-            nodeOpacity={0.6}
-            nodeHoverOthersOpacity={0.6}
-            nodeThickness={30}
+            nodeOpacity={0.5}
+            nodeHoverOthersOpacity={0.5}
+            nodeThickness={24}
             nodeSpacing={2}
-            nodeBorderWidth={0}
+            nodeBorderWidth={0.5}
             nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
             nodeBorderRadius={2}
             linkOpacity={0.5}
             linkHoverOthersOpacity={0.1}
-            linkContract={0}
+            linkContract={2}
             enableLinkGradient={true}
             labelPosition="inside"
             labelOrientation="horizontal"
