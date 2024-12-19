@@ -13,9 +13,12 @@ export const ItemPrice = () => {
 
   // To store the different multipliers that you want to add
   const [multipliers, setMultipliers] = useState([
-    { name: "€->£", value: 0.83, isActive: true },
-    { name: "Tax refund", value: 0.8, isActive: true },
+    { name: "€->£", value: 0.83 },
+    { name: "Tax refund", value: 0.8 },
   ]);
+
+  // To keep track of the active multipliers
+  const [activeMultiplliers, setActiveMultipliers] = useState([]);
 
   return (
     <Card>
@@ -34,10 +37,14 @@ export const ItemPrice = () => {
           />
         ))}
         <h1>Multipliers</h1>
-        <ToggleGroup type="multiple" value={multipliers} onValueChange={(newValue) => {console.log(newValue)}}>
+        <ToggleGroup
+          type="multiple"
+          onValueChange={(newMults) => setActiveMultipliers(newMults)}
+        >
           {multipliers.map((multiplier, multiplierIndex) => (
-            <ToggleGroupItem key={multiplierIndex} value={multiplier.value}>
+            <ToggleGroupItem key={multiplierIndex} value={multiplier}>
               {multiplier.name}
+              <span>{multiplier.value}</span>
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -45,7 +52,7 @@ export const ItemPrice = () => {
         {prices.map((price, priceIndex) => (
           <p key={priceIndex}>
             {formatCurrency(
-              multipliers.reduce(
+              activeMultiplliers.reduce(
                 (finalPrice, multiplier) => finalPrice * multiplier.value,
                 price.value
               )
