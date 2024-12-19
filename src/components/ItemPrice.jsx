@@ -17,7 +17,7 @@ import { Button } from "./ui/button";
 
 export const ItemPrice = ({ initialOriginalPrice }) => {
   // The different currencies that you can use
-  const [currencies, setCurrencies] = useState({ "£": 1, "€": 0.83, "$": 1.26 });
+  const [currencies, setCurrencies] = useState({ "£": 1, "€": 0.83, $: 1.26 });
   const [activeCurrency, setActiveCurrency] = useState("£");
 
   // The original price we are compaing this to
@@ -67,17 +67,40 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
           </DropdownMenu>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <h1>Original Price</h1>
-        {originalPrice.currency}
-        {formatCurrency(originalPrice.value)}
-        <h1>Prices</h1>
+      <CardContent className="space-y-2">
+        <h1 className="font-extralight text-muted-foreground">
+          Original Price
+        </h1>
+        <p>
+          <span>
+            {activeCurrency}{" "}
+            {formatCurrency(
+              (originalPrice.value * currencies[originalPrice.currency]) /
+                currencies[activeCurrency]
+            )}
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {" "}
+            ({originalPrice.currency} {formatCurrency(originalPrice.value)})
+          </span>
+        </p>
+        <h1 className="font-extralight text-muted-foreground">
+          Compare Prices
+        </h1>
         {prices.map((price, priceIndex) => (
-          <DisplayButton
-            key={priceIndex}
-            name={price.name}
-            value={price.value}
-          />
+          <p key={priceIndex}>
+            <span>
+              {activeCurrency}{" "}
+              {formatCurrency(
+                (price.value * currencies[price.currency]) /
+                  currencies[activeCurrency]
+              )}
+            </span>
+            <span className="text-xs text-muted-foreground">
+              {" "}
+              ({price.name} {price.currency} {formatCurrency(price.value)})
+            </span>
+          </p>
         ))}
         <h1>Multipliers</h1>
         <ToggleGroup
@@ -91,17 +114,18 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        <h1>Savings</h1>
+        <h1>Savings / Output</h1>
         {prices.map((price, priceIndex) => {
           let appliedPrice = activeMultiplliers.reduce(
             (finalPrice, multiplier) => finalPrice * multiplier.value,
             price.value
           );
 
-          appliedPrice *= currencies[price.currency]/currencies[activeCurrency];
+          appliedPrice *=
+            currencies[price.currency] / currencies[activeCurrency];
           return (
             <p key={priceIndex}>
-              {formatCurrency(appliedPrice)}
+              {activeCurrency} {formatCurrency(appliedPrice)}
               <span className="text-xs text-muted-foreground">
                 {" "}
                 (saving {formatCurrency(
