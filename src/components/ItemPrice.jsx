@@ -14,6 +14,8 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
+import { Input } from "./ui/input";
 
 export const ItemPrice = ({ initialOriginalPrice }) => {
   // The different currencies that you can use
@@ -71,19 +73,35 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
         <h1 className="font-extralight text-muted-foreground">
           Original Price
         </h1>
-        <p>
-          <span>
-            {activeCurrency}{" "}
-            {formatCurrency(
-              (originalPrice.value * currencies[originalPrice.currency]) /
-                currencies[activeCurrency]
-            )}
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {" "}
-            ({originalPrice.currency} {formatCurrency(originalPrice.value)})
-          </span>
-        </p>
+        <Popover>
+          <PopoverTrigger asChild>
+            <p>
+              <span>
+                {activeCurrency}{" "}
+                {formatCurrency(
+                  (originalPrice.value * currencies[originalPrice.currency]) /
+                    currencies[activeCurrency]
+                )}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {" "}
+                ({originalPrice.currency} {formatCurrency(originalPrice.value)})
+              </span>
+            </p>
+          </PopoverTrigger>
+          <PopoverContent align="start">
+            <Input
+              value={originalPrice.value}
+              onChange={(e) => {
+                setOriginalPrice((OldPrice) => ({
+                  ...OldPrice,
+                  ["value"]: e.target.value,
+                }));
+              }}
+            />
+            <span>currency change will be here</span>
+          </PopoverContent>
+        </Popover>
         <h1 className="font-extralight text-muted-foreground">
           Compare Prices
         </h1>
