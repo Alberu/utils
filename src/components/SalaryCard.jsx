@@ -178,8 +178,8 @@ const SalaryCard = ({
                           <Slider
                             value={[tax?.percentValue]}
                             min={0}
-                            max={50}
-                            step={5}
+                            max={20}
+                            step={1}
                             onValueChange={(value) => {
                               handlePercentChange(value[0]);
                             }}

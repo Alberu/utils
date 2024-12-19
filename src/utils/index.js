@@ -16,6 +16,13 @@ export const pages = [
     thumbnail: '/api/placeholder/300/200',
     component: () => import('@/pages/TripCalc.jsx')
   },
+  {
+    id: 'Simple Price Compare Tool',
+    title: 'Price Compare',
+    description: 'A way to compare prices easily and fast',
+    thumbnail: '/api/placeholder/300/200',
+    component: () => import('@/pages/PriceCompare.jsx')
+  },
 ];
 
 export const occuraceMultiplier = {
