@@ -3,10 +3,22 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
 import { DisplayButton } from "./DisplayButton";
 import { formatCurrency } from "@/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "./ui/button";
 
-export const ItemPrice = ({initialOriginalPrice}) => {
+export const ItemPrice = ({ initialOriginalPrice }) => {
   // The different currencies that you can use
-  const [currencies, setCurrencies] = useState({ "£": 1, "€": 0.83 });
+  const [currencies, setCurrencies] = useState({ "£": 1, "€": 0.83, "$": 1.26 });
+  const [activeCurrency, setActiveCurrency] = useState("£");
 
   // The original price we are compaing this to
   const [originalPrice, setOriginalPrice] = useState(initialOriginalPrice);
@@ -31,7 +43,28 @@ export const ItemPrice = ({initialOriginalPrice}) => {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          Item (can add more?)
+          <h2>Item</h2>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">{activeCurrency}</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Main Currency</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={activeCurrency}
+                onValueChange={(value) => {
+                  setActiveCurrency(value);
+                }}
+              >
+                {Object.keys(currencies).map((currency, currencyIndex) => (
+                  <DropdownMenuRadioItem key={currencyIndex} value={currency}>
+                    {currency}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -65,16 +98,19 @@ export const ItemPrice = ({initialOriginalPrice}) => {
             price.value
           );
 
-          appliedPrice *= currencies[price.currency];
+          appliedPrice *= currencies[price.currency]/currencies[activeCurrency];
           return (
             <p key={priceIndex}>
               {formatCurrency(appliedPrice)}
               <span className="text-xs text-muted-foreground">
                 {" "}
-                (saving {formatCurrency(originalPrice.value - appliedPrice)} or{" "}
-                {((100 * (originalPrice.value - appliedPrice)) / originalPrice.value).toFixed(
-                  1
-                )}{" "}
+                (saving {formatCurrency(
+                  originalPrice.value - appliedPrice
+                )} or{" "}
+                {(
+                  (100 * (originalPrice.value - appliedPrice)) /
+                  originalPrice.value
+                ).toFixed(1)}{" "}
                 %)
               </span>
             </p>
