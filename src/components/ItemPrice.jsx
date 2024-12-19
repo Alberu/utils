@@ -33,8 +33,8 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
 
   // To store the different multipliers that you want to add
   const [multipliers, setMultipliers] = useState([
-    { name: "€->£", value: 0.83 },
     { name: "Tax refund", value: 0.8 },
+    { name: "Less Tax refund", value: 0.85 },
     { name: "Black friday", value: 0.5 },
   ]);
 
@@ -147,7 +147,7 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
               <span className="text-xs text-muted-foreground">
                 {" "}
                 (saving {formatCurrency(
-                  originalPrice.value - appliedPrice
+                  originalPrice.value * currencies[originalPrice.currency] / currencies[activeCurrency] - appliedPrice
                 )} or{" "}
                 {(
                   (100 * (originalPrice.value - appliedPrice)) /

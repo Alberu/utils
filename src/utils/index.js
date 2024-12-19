@@ -23,6 +23,13 @@ export const pages = [
     thumbnail: '/api/placeholder/300/200',
     component: () => import('@/pages/PriceCompare.jsx')
   },
+  {
+    id: 'Will You do something',
+    title: 'Will You',
+    description: 'A way to get your friends to do something for you',
+    thumbnail: '/api/placeholder/300/200',
+    component: () => import('@/pages/WillYou.jsx')
+  },
 ];
 
 export const occuraceMultiplier = {
