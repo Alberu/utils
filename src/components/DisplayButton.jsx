@@ -6,8 +6,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 export function DisplayButton({
   children,
   name,
-  colour,
   value,
+  colour = null,
   percent = null,
   category = null,
   variant = "default",
