@@ -49,16 +49,25 @@ export const ItemPrice = () => {
           ))}
         </ToggleGroup>
         <h1>Savings</h1>
-        {prices.map((price, priceIndex) => (
-          <p key={priceIndex}>
-            {formatCurrency(
-              activeMultiplliers.reduce(
-                (finalPrice, multiplier) => finalPrice * multiplier.value,
-                price.value
-              )
-            )}
-          </p>
-        ))}
+        {prices.map((price, priceIndex) => {
+          const appliedPrice = activeMultiplliers.reduce(
+            (finalPrice, multiplier) => finalPrice * multiplier.value,
+            price.value
+          );
+          return (
+            <p key={priceIndex}>
+              {formatCurrency(appliedPrice)}
+              <span className="text-xs text-muted-foreground">
+                {" "}
+                (saving {formatCurrency(price.value - appliedPrice)} or{" "}
+                {((100 * (price.value - appliedPrice)) / price.value).toFixed(
+                  1
+                )}{" "}
+                %)
+              </span>
+            </p>
+          );
+        })}
       </CardContent>
     </Card>
   );
