@@ -16,6 +16,7 @@ import {
 import { Button } from "./ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { Input } from "./ui/input";
+import DropdownPriceSettings from "./DropdownPriceSettings";
 
 export const ItemPrice = ({ initialItemName='Item Name', initialOriginalPrice }) => {
   // The name of the item
@@ -47,36 +48,13 @@ export const ItemPrice = ({ initialItemName='Item Name', initialOriginalPrice })
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <h2>
-                {itemName} in {activeCurrency}
-              </h2>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="start">
-              <DropdownMenuLabel>
-                <Input
-                  value={itemName}
-                  onChange={(e) => {
-                    setItemName(e.target.value);
-                  }}
-                />
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                value={activeCurrency}
-                onValueChange={(value) => {
-                  setActiveCurrency(value);
-                }}
-              >
-                {Object.keys(currencies).map((currency, currencyIndex) => (
-                  <DropdownMenuRadioItem key={currencyIndex} value={currency}>
-                    {currency}
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <DropdownPriceSettings 
+          text={`${itemName} in ${activeCurrency}`}
+          itemValue={itemName}
+          handleValueChange={setItemName}
+          selectValue={activeCurrency}
+          handleSelectValueChange={setActiveCurrency}
+          currencies={currencies} />
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
