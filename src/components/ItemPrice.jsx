@@ -17,7 +17,9 @@ import { Button } from "./ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { Input } from "./ui/input";
 
-export const ItemPrice = ({ initialOriginalPrice }) => {
+export const ItemPrice = ({ initialItemName='Item Name', initialOriginalPrice }) => {
+  // The name of the item
+  const [itemName, setItemName] = useState(initialItemName);
   // The different currencies that you can use
   const [currencies, setCurrencies] = useState({ "£": 1, "€": 0.83, $: 1.26 });
   const [activeCurrency, setActiveCurrency] = useState("£");
@@ -45,13 +47,21 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          <h2>Item</h2>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">{activeCurrency}</Button>
+              <h2>
+                {itemName} in {activeCurrency}
+              </h2>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Main Currency</DropdownMenuLabel>
+            <DropdownMenuContent className="w-56" align="start">
+              <DropdownMenuLabel>
+                <Input
+                  value={itemName}
+                  onChange={(e) => {
+                    setItemName(e.target.value);
+                  }}
+                />
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
                 value={activeCurrency}
@@ -156,7 +166,10 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
                 <span>{activeCurrency}</span>
                 <span>{formatCurrency(originalPrice.value)}</span>
                 <span>{formatCurrency(appliedPrice)}</span>
-                <span className="text-xs text-muted-foreground">(saving {formatCurrency(savings)} or {percent_saved.toFixed(1)} %)</span>
+                <span className="text-xs text-muted-foreground">
+                  (saving {formatCurrency(savings)} or{" "}
+                  {percent_saved.toFixed(1)} %)
+                </span>
               </p>
             </div>
           );
