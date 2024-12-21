@@ -16,7 +16,7 @@ const DropdownPriceSettings = ({
   handleValueChange,
   selectValue,
   handleSelectValueChange,
-  currencies,
+  selectOptions,
 }) => {
   return (
     <DropdownMenu>
@@ -41,9 +41,9 @@ const DropdownPriceSettings = ({
             handleSelectValueChange(value);
           }}
         >
-          {Object.keys(currencies).map((currency, currencyIndex) => (
-            <DropdownMenuRadioItem key={currencyIndex} value={currency}>
-              {currency}
+          {Object.keys(selectOptions).map((option, optionIndex) => (
+            <DropdownMenuRadioItem key={optionIndex} value={option}>
+              {option}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

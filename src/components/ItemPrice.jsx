@@ -18,7 +18,10 @@ import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { Input } from "./ui/input";
 import DropdownPriceSettings from "./DropdownPriceSettings";
 
-export const ItemPrice = ({ initialItemName='Item Name', initialOriginalPrice }) => {
+export const ItemPrice = ({
+  initialItemName = "Item Name",
+  initialOriginalPrice,
+}) => {
   // The name of the item
   const [itemName, setItemName] = useState(initialItemName);
   // The different currencies that you can use
@@ -44,23 +47,43 @@ export const ItemPrice = ({ initialItemName='Item Name', initialOriginalPrice })
   // To keep track of the active multipliers
   const [activeMultiplliers, setActiveMultipliers] = useState([]);
 
+  const handleOriginalPriceChange = (newValue) => {
+    setOriginalPrice((OldPrice) => ({
+      ...OldPrice,
+      ["value"]: newValue,
+    }));
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-lg flex items-center gap-2">
-          <DropdownPriceSettings 
-          text={`${itemName} in ${activeCurrency}`}
-          itemValue={itemName}
-          handleValueChange={setItemName}
-          selectValue={activeCurrency}
-          handleSelectValueChange={setActiveCurrency}
-          currencies={currencies} />
+          <DropdownPriceSettings
+            text={`${itemName} in ${activeCurrency}`}
+            itemValue={itemName}
+            handleValueChange={setItemName}
+            selectValue={activeCurrency}
+            handleSelectValueChange={setActiveCurrency}
+            selectOptions={currencies}
+          />
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
         <h1 className="font-extralight text-muted-foreground">
           Original Price
         </h1>
+        <DropdownPriceSettings
+          text={formatCurrency(
+            (originalPrice.value * currencies[originalPrice.currency]) /
+              currencies[activeCurrency]
+          )}
+          itemValue={originalPrice.value}
+          handleValueChange={handleOriginalPriceChange}
+          selectValue={activeCurrency}
+          handleSelectValueChange={setActiveCurrency}
+          selectOptions={currencies}
+        />
+
         <Popover>
           <PopoverTrigger asChild>
             <p>
