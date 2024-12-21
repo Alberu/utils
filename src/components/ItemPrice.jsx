@@ -141,21 +141,24 @@ export const ItemPrice = ({ initialOriginalPrice }) => {
 
           appliedPrice *=
             currencies[price.currency] / currencies[activeCurrency];
+
+          // Calculate the amount of savings
+          const savings =
+            (originalPrice.value * currencies[originalPrice.currency]) /
+              currencies[activeCurrency] -
+            appliedPrice;
+
+          const percent_saved =
+            (100 * (originalPrice.value - appliedPrice)) / originalPrice.value;
           return (
-            <p key={priceIndex}>
-              {activeCurrency} {formatCurrency(appliedPrice)}
-              <span className="text-xs text-muted-foreground">
-                {" "}
-                (saving {formatCurrency(
-                  originalPrice.value * currencies[originalPrice.currency] / currencies[activeCurrency] - appliedPrice
-                )} or{" "}
-                {(
-                  (100 * (originalPrice.value - appliedPrice)) /
-                  originalPrice.value
-                ).toFixed(1)}{" "}
-                %)
-              </span>
-            </p>
+            <div key={priceIndex}>
+              <p className="flex space-x-5 items-baseline">
+                <span>{activeCurrency}</span>
+                <span>{formatCurrency(originalPrice.value)}</span>
+                <span>{formatCurrency(appliedPrice)}</span>
+                <span className="text-xs text-muted-foreground">(saving {formatCurrency(savings)} or {percent_saved.toFixed(1)} %)</span>
+              </p>
+            </div>
           );
         })}
       </CardContent>
