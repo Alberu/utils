@@ -20,20 +20,20 @@ const WillYou = () => {
 ];
   return (
     <PageLayout>
-      <Card className="container max-w-lg">
+      <Card className="container">
         <CardHeader>{/* <CardTitle>Hi</CardTitle> */}</CardHeader>
         <CardContent className="text-center">
           <p>Will you be my valentine?</p>
-          <p className="grid-cols-2 text-center">
+          <p className="grid-cols-2 text-center space-x-1">
             <button
-              className="p-5"
-              style={{ fontSize: `${8 * 2 ** (rejections + 1)}px` }}
+              className="rounded-lg px-5 py-2 bg-green-400"
+              style={{ fontSize: `${8 * 1.5 ** (rejections + 1)}px` }}
             >
               Yes
             </button>
-            {rejections < 4 && (
+            {rejections < 40 && (
               <button
-                className="p-5"
+                className="rounded-lg px-5 py-2 bg-red-400"
                 onClick={() => {
                   setRejections((prevValue) => prevValue + 1);
                 }}
