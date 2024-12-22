@@ -54,6 +54,14 @@ export const ItemPrice = ({
     }));
   };
 
+  const handlePriceCurrencyChange = (priceIndex, newCurrency, type) => {
+    setPrices((oldPrices) =>
+      oldPrices.map((price, i) =>
+        i === priceIndex ? { ...price, [type]: newCurrency } : price
+      )
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -131,6 +139,25 @@ export const ItemPrice = ({
             </span>
           </p>
         ))}
+        {prices.map((price, priceIndex) => {
+          const convertedValue =
+            (price.value * currencies[price.currency]) /
+            currencies[activeCurrency];
+          return (
+            <DropdownPriceSettings
+              key={priceIndex}
+              text={`${activeCurrency} ${convertedValue}`}
+              itemValue={price.value}
+              handleValueChange={handlePriceCurrencyChange}
+              valueType='value'
+              selectValue={price.currency}
+              handleSelectValueChange={handlePriceCurrencyChange}
+              selectType='currency'
+              selectOptions={currencies}
+              index={priceIndex}
+            />
+          );
+        })}
         <h1>Multipliers</h1>
         <ToggleGroup
           type="multiple"

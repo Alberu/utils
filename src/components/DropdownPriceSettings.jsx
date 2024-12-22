@@ -14,23 +14,32 @@ const DropdownPriceSettings = ({
   text,
   itemValue,
   handleValueChange,
+  valueType = null,
   selectValue,
   handleSelectValueChange,
   selectOptions,
+  selectType = null,
+  index=null,
 }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <h2>
-          {text}
-        </h2>
+        <h2>{text}</h2>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuLabel>
           <Input
             value={itemValue}
             onChange={(e) => {
-              handleValueChange(e.target.value);
+              if (valueType === null) {
+                handleValueChange(e.target.value);
+              } else {
+                handleValueChange(
+                  index,
+                  e.target.value,
+                  valueType
+                );
+              }
             }}
           />
         </DropdownMenuLabel>
@@ -38,7 +47,15 @@ const DropdownPriceSettings = ({
         <DropdownMenuRadioGroup
           value={selectValue}
           onValueChange={(value) => {
-            handleSelectValueChange(value);
+            if (selectType === null) {
+              handleSelectValueChange(value);
+            } else {
+              handleValueChange(
+                index,
+                value,
+                selectType
+              );
+            }
           }}
         >
           {Object.keys(selectOptions).map((option, optionIndex) => (
