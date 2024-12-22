@@ -113,11 +113,15 @@ export const ItemPrice = ({
           <Button
             variant="outline"
             onClick={() => {
-              hanldeDicListAdd(setPrices, { name: "NewValue", value: 209, currency: "€" });
+              hanldeDicListAdd(setPrices, {
+                name: "NewValue",
+                value: 209,
+                currency: "€",
+              });
             }}
           >
             +
-          </Button>
+          </Button>{" "}
           Compare Prices
         </h1>
         {prices.map((price, priceIndex) => {
@@ -157,22 +161,22 @@ export const ItemPrice = ({
         {originalPrices.map((originalPrice, originalPriceIndex) => {
           return (
             <div key={originalPriceIndex}>
-              <Separator/>
+              <Separator />
               {prices.map((price, priceIndex) => {
                 let appliedPrice = activeMultiplliers.reduce(
                   (finalPrice, multiplier) => finalPrice * multiplier.value,
                   price.value
                 );
-      
+
                 appliedPrice *=
                   currencies[price.currency] / currencies[activeCurrency];
-      
+
                 // Calculate the amount of savings
                 const savings =
                   (originalPrice.value * currencies[originalPrice.currency]) /
                     currencies[activeCurrency] -
                   appliedPrice;
-      
+
                 const percent_saved =
                   (100 * (originalPrice.value - appliedPrice)) /
                   originalPrice.value;
@@ -191,7 +195,7 @@ export const ItemPrice = ({
                 );
               })}
             </div>
-          )
+          );
         })}
       </CardContent>
     </Card>
