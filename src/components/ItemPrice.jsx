@@ -17,6 +17,7 @@ import { Button } from "./ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { Input } from "./ui/input";
 import DropdownPriceSettings from "./DropdownPriceSettings";
+import { Separator } from "./ui/separator";
 
 export const ItemPrice = ({
   initialItemName = "Item Name",
@@ -33,8 +34,8 @@ export const ItemPrice = ({
 
   // To store the differnet prices that you want to compare
   const [prices, setPrices] = useState([
-    { name: "Original", value: 209, applyMultiplier: false, currency: "€" },
-    { name: "New", value: 190, applyMultiplier: true, currency: "€" },
+    { name: "Original", value: 209, currency: "€" },
+    { name: "New", value: 190, currency: "€" },
   ]);
 
   // To store the different multipliers that you want to add
@@ -109,6 +110,14 @@ export const ItemPrice = ({
         })}
 
         <h1 className="font-extralight text-muted-foreground">
+          <Button
+            variant="outline"
+            onClick={() => {
+              hanldeDicListAdd(setPrices, { name: "NewValue", value: 209, currency: "€" });
+            }}
+          >
+            +
+          </Button>
           Compare Prices
         </h1>
         {prices.map((price, priceIndex) => {
@@ -130,6 +139,7 @@ export const ItemPrice = ({
             />
           );
         })}
+
         <h1>Multipliers</h1>
         <ToggleGroup
           type="multiple"
@@ -142,38 +152,46 @@ export const ItemPrice = ({
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
+
         <h1>Savings / Output</h1>
-        {prices.map((price, priceIndex) => {
-          let appliedPrice = activeMultiplliers.reduce(
-            (finalPrice, multiplier) => finalPrice * multiplier.value,
-            price.value
-          );
-
-          appliedPrice *=
-            currencies[price.currency] / currencies[activeCurrency];
-
-          // Calculate the amount of savings
-          const savings =
-            (originalPrices[0].value * currencies[originalPrices[0].currency]) /
-              currencies[activeCurrency] -
-            appliedPrice;
-
-          const percent_saved =
-            (100 * (originalPrices[0].value - appliedPrice)) /
-            originalPrices[0].value;
+        {originalPrices.map((originalPrice, originalPriceIndex) => {
           return (
-            <div key={priceIndex}>
-              <p className="flex space-x-5 items-baseline">
-                <span>{activeCurrency}</span>
-                <span>{formatCurrency(originalPrices[0].value)}</span>
-                <span>{formatCurrency(appliedPrice)}</span>
-                <span className="text-xs text-muted-foreground">
-                  (saving {formatCurrency(savings)} or{" "}
-                  {percent_saved.toFixed(1)} %)
-                </span>
-              </p>
+            <div key={originalPriceIndex}>
+              <Separator/>
+              {prices.map((price, priceIndex) => {
+                let appliedPrice = activeMultiplliers.reduce(
+                  (finalPrice, multiplier) => finalPrice * multiplier.value,
+                  price.value
+                );
+      
+                appliedPrice *=
+                  currencies[price.currency] / currencies[activeCurrency];
+      
+                // Calculate the amount of savings
+                const savings =
+                  (originalPrice.value * currencies[originalPrice.currency]) /
+                    currencies[activeCurrency] -
+                  appliedPrice;
+      
+                const percent_saved =
+                  (100 * (originalPrice.value - appliedPrice)) /
+                  originalPrice.value;
+                return (
+                  <div key={priceIndex}>
+                    <p className="flex space-x-5 items-baseline">
+                      <span>{activeCurrency}</span>
+                      <span>{formatCurrency(originalPrice.value)}</span>
+                      <span>{formatCurrency(appliedPrice)}</span>
+                      <span className="text-xs text-muted-foreground">
+                        (saving {formatCurrency(savings)} or{" "}
+                        {percent_saved.toFixed(1)} %)
+                      </span>
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-          );
+          )
         })}
       </CardContent>
     </Card>
