@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
 import { DisplayButton } from "./DisplayButton";
-import { formatCurrency } from "@/utils";
+import { formatCurrency, hanldeDicListAdd } from "@/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,13 +47,6 @@ export const ItemPrice = ({
   // To keep track of the active multipliers
   const [activeMultiplliers, setActiveMultipliers] = useState([]);
 
-  // const handleOriginalPriceChange = (newValue) => {
-  //   setOriginalPrices((OldPrice) => ({
-  //     ...OldPrice,
-  //     ["value"]: newValue,
-  //   }));
-  // };
-
   const handlePriceCurrencyChange = (priceIndex, newCurrency, type) => {
     setPrices((oldPrices) =>
       oldPrices.map((price, i) =>
@@ -85,6 +78,14 @@ export const ItemPrice = ({
       </CardHeader>
       <CardContent className="space-y-2">
         <h1 className="font-extralight text-muted-foreground">
+          <Button
+            variant="outline"
+            onClick={() => {
+              hanldeDicListAdd(setOriginalPrices, initialOriginalPrice);
+            }}
+          >
+            +
+          </Button>{" "}
           Original Price
         </h1>
         {originalPrices.map((price, priceIndex) => {

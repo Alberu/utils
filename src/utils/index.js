@@ -33,7 +33,7 @@ export const pages = [
 ];
 
 export const occuraceMultiplier = {
-  'Yearly': 1/12,
+  'Yearly': 1 / 12,
   'Monthly': 1,
   'Weekly': 4,
   'Daily': 30.47,
@@ -43,10 +43,10 @@ export const occuraceMultiplier = {
 export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
 
 export const initialTaxes = [
-  { name: 'Pension', value: 1500, percentValue: 5, active: false, colour: "#ABAA99"},
+  { name: 'Pension', value: 1500, percentValue: 5, active: false, colour: "#ABAA99" },
   { name: 'Income Tax', value: 3000, bands: taxBands, active: true, colour: "#f00" },
   { name: 'National Insurance', value: 2000, bands: niBands, active: true, colour: "#FA961F" },
-  { name: 'Student Finance', value: 0, bands: studentFinanceBands, active: false, colour: "#f00"},
+  { name: 'Student Finance', value: 0, bands: studentFinanceBands, active: false, colour: "#f00" },
 ]
 
 export const initialExpenses = [
@@ -88,8 +88,27 @@ export const finances = [
   },
 ]
 
-// locale can also be set to undefined to let the system pick
+// Locale can also be set to undefined to let the system pick
 export const formatCurrency = (num, decimalPlaces = 2, locale = 'en-GB') => num.toLocaleString(locale, { minimumFractionDigits: decimalPlaces, maximumFractionDigits: decimalPlaces })
+
+// Functions to handle changes on lists of dictionaries
+export const hanldeDicListUpdate = (setUsestate, dicIndex, newValue, type) => {
+  setUsestate((prevDics) =>
+    prevDics.map((dic, i) =>
+      i === dicIndex ? { ...dic, [type]: newValue } : dic
+    )
+  );
+};
+
+export const hanldeDicListAdd = (setUsestate, newDic) => {
+  setUsestate((prevDics) => [...prevDics, newDic]);
+};
+
+export const hanldeDicListDelete = (setUsestate, dicIndex) => {
+  setUsestate((prevDics) =>
+    prevDics.filter((_, valIndex) => valIndex !== dicIndex)
+  );
+};
 
 export const tmp = {
   nodes: [

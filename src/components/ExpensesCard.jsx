@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 
 const ExpensesCard = ({ salary, expenses, setExpenses }) => {
   const handleUpdateExpense = (expenseIndex, newValue, type) => {
+  // Update the value of any expense
     setExpenses((prevExpenses) =>
       prevExpenses.map((expense, i) =>
         i === expenseIndex ? { ...expense, [type]: newValue } : expense
