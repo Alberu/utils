@@ -29,7 +29,7 @@ export const ItemPrice = ({
   const [activeCurrency, setActiveCurrency] = useState("£");
 
   // The original price we are compaing this to
-  const [originalPrice, setOriginalPrice] = useState(initialOriginalPrice);
+  const [originalPrices, setOriginalPrices] = useState([initialOriginalPrice]);
 
   // To store the differnet prices that you want to compare
   const [prices, setPrices] = useState([
@@ -47,12 +47,12 @@ export const ItemPrice = ({
   // To keep track of the active multipliers
   const [activeMultiplliers, setActiveMultipliers] = useState([]);
 
-  const handleOriginalPriceChange = (newValue) => {
-    setOriginalPrice((OldPrice) => ({
-      ...OldPrice,
-      ["value"]: newValue,
-    }));
-  };
+  // const handleOriginalPriceChange = (newValue) => {
+  //   setOriginalPrices((OldPrice) => ({
+  //     ...OldPrice,
+  //     ["value"]: newValue,
+  //   }));
+  // };
 
   const handlePriceCurrencyChange = (priceIndex, newCurrency, type) => {
     setPrices((oldPrices) =>
@@ -62,6 +62,13 @@ export const ItemPrice = ({
     );
   };
 
+  const handleOriginalPriceChange = (priceIndex, newCurrency, type) => {
+    setOriginalPrices((oldPrices) =>
+      oldPrices.map((price, i) =>
+        i === priceIndex ? { ...price, [type]: newCurrency } : price
+      )
+    );
+  };
   return (
     <Card>
       <CardHeader>
@@ -80,65 +87,29 @@ export const ItemPrice = ({
         <h1 className="font-extralight text-muted-foreground">
           Original Price
         </h1>
-        <DropdownPriceSettings
-          text={formatCurrency(
-            (originalPrice.value * currencies[originalPrice.currency]) /
-              currencies[activeCurrency]
-          )}
-          itemValue={originalPrice.value}
-          handleValueChange={handleOriginalPriceChange}
-          selectValue={activeCurrency}
-          handleSelectValueChange={setActiveCurrency}
-          selectOptions={currencies}
-        />
-
-        <Popover>
-          <PopoverTrigger asChild>
-            <p>
-              <span>
-                {activeCurrency}{" "}
-                {formatCurrency(
-                  (originalPrice.value * currencies[originalPrice.currency]) /
-                    currencies[activeCurrency]
-                )}
-              </span>
-              <span className="text-xs text-muted-foreground">
-                {" "}
-                ({originalPrice.currency} {formatCurrency(originalPrice.value)})
-              </span>
-            </p>
-          </PopoverTrigger>
-          <PopoverContent align="start">
-            <Input
-              value={originalPrice.value}
-              onChange={(e) => {
-                setOriginalPrice((OldPrice) => ({
-                  ...OldPrice,
-                  ["value"]: e.target.value,
-                }));
-              }}
+        {originalPrices.map((price, priceIndex) => {
+          const convertedValue =
+            (price.value * currencies[price.currency]) /
+            currencies[activeCurrency];
+          return (
+            <DropdownPriceSettings
+              key={priceIndex}
+              text={`${activeCurrency} ${convertedValue}`}
+              itemValue={price.value}
+              handleValueChange={handleOriginalPriceChange}
+              valueType="value"
+              selectValue={price.currency}
+              handleSelectValueChange={handleOriginalPriceChange}
+              selectType="currency"
+              selectOptions={currencies}
+              index={priceIndex}
             />
-            <span>currency change will be here</span>
-          </PopoverContent>
-        </Popover>
+          );
+        })}
+
         <h1 className="font-extralight text-muted-foreground">
           Compare Prices
         </h1>
-        {prices.map((price, priceIndex) => (
-          <p key={priceIndex}>
-            <span>
-              {activeCurrency}{" "}
-              {formatCurrency(
-                (price.value * currencies[price.currency]) /
-                  currencies[activeCurrency]
-              )}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {" "}
-              ({price.name} {price.currency} {formatCurrency(price.value)})
-            </span>
-          </p>
-        ))}
         {prices.map((price, priceIndex) => {
           const convertedValue =
             (price.value * currencies[price.currency]) /
@@ -149,10 +120,10 @@ export const ItemPrice = ({
               text={`${activeCurrency} ${convertedValue}`}
               itemValue={price.value}
               handleValueChange={handlePriceCurrencyChange}
-              valueType='value'
+              valueType="value"
               selectValue={price.currency}
               handleSelectValueChange={handlePriceCurrencyChange}
-              selectType='currency'
+              selectType="currency"
               selectOptions={currencies}
               index={priceIndex}
             />
@@ -182,17 +153,18 @@ export const ItemPrice = ({
 
           // Calculate the amount of savings
           const savings =
-            (originalPrice.value * currencies[originalPrice.currency]) /
+            (originalPrices[0].value * currencies[originalPrices[0].currency]) /
               currencies[activeCurrency] -
             appliedPrice;
 
           const percent_saved =
-            (100 * (originalPrice.value - appliedPrice)) / originalPrice.value;
+            (100 * (originalPrices[0].value - appliedPrice)) /
+            originalPrices[0].value;
           return (
             <div key={priceIndex}>
               <p className="flex space-x-5 items-baseline">
                 <span>{activeCurrency}</span>
-                <span>{formatCurrency(originalPrice.value)}</span>
+                <span>{formatCurrency(originalPrices[0].value)}</span>
                 <span>{formatCurrency(appliedPrice)}</span>
                 <span className="text-xs text-muted-foreground">
                   (saving {formatCurrency(savings)} or{" "}
