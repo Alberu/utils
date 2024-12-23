@@ -22,6 +22,7 @@ import { Separator } from "./ui/separator";
 export const ItemPrice = ({
   initialItemName = "Item Name",
   initialOriginalPrice,
+  initialPrices,
 }) => {
   // The name of the item
   const [itemName, setItemName] = useState(initialItemName);
@@ -30,13 +31,10 @@ export const ItemPrice = ({
   const [activeCurrency, setActiveCurrency] = useState("£");
 
   // The original price we are compaing this to
-  const [originalPrices, setOriginalPrices] = useState([initialOriginalPrice]);
+  const [originalPrices, setOriginalPrices] = useState(initialOriginalPrice);
 
   // To store the differnet prices that you want to compare
-  const [prices, setPrices] = useState([
-    { name: "Original", value: 209, currency: "€" },
-    { name: "New", value: 190, currency: "€" },
-  ]);
+  const [prices, setPrices] = useState(initialPrices);
 
   // To store the different multipliers that you want to add
   const [multipliers, setMultipliers] = useState([
@@ -96,7 +94,7 @@ export const ItemPrice = ({
           return (
             <DropdownPriceSettings
               key={priceIndex}
-              text={`${activeCurrency} ${convertedValue}`}
+              text={`${activeCurrency} ${convertedValue} - ${price.name}`}
               itemValue={price.value}
               handleValueChange={handleOriginalPriceChange}
               valueType="value"
@@ -131,7 +129,7 @@ export const ItemPrice = ({
           return (
             <DropdownPriceSettings
               key={priceIndex}
-              text={`${activeCurrency} ${convertedValue}`}
+              text={`${activeCurrency} ${convertedValue} - ${price.name}`}
               itemValue={price.value}
               handleValueChange={handlePriceCurrencyChange}
               valueType="value"
@@ -190,6 +188,7 @@ export const ItemPrice = ({
                         (saving {formatCurrency(savings)} or{" "}
                         {percent_saved.toFixed(1)} %)
                       </span>
+                      <span className="text-muted-foreground">{originalPrice.name} - {price.name}</span>
                     </p>
                   </div>
                 );
