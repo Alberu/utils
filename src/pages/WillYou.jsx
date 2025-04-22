@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
+export const meta = {
+  title: "will",
+  description: "Having trouble deciding? Use me!",
+};
+
 const WillYou = () => {
   const [rejections, setRejections] = useState(0);
   const [yes, setYes] = useState(false);

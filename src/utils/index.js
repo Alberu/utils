@@ -7,7 +7,6 @@ export const pages = [
     description: 'To help with taxes and how to spend your money',
     thumbnail: '/api/placeholder/300/200',
     component: () => import('@/pages/MoneyFlow.jsx')
-    // component: () => import('../pages/Page2.jsx') // can also be done like this
   },
   {
     id: 'Trip Price Calculator',

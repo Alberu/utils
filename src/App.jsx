@@ -6,45 +6,35 @@ import { pages } from "./utils";
 import HomePage from "./components/HomePage";
 
 const App = () => {
-  const modules = import.meta.glob("@/pages/*.jsx");
+  // Import just the metadata
+  const metaModules = import.meta.glob("@/pages/*.jsx", { 
+    eager: true,
+    import: 'meta'
+  });
 
-  const components = Object.values(modules).map((mod) => ({
-    Component: mod.default,
-    meta: mod.meta || { title: "Untitled", description: "" },
-  }));
-
-  const pageRoutes = Object.entries(modules).map(([path, importFn]) => {
-    // Extract component name from path
-    console.log(path)
+  // Set up the imports for the actual lazy loaded components
+  const componentImports = import.meta.glob("@/pages/*.jsx");
+  
+  const pageRoutes = Object.entries(metaModules).map(([path, meta]) => {
     const componentName = path.match(/([^/]+)\.jsx$/)[1];
-    console.log(componentName)
     
-    // Create a lazy-loaded component for this path
-    const LazyComponent = React.lazy(importFn);
+    const LazyComponent = React.lazy(() => componentImports[path]());
+    
+    const routePath = meta && meta.id ? `/${meta.id}` : `/${componentName.toLowerCase()}`;
+    console.log(routePath)
     
     return {
-      path: `/${componentName.toLowerCase()}`,
+      path: routePath,
       Component: LazyComponent,
-      // We'll load the meta when the component is actually rendered
+      meta: meta || { title: componentName }  // Store the metadata
     };
   });
-  console.log(pageRoutes)
 
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* {components.map(({ Component, meta }, i) => {
-            const slug = meta.title.toLowerCase().replace(/\s+/g, '-');
-            return (
-              <Route
-                key={i}
-                path={`/${slug}`}
-                element={<Component />}
-              />
-            );
-          })} */}
           {pageRoutes.map(({ path, Component }, i) => (
             <Route
               key={i}
@@ -52,19 +42,6 @@ const App = () => {
               element={<Component />}
             />
           ))}
-          {/* {components.map(({ Component, meta }, i) => {
-            return (
-              <Route
-                key={i}
-                path={`/${meta.title}`}
-                element={
-                  <Suspense fallback={<div>Loading page...</div>}>
-                    {React.createElement(lazy(Component))}
-                  </Suspense>
-                }
-              />
-            );
-          })} */}
         </Routes>
       </Suspense>
     </BrowserRouter>

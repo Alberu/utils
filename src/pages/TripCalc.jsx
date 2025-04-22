@@ -8,6 +8,11 @@ import PageLayout from "@/components/PageLayout";
 import { Fuel } from "lucide-react";
 import { formatCurrency } from "@/utils";
 
+export const meta = {
+  title: "trip",
+  description: "Having trouble deciding? Use me!",
+};
+
 const TripCalc = () => {
     const [fuelEconomy, setFuelEconomy] = useState(40);
     const [fuelPrice, setFuelPrice] = useState(1.4);

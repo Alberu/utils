@@ -1,6 +1,11 @@
 import { ItemPrice } from "@/components/ItemPrice";
 import PageLayout from "@/components/PageLayout";
 
+export const meta = {
+  title: "price",
+  description: "Having trouble deciding? Use me!",
+};
+
 const PriceCompare = () => {
   return (
     <PageLayout>

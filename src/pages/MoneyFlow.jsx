@@ -9,6 +9,11 @@ import { initialExpenses, initialTaxes } from "@/utils";
 import { ImpactCard } from "@/components/ImpactCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const meta = {
+  title: "Moneyflow",
+  description: "Having trouble deciding? Use me!",
+};
+
 const MoneyFlow = () => {
   const [salary1, setSalary1] = useState(30000);
   // const [salary2, setSalary2] = useState(70000);
