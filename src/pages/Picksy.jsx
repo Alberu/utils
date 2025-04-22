@@ -31,7 +31,7 @@ const Picksy = () => {
       <PageLayout>
         <div className="w-full">
           <Separator />
-          <Accordion type="single" collapsible>
+          <Accordion type="multiple" collapsible>
             {components.map(({ Component, meta }, i) => {
               return (
                 <AccordionItem value={`item-${i}`}>

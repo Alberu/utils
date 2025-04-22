@@ -47,6 +47,13 @@ export const occuraceMultiplier = {
   // 'other': 1,
 }
 
+export const getRandomInteger = (min, max) => {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
 export const initialCategories = { 'Essential': '#ABAA99', 'Investment': '#FA961F', 'Savings': '#2ECE2E', 'Other': '#f00' }
 
 export const initialTaxes = [
