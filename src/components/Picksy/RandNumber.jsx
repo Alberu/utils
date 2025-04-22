@@ -1,6 +1,7 @@
 import { getRandomInteger } from "@/utils";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 
 export const meta = {
   title: "Random Number",
@@ -17,7 +18,7 @@ export default function RandNumber() {
   };
 
   return (
-    <div className="flex-col space-y-4">
+    <div className="flex-col space-y-4 items-center">
       <div className="flex space-x-1">
         <Input
           className="text-center"
@@ -34,9 +35,9 @@ export default function RandNumber() {
           onChange={(e) => setMaxLimit(Number(e.target.value))}
         />
       </div>
-      <p className="text-center text-5xl m-auto" onClick={handleClick}>
+      <div className="text-center text-5xl" onClick={handleClick}>
         {number}
-      </p>
+      </div>
     </div>
   );
 }

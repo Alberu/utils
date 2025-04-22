@@ -48,7 +48,7 @@ export default function Arrow() {
               viewBox="0 0 24 24"
               width="100%"
               height="100%"
-              className="text-red-600 fill-current"
+              className="text-black fill-current"
             >
               <path d="M12 2L4 10h6v12h4V10h6L12 2z" />
             </svg>
