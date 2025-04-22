@@ -23,6 +23,7 @@ import {
 import { Toggle } from "./ui/toggle";
 import { Switch } from "./ui/switch";
 import { Slider } from "./ui/slider";
+import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
 
 const SalaryCard = ({
   title,
@@ -260,6 +261,39 @@ const SalaryCard = ({
             ]}
           />
         </div>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Stats</AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col">
+                  <Label className="text-sm text-muted-foreground">
+                    Effective Tax Rate
+                  <span className="text-lg">
+                    {effectiveTaxRate.toFixed(1)} %{" "}
+                    {taxes[0].active && (
+                      <>
+                        <span className="text-xs text-muted-foreground">
+                          (saving £
+                          {formatCurrency(
+                            (noPensioneffectiveTaxRate * salary) / 100 -
+                              (effectiveTaxRate * salary) / 100
+                          )}{" "}
+                          or{" "}
+                          {(noPensioneffectiveTaxRate - effectiveTaxRate).toFixed(
+                            1
+                          )}{" "}
+                          % from {noPensioneffectiveTaxRate.toFixed(1)} %)
+                        </span>
+                      </>
+                    )}
+                  </span>
+                  </Label>
+                  <Label className="text-sm text-muted-foreground">Hourly rate{(salary/52/40).toFixed(2)}</Label>
+                  <Label className="text-sm text-muted-foreground">Net hourly rate{(net/52/40).toFixed(2)}</Label>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
       </CardContent>
     </Card>
   );

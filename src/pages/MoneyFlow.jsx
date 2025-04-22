@@ -7,6 +7,7 @@ import PageLayout from "@/components/PageLayout";
 import IncomeSankeyDiagram from "@/components/IncomeSankeyDiagram";
 import { initialExpenses, initialTaxes } from "@/utils";
 import { ImpactCard } from "@/components/ImpactCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const MoneyFlow = () => {
   const [salary1, setSalary1] = useState(30000);

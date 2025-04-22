@@ -30,6 +30,13 @@ export const pages = [
     thumbnail: '/api/placeholder/300/200',
     component: () => import('@/pages/WillYou.jsx')
   },
+  {
+    id: 'Picksy',
+    title: 'Picksy',
+    description: 'Having trouble deciding? Use me!',
+    thumbnail: '/api/placeholder/300/200',
+    component: () => import('@/pages/Picksy.jsx')
+  },
 ];
 
 export const occuraceMultiplier = {
