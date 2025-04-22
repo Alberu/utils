@@ -7,27 +7,44 @@ import HomePage from "./components/HomePage";
 
 const App = () => {
   // Import just the metadata
-  const metaModules = import.meta.glob("@/pages/*.jsx", { 
+  const metaModules = import.meta.glob("@/pages/*.jsx", {
     eager: true,
-    import: 'meta'
+    import: "meta",
   });
 
   // Set up the imports for the actual lazy loaded components
   const componentImports = import.meta.glob("@/pages/*.jsx");
-  
-  const pageRoutes = Object.entries(metaModules).map(([path, meta]) => {
-    const componentName = path.match(/([^/]+)\.jsx$/)[1];
-    
-    const LazyComponent = React.lazy(() => componentImports[path]());
-    
-    const routePath = meta && meta.id ? `/${meta.id}` : `/${componentName.toLowerCase()}`;
-    
-    return {
-      path: routePath,
-      Component: LazyComponent,
-      meta: meta || { title: componentName }  // Store the metadata
-    };
-  });
+
+  const pageRoutes = Object.entries(componentImports).map(
+    ([path, lazyimport]) => {
+      const componentName = path.match(/([^/]+)\.jsx$/)[1];
+
+      console.log("this is it");
+      const meta = metaModules[path] || { title: "not provided" };
+
+      return {
+        path: meta.title ?? componentName,
+        Component: React.lazy(() => lazyimport()),
+        meta: meta || { title: componentName }, // Store the metadata
+      };
+    }
+  );
+
+  // const pageRoutes = Object.entries(metaModules).map(([path, meta]) => {
+  //   const componentName = path.match(/([^/]+)\.jsx$/)[1];
+
+  //   const LazyComponent = React.lazy(() => componentImports[path]());
+
+  //   return {
+  //     path: meta.title ?? componentName,
+  //     Component: LazyComponent,
+  //     meta: meta || { title: componentName }  // Store the metadata
+  //   };
+  // });
+
+  console.log(metaModules);
+  console.log("thi");
+  console.log(componentImports);
 
   return (
     <BrowserRouter>
@@ -35,11 +52,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           {pageRoutes.map(({ path, Component }, i) => (
-            <Route
-              key={i}
-              path={path}
-              element={<Component />}
-            />
+            <Route key={i} path={path} element={<Component />} />
           ))}
         </Routes>
       </Suspense>
