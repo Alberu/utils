@@ -23,7 +23,7 @@ const Picksy = () => {
   //   const components = Object.values(modules).map((mod) => mod.default);
   const components = Object.values(modules).map((mod) => ({
     Component: mod.default,
-    meta: mod.meta || { title: "Untitled", description: ""},
+    meta: mod.meta || { title: "Untitled", description: "" },
   }));
 
   return (
@@ -31,18 +31,18 @@ const Picksy = () => {
       <PageLayout>
         <div className="w-full">
           <Separator />
-          {components.map(({ Component, meta }, i) => {
-            return (
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
+          <Accordion type="single" collapsible>
+            {components.map(({ Component, meta }, i) => {
+              return (
+                <AccordionItem value={`item-${i}`}>
                   <AccordionTrigger>{meta.title}</AccordionTrigger>
                   <AccordionContent>
                     <Component />
                   </AccordionContent>
                 </AccordionItem>
-              </Accordion>
-            );
-          })}
+              );
+            })}
+          </Accordion>
         </div>
       </PageLayout>
     </>

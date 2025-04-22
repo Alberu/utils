@@ -5,17 +5,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+export const meta = {
+  title: "Random Number",
+  description: "Write a description here",
+};
+
 export default function Number() {
   return (
     <>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Number</AccordionTrigger>
-          <AccordionContent>
-            <p>This one needs to be made</p>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <p>This one needs to be made</p>
     </>
   );
 }
