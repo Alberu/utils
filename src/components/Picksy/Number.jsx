@@ -1,10 +1,3 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionContent,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 export const meta = {
   title: "Random Number",
   description: "Write a description here",

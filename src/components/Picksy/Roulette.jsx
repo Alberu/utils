@@ -1,10 +1,3 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionContent,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 export const meta = {
   title: "Roulette",
   description: "Write a description here",
