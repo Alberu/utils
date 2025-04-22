@@ -1,13 +1,6 @@
 // Picksy, EenieMeenie
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/PageLayout";
-import { Fuel } from "lucide-react";
-import { formatCurrency } from "@/utils";
 import {
   Accordion,
   AccordionItem,
@@ -15,12 +8,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+export const meta = {
+  title: "Picksy",
+  description: "Having trouble deciding? Use me!",
+};
+
 const Picksy = () => {
   const modules = import.meta.glob("@/components/Picksy/*.jsx", {
     eager: true,
   });
 
-  //   const components = Object.values(modules).map((mod) => mod.default);
   const components = Object.values(modules).map((mod) => ({
     Component: mod.default,
     meta: mod.meta || { title: "Untitled", description: "" },

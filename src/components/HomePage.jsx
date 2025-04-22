@@ -1,0 +1,48 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { pages } from "@/utils";
+import { Link } from "react-router-dom";
+
+const HomePage = () => {
+  const modules = import.meta.glob("@/pages/*.jsx", {
+    eager: true,
+  });
+
+  const components = Object.values(modules).map((mod) => ({
+    Component: mod.default,
+    meta: mod.meta || { title: "Untitled", description: "" },
+  }));
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8">Utils Collection</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <p>hi</p>
+        {components.map(({ Component, meta }, i) => {
+          return (
+            <Link key={i} to={`/${meta.title}`} className="block">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{meta.title}</CardTitle>
+                </CardHeader>
+                <CardContent>{meta.description}</CardContent>
+              </Card>
+            </Link>
+          );
+        })}
+        <p>hi</p>
+        {pages.map((page, pageIndex) => (
+          <Link key={pageIndex} to={`/${page.id}`} className="block">
+            <Card>
+              <CardHeader>
+                <CardTitle>{page.title}</CardTitle>
+              </CardHeader>
+              <CardContent>{page.description}</CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;

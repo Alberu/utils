@@ -1,7 +1,6 @@
 import { getRandomInteger } from "@/utils";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
 
 export const meta = {
   title: "Random Number",
