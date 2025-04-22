@@ -2,8 +2,8 @@ import { ItemPrice } from "@/components/ItemPrice";
 import PageLayout from "@/components/PageLayout";
 
 export const meta = {
-  title: "price",
-  description: "Having trouble deciding? Use me!",
+  title: "Price Compare",
+  description: "A way to compare prices easily and fast.",
 };
 
 const PriceCompare = () => {

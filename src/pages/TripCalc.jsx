@@ -9,8 +9,8 @@ import { Fuel } from "lucide-react";
 import { formatCurrency } from "@/utils";
 
 export const meta = {
-  title: "trip",
-  description: "Having trouble deciding? Use me!",
+  title: "Trip Price Calculator",
+  description: "To calculate price of fuel by car.",
 };
 
 const TripCalc = () => {

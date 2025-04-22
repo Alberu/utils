@@ -21,7 +21,6 @@ const App = () => {
     const LazyComponent = React.lazy(() => componentImports[path]());
     
     const routePath = meta && meta.id ? `/${meta.id}` : `/${componentName.toLowerCase()}`;
-    console.log(routePath)
     
     return {
       path: routePath,

@@ -10,8 +10,8 @@ import { ImpactCard } from "@/components/ImpactCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const meta = {
-  title: "Moneyflow",
-  description: "Having trouble deciding? Use me!",
+  title: "Money Flow",
+  description: "To help with taxes and how to spend your money.",
 };
 
 const MoneyFlow = () => {

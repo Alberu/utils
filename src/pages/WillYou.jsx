@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
 export const meta = {
-  title: "will",
-  description: "Having trouble deciding? Use me!",
+  title: "Will you",
+  description: "A way to get your friends to do something for you.",
 };
 
 const WillYou = () => {
