@@ -11,7 +11,6 @@ const HomePage = () => {
     eager: true,
     import: "meta",
   });
-  console.log(modules)
 
   const filteredModules = Object.entries(modules).filter(([path, meta]) => {
     if (meta.title.toLowerCase().includes(filterString)) return true
