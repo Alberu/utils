@@ -15,6 +15,7 @@ const HomePage = () => {
 
   const filteredModules = Object.entries(modules).filter(([path, meta]) => {
     if (meta.title.toLowerCase().includes(filterString)) return true
+    if (meta.description.toLowerCase().includes(filterString)) return true
     return false
   })
 
