@@ -6,8 +6,8 @@ import { fcumsum } from "d3";
 import { useEffect, useRef, useState } from "react";
 
 export const meta = {
-  title: "Cypher",
-  description: "Needs to be done",
+  title: "Simple Cypher",
+  description: "Change text into numbers and vice versa",
 };
 
 export default function Cypher() {
