@@ -28,10 +28,15 @@ const Picksy = () => {
       <PageLayout>
         <div className="w-full">
           <Separator />
-          <Accordion type="multiple" collapsible>
+          <Accordion
+            type="multiple"
+            collapsible
+            // defaultValue={components.map((_, i) => `item-${i}`)}
+            defaultValue={['item-4', 'item-5']}
+          >
             {components.map(({ Component, meta }, i) => {
               return (
-                <AccordionItem value={`item-${i}`}>
+                <AccordionItem value={`item-${i}`} key={i}>
                   <AccordionTrigger>{meta.title}</AccordionTrigger>
                   <AccordionContent>
                     <Component />
