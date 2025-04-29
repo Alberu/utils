@@ -12,9 +12,6 @@ export const meta = {
 };
 
 export default function Cypher() {
-//   const textAreaRef = useRef(null);
-//   const cypherAreaRef = useRef(null);
-
   const [regularText, setRegularText] = useState("");
   const [cypherText, setCypherText] = useState("");
 
@@ -27,16 +24,6 @@ export default function Cypher() {
     setCypherText(value);
     setRegularText(numberToLetter(value));
   };
-
-//   const resizeTextArea = (textarea) => {
-//     textarea.style.height = "auto";
-//     textarea.style.height = textarea.scrollHeight + "px";
-//   };
-
-//   useEffect(() => {
-//     resizeTextArea(textAreaRef.current);
-//     resizeTextArea(cypherAreaRef.current);
-//   }, [regularText, cypherText]);
 
   return (
     <>
@@ -55,23 +42,6 @@ export default function Cypher() {
             className="text-center text-4xl"
             placeholder="Cypher text goes here"
           />
-          {/* <textarea
-            ref={textAreaRef}
-            value={regularText}
-            onChange={(e) => handleRegularInput(e.target.value)}
-            placeholder="Enter some text"
-            className="overflow-auto resize-none text-center text-6xl flex w-full bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            rows={1}
-          />
-          <Separator />
-          <textarea
-            ref={cypherAreaRef}
-            value={cypherText}
-            onChange={(e) => handleCypherInput(e.target.value)}
-            placeholder="Cypher text goes here"
-            className="overflow-auto resize-none text-center text-6xl flex w-full bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            rows={1}
-          /> */}
         </div>
       </PageLayout>
     </>
