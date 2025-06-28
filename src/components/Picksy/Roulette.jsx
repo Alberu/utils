@@ -58,14 +58,23 @@ export default function Roulette() {
   // Generate colors for wheel segments
   const getSegmentColor = (index) => {
     const colors = [
-      "bg-red-500",
-      "bg-blue-500",
-      "bg-green-500",
-      "bg-yellow-500",
-      "bg-purple-500",
-      "bg-pink-500",
-      "bg-indigo-500",
-      "bg-teal-500",
+      "bg-red-300",
+      "bg-orange-300",
+      // "bg-amber-300",
+      "bg-yellow-300",
+      "bg-lime-300",
+      "bg-green-300",
+      // "bg-emerald-300",
+      "bg-teal-300",
+      "bg-cyan-300",
+      // "bg-sky-300",
+      "bg-blue-300",
+      "bg-indigo-300",
+      "bg-violet-300",
+      "bg-purple-300",
+      "bg-fuchsia-300",
+      "bg-pink-300",
+      // "bg-rose-300",
     ]
     return colors[index % colors.length]
   }
@@ -141,7 +150,7 @@ export default function Roulette() {
 
   return (
     <div className="flex flex-col items-center w-full max-w-2xl mx-auto p-4 space-y-6">
-      <AutoTextArea value={rouletteList} onChange={handleRouletteList} />
+      <AutoTextArea className={"text-center text-2xl"} value={rouletteList} onChange={handleRouletteList} />
       <Separator />
 
       <div className="relative w-full max-w-md aspect-square">
@@ -212,7 +221,7 @@ export default function Roulette() {
                           y="0"
                           width="100"
                           height="100"
-                          fill={getSegmentColor(index).replace('bg-', '').replace('-500', '')}
+                          fill={getSegmentColor(index).replace('bg-', '').replace('-300', '')}
                         />
                       </g>
                       
@@ -220,6 +229,7 @@ export default function Roulette() {
                       <text
                         x={textX}
                         y={textY}
+                        className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
                         textAnchor="middle"
                         dominantBaseline="middle"
                         fill="white"
