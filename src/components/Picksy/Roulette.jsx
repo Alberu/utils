@@ -158,13 +158,13 @@ export default function Roulette() {
           <>
             {/* Pointer/indicator */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-              <ArrowDown className="h-8 w-8 text-black" />
+              <ArrowDown className="h-8 w-8 text-black" strokeWidth={5} />
             </div>
 
             {/* Wheel */}
             <motion.div
               ref={wheelRef}
-              className={`w-full h-full rounded-full overflow-hidden border-4 border-gray-500 relative ${!spinning && items.length > 1 ? 'cursor-pointer hover:opacity-90 hover:shadow-lg transition-all' : ''}`}
+              className={`w-full h-full rounded-full overflow-hidden border-4 border-gray-100 relative ${!spinning && items.length > 1 ? 'cursor-pointer hover:opacity-90 hover:shadow-lg transition-all' : ''}`}
               animate={{ rotate: rotation }}
               transition={{ duration: spinning ? 5 + Math.random() * 3 : 0, ease: "easeOut" }}
               onClick={!spinning && items.length > 1 ? spinWheel : undefined}
@@ -255,7 +255,7 @@ export default function Roulette() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
                 >
-                  <div className="bg-white rounded-full p-4 shadow-lg border-4 border-gray-500 flex flex-col items-center justify-center w-40 h-40">
+                  <div className="bg-white rounded-full p-4 shadow-lg border-4 border-black flex flex-col items-center justify-center w-40 h-40">
                     <p className="text-sm text-black font-semibold">Selected:</p>
                     <p className="text-lg font-bold text-black text-center">{selectedItem}</p>
                   </div>
