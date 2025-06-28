@@ -30,9 +30,9 @@ const Picksy = () => {
           <Separator />
           <Accordion
             type="multiple"
-            collapsible
+            collapsible="true"
             // defaultValue={components.map((_, i) => `item-${i}`)}
-            defaultValue={['item-4', 'item-5']}
+            // defaultValue={['item-4', 'item-5']}
           >
             {components.map(({ Component, meta }, i) => {
               return (
