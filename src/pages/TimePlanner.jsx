@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import { Card, CardContent } from "@/components/ui/card";
 import React, { useState } from "react";
 
 export const meta = {
@@ -95,51 +96,68 @@ export default function Cypher() {
 
   return (
     <PageLayout>
-      <div className="max-w-xl mx-auto p-4 space-y-4">
-        {daysOfWeek.map((day) => {
-          const dailyMinutes = getWorkedMinutesForDay(day);
-          const formattedDaily = formatHHMM(dailyMinutes);
+      <Card>
+        <CardContent>
+          <div className="max-w-xl mx-auto p-4 space-y-4">
+            {daysOfWeek.map((day) => {
+              const dailyMinutes = getWorkedMinutesForDay(day);
+              const formattedDaily = formatHHMM(dailyMinutes);
 
-          return (
-            <div key={day} className="flex items-center justify-between gap-2">
-              <span className="w-24">{day}</span>
-              <input
-                type="time"
-                value={timeEntries[day].start}
-                onChange={(e) => handleChange(day, "start", e.target.value)}
-                className="border p-1 rounded"
-              />
-              <span>to</span>
-              <input
-                type="time"
-                value={timeEntries[day].end}
-                onChange={(e) => handleChange(day, "end", e.target.value)}
-                className="border p-1 rounded"
-              />
-              <span className="ml-2 w-16 text-right text-sm text-gray-700">
-                {dailyMinutes > 0 ? formattedDaily : "--:--"}
-              </span>
+              return (
+                <div
+                  key={day}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b pb-2"
+                >
+                  <div className="flex justify-between sm:w-24 font-medium">
+                    {day}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+                    <input
+                      type="time"
+                      value={timeEntries[day].start}
+                      onChange={(e) =>
+                        handleChange(day, "start", e.target.value)
+                      }
+                      className="border p-1 rounded w-full sm:w-28"
+                    />
+                    <span className="hidden sm:inline">to</span>
+                    <input
+                      type="time"
+                      value={timeEntries[day].end}
+                      onChange={(e) => handleChange(day, "end", e.target.value)}
+                      className="border p-1 rounded w-full sm:w-28"
+                    />
+                  </div>
+
+                  <div className="flex justify-between sm:justify-end items-center gap-2 sm:w-32 text-sm text-gray-700">
+                    <span className="w-16 text-right">
+                      {dailyMinutes > 0 ? formattedDaily : "--:--"}
+                    </span>
+                    <button
+                      onClick={() => resetDay(day)}
+                      className="text-blue-600 hover:underline whitespace-nowrap"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="mt-6 text-lg font-semibold">
+              Total Time: <span className="text-blue-600">{totalWorked}</span>
+            </div>
+            <div className="mt-4 flex justify-end">
               <button
-                onClick={() => resetDay(day)}
-                className="text-sm text-blue-600 hover:underline ml-2"
+                onClick={handleReset}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
               >
-                Reset
+                Reset to all
               </button>
             </div>
-          );
-        })}
-        <div className="mt-6 text-lg font-semibold">
-          Total Time: <span className="text-blue-600">{totalWorked}</span>
-        </div>
-        <div className="mt-4 flex justify-end">
-          <button
-            onClick={handleReset}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-          >
-            Reset to all
-          </button>
-        </div>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </PageLayout>
   );
 }
