@@ -1,3 +1,4 @@
+import PageLayout from "@/components/PageLayout";
 import React, { useState } from "react";
 
 export const meta = {
@@ -16,16 +17,30 @@ const daysOfWeek = [
 ];
 
 export default function Cypher() {
-  const [timeEntries, setTimeEntries] = useState(
-    daysOfWeek.reduce((acc, day) => {
+  const getDefaultTimeEntries = () => {
+    return daysOfWeek.reduce((acc, day) => {
       const isWeekend = day === "Saturday" || day === "Sunday";
       acc[day] = {
-        start: isWeekend ? "" : "08:30",
+        start: isWeekend ? "" : "08:00",
         end: isWeekend ? "" : "17:00",
       };
       return acc;
-    }, {})
-  );
+    }, {});
+  };
+
+  const [timeEntries, setTimeEntries] = useState(getDefaultTimeEntries());
+
+  const handleReset = () => {
+    setTimeEntries(getDefaultTimeEntries());
+  };
+
+  const resetDay = (day) => {
+    const defaultEntry = getDefaultTimeEntries()[day];
+    setTimeEntries((prev) => ({
+      ...prev,
+      [day]: defaultEntry,
+    }));
+  };
 
   const handleChange = (day, type, value) => {
     setTimeEntries((prev) => ({
@@ -79,29 +94,52 @@ export default function Cypher() {
   const totalWorked = formatHHMM(calculateTotalMinutes());
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">Weekly Time Planner</h1>
-      {daysOfWeek.map((day) => (
-        <div key={day} className="flex items-center justify-between gap-2">
-          <span className="w-24">{day}</span>
-          <input
-            type="time"
-            value={timeEntries[day].start}
-            onChange={(e) => handleChange(day, "start", e.target.value)}
-            className="border p-1 rounded"
-          />
-          <span>to</span>
-          <input
-            type="time"
-            value={timeEntries[day].end}
-            onChange={(e) => handleChange(day, "end", e.target.value)}
-            className="border p-1 rounded"
-          />
+    <PageLayout>
+      <div className="max-w-xl mx-auto p-4 space-y-4">
+        {daysOfWeek.map((day) => {
+          const dailyMinutes = getWorkedMinutesForDay(day);
+          const formattedDaily = formatHHMM(dailyMinutes);
+
+          return (
+            <div key={day} className="flex items-center justify-between gap-2">
+              <span className="w-24">{day}</span>
+              <input
+                type="time"
+                value={timeEntries[day].start}
+                onChange={(e) => handleChange(day, "start", e.target.value)}
+                className="border p-1 rounded"
+              />
+              <span>to</span>
+              <input
+                type="time"
+                value={timeEntries[day].end}
+                onChange={(e) => handleChange(day, "end", e.target.value)}
+                className="border p-1 rounded"
+              />
+              <span className="ml-2 w-16 text-right text-sm text-gray-700">
+                {dailyMinutes > 0 ? formattedDaily : "--:--"}
+              </span>
+              <button
+                onClick={() => resetDay(day)}
+                className="text-sm text-blue-600 hover:underline ml-2"
+              >
+                Reset
+              </button>
+            </div>
+          );
+        })}
+        <div className="mt-6 text-lg font-semibold">
+          Total Time: <span className="text-blue-600">{totalWorked}</span>
         </div>
-      ))}
-      <div className="mt-6 text-lg font-semibold">
-        Total Time: <span className="text-blue-600">{totalWorked}</span>
+        <div className="mt-4 flex justify-end">
+          <button
+            onClick={handleReset}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+          >
+            Reset to all
+          </button>
+        </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }
