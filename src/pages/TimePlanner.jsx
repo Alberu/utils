@@ -1,6 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import { Card, CardContent } from "@/components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const meta = {
   title: "Weekly Time Planner",
@@ -93,6 +93,16 @@ export default function Cypher() {
   };
 
   const totalWorked = formatHHMM(calculateTotalMinutes());
+
+  useEffect(() => {
+    console.log("change was made");
+    console.log(timeEntries);
+    if (!localStorage) {
+      return;
+    }
+
+    localStorage.setItem("temp", JSON.stringify(timeEntries));
+  }, [timeEntries]);
 
   return (
     <PageLayout>
