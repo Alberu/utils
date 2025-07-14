@@ -29,7 +29,10 @@ export default function Cypher() {
     }, {});
   };
 
-  const [timeEntries, setTimeEntries] = useState(getDefaultTimeEntries());
+  const [timeEntries, setTimeEntries] = useState(() => {
+    const stored = localStorage.getItem("temp");
+    return stored ? JSON.parse(stored) : getDefaultTimeEntries();
+  });
 
   const handleReset = () => {
     setTimeEntries(getDefaultTimeEntries());
@@ -95,8 +98,6 @@ export default function Cypher() {
   const totalWorked = formatHHMM(calculateTotalMinutes());
 
   useEffect(() => {
-    console.log("change was made");
-    console.log(timeEntries);
     if (!localStorage) {
       return;
     }
