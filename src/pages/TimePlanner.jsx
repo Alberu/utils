@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 export const meta = {
-  title: "Weekly time planner",
+  title: "Weekly Time Planner",
   description: "Change text into numbers and vice versa",
 };
 
